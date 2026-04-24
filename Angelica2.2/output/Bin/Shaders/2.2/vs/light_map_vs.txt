@@ -1,0 +1,88 @@
+; DESCRIPTION:
+; Vertex shader used to caculate lightmap
+; point light effect
+;
+; CREATED BY: doujianwei, 2012/4/26
+
+; vertex decl
+;------------------------------------------------------------------------------
+; v0 	  = position in world space
+; v1	  = normal in world space
+;------------------------------------------------------------------------------
+
+; const buffer
+;------------------------------------------------------------------------------
+; c0 	  = {1.0f, 0.0f, -0.5f, 0.0f }
+; c1-c4	  = view matrix * projection matrix
+; c5	  = light_pos
+; c6 	  = light_diffuse
+; c7	  = light_ambient
+; c8.x	  = light_power
+; c8.y    = -light_attenu / light_range = f
+; c8.z	  = const e
+; c8.w    = light_range
+; c9 	  = material_diffuse 
+; c10	  = material_ambient
+; c11	  = material_emissive
+; c12     = is emissive ? (0.0f,0.0f,0.0f,1.0f) : (1.0f,1.0f,1.0f,1.0f)     
+;------------------------------------------------------------------------------
+
+; output buffer
+;------------------------------------------------------------------------------
+; oPos    = Output position
+; oD0	  = color
+; oT0     = auto gen
+; oT1.x   = dot(N*L)
+; oT1.y	  = (vertex_pos - light_pos) > light range ? 
+; 
+;------------------------------------------------------------------------------
+
+vs.2.0
+
+dcl_position v0
+dcl_normal   v1
+
+; transform 
+m4x4 oPos,v0,c1
+
+; pos to light dis
+add r0,v0,-c5
+mov r2,r0
+dp3 r0,r0,r2		
+rcp r0.x,r0.x
+rsq r0.x,r0.x		; d = (vertex_pos - light_pos)
+
+; dot(N*L)
+mov r3,r2
+nrm r2,r3
+dp3 r2.x,r2,v1  
+mov oT1.x,r2.x		; r2.x = dot(N*L)
+
+; (vertex_pos - light_pos) > (light_range) ? 
+slt r2.y,r0.x,c8.w
+add r2.y,r2.y,c0.z
+mov oT1.y,r2.y		; r2.y = (vertex_pos - light_pos) > (light_range) ? -0.5f : +0.5f
+mov oT1.zw,c0.xx
+
+; attenu factor
+mul r1.x,r0.x,c8.y
+pow r0.x,c8.z,r1.x      ; e^-d*f
+mul r0.x,r0.x,c8.x	; light_power * e^-d*f
+mul r0.x,r0.x,-r2.x	; -dot(N*L) * e^-d*f
+ 
+mov r2,c6
+mul r2,r2,c9		; light_diffuse*material_diffuse
+mov r3,c7
+mul r3,r3,c10		; light_ambient*material_ambient
+mad r1,r0.x,r2,r3	; light_diffuse * dot(N*L) * material_diffuse * e^-d*f + light_ambient*material_ambient
+
+mov r3,c12
+add r4,c0.xxxx,-r3 
+mul r3,r3,c11		; c12 * material_emissive
+
+mad r1,r1,r4,r3		; c12 * material_emissive + (1 - c12) * (light_diffuse * dot(N*L) * material_diffuse * e^-d*f)
+min oD0,r1,c0.x		 
+
+mov oD1, c0.yyyx
+mov oFog, c0.x
+

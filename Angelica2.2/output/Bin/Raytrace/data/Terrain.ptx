@@ -1,0 +1,926 @@
+	.version 1.4
+	.target sm_10, map_f64_to_f32
+	// compiled with D:\CUDA4.1\v4.1\bin/../open64/lib//be.exe
+	// nvopencc 4.1 built on 2012-01-13
+
+	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
+
+	//-----------------------------------------------------------
+	// Compiling C:/DOCUME~1/DevUser/LOCALS~1/Temp/tmpxft_00000b50_00000000-11_Terrain.cpp3.i (C:/DOCUME~1/DevUser/LOCALS~1/Temp/ccBI#.a00208)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_10, Endian:little, Pointer Size:32
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m0	(Report errors only)
+	//-----------------------------------------------------------
+
+	.file	1	"C:/DOCUME~1/DevUser/LOCALS~1/Temp/tmpxft_00000b50_00000000-10_Terrain.cudafe2.gpu"
+	.file	2	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\internal/optix_datatypes.h"
+	.file	3	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\optixu\optixu_aabb_namespace.h"
+	.file	4	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\optix_device.h"
+	.file	5	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\internal\optix_defines.h"
+	.file	6	"C:/DOCUME~1/DevUser/LOCALS~1/Temp/tmpxft_00000b50_00000000-3_Terrain.cudafe1.gpu"
+	.file	7	"C:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE\crtdefs.h"
+	.file	8	"D:\CUDA4.1\v4.1\include\crt/device_runtime.h"
+	.file	9	"D:\CUDA4.1\v4.1\include\host_defines.h"
+	.file	10	"D:\CUDA4.1\v4.1\include\builtin_types.h"
+	.file	11	"d:\cuda4.1\v4.1\include\device_types.h"
+	.file	12	"d:\cuda4.1\v4.1\include\host_defines.h"
+	.file	13	"d:\cuda4.1\v4.1\include\driver_types.h"
+	.file	14	"d:\cuda4.1\v4.1\include\surface_types.h"
+	.file	15	"d:\cuda4.1\v4.1\include\texture_types.h"
+	.file	16	"d:\cuda4.1\v4.1\include\vector_types.h"
+	.file	17	"d:\cuda4.1\v4.1\include\builtin_types.h"
+	.file	18	"D:\CUDA4.1\v4.1\include\device_launch_parameters.h"
+	.file	19	"d:\cuda4.1\v4.1\include\crt\storage_class.h"
+	.file	20	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\internal\../optix_sizet.h"
+	.file	21	"d:/code/RayTraceLightMap/RayTraceLightMap/Cuda/Terrain.cu"
+	.file	22	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\internal/optix_internal.h"
+	.file	23	"D:\CUDA4.1\v4.1\include\common_functions.h"
+	.file	24	"d:\cuda4.1\v4.1\include\math_functions.h"
+	.file	25	"d:\cuda4.1\v4.1\include\math_constants.h"
+	.file	26	"d:\cuda4.1\v4.1\include\device_functions.h"
+	.file	27	"d:\cuda4.1\v4.1\include\sm_11_atomic_functions.h"
+	.file	28	"d:\cuda4.1\v4.1\include\sm_12_atomic_functions.h"
+	.file	29	"d:\cuda4.1\v4.1\include\sm_13_double_functions.h"
+	.file	30	"d:\cuda4.1\v4.1\include\sm_20_atomic_functions.h"
+	.file	31	"d:\cuda4.1\v4.1\include\sm_20_intrinsics.h"
+	.file	32	"d:\cuda4.1\v4.1\include\surface_functions.h"
+	.file	33	"d:\cuda4.1\v4.1\include\texture_fetch_functions.h"
+	.file	34	"d:\cuda4.1\v4.1\include\math_functions_dbl_ptx1.h"
+
+	.global .align 1 .b8 bufHeight[1];
+	.global .align 1 .b8 bufNormal[1];
+	.global .s32 useMaterial;
+	.global .align 8 .b8 mapSize[8];
+	.global .align 8 .b8 gridSize[8];
+	.global .align 16 .b8 position[12];
+	.global .align 8 .b8 texcoord[12];
+	.global .align 16 .b8 geometric_normal[12];
+	.global .align 16 .b8 shading_normal[12];
+	.global .align 16 .b8 ray[36];
+	.global .align 16 .b8 centerPos[12];
+
+	.entry _Z16TerrainIntersecti (
+		.param .s32 __cudaparm__Z16TerrainIntersecti_primIdx)
+	{
+	.reg .u32 %ra1;
+	.reg .u32 %r<189>;
+	.reg .f32 %f<252>;
+	.reg .pred %p<17>;
+	.loc	21	72	0
+$LDWbegin__Z16TerrainIntersecti:
+	.loc	21	74	0
+	ld.global.u32 	%r1, [mapSize+0];
+	ld.param.s32 	%r2, [__cudaparm__Z16TerrainIntersecti_primIdx];
+	rem.u32 	%r3, %r2, %r1;
+	div.u32 	%r4, %r2, %r1;
+	mov.s32 	%r5, %r3;
+	mov.s32 	%r6, %r4;
+	.loc	21	76	0
+	add.u32 	%r7, %r4, 1;
+	mov.s32 	%r8, %r7;
+	.loc	21	77	0
+	add.u32 	%r9, %r3, 1;
+	mov.s32 	%r10, %r9;
+	mov.s32 	%r11, %r7;
+	.loc	21	78	0
+	mov.s32 	%r12, %r9;
+	.loc	22	53	0
+	mov.s32 	%r13, %r6;
+	mov.s32 	%r14, %r5;
+	mov.u32 	%r15, bufHeight;
+	mov.u32 	%r16, %r15;
+	mov.u32 	%r17, 2;
+	mov.u32 	%r18, %r17;
+	mov.u32 	%r19, 4;
+	mov.u32 	%r20, %r19;
+	mov.u32 	%r21, %r14;
+	mov.u32 	%r22, %r13;
+	mov.u32 	%r23, 0;
+	mov.u32 	%r24, %r23;
+	mov.u32 	%r25, 0;
+	mov.u32 	%r26, %r25;
+	call (%r27), _rt_buffer_get, (%r16, %r18, %r20, %r21, %r22, %r24, %r26);
+	mov.s32 	%r28, %r27;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r28;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	80	0
+	ld.global.f32 	%f1, [%r28+0];
+	.loc	22	53	0
+	mov.u32 	%r29, bufHeight;
+	mov.u32 	%r30, %r29;
+	mov.u32 	%r31, 2;
+	mov.u32 	%r32, %r31;
+	mov.u32 	%r33, 4;
+	mov.u32 	%r34, %r33;
+	mov.u32 	%r35, %r14;
+	mov.u32 	%r36, %r8;
+	mov.u32 	%r37, 0;
+	mov.u32 	%r38, %r37;
+	mov.u32 	%r39, 0;
+	mov.u32 	%r40, %r39;
+	call (%r41), _rt_buffer_get, (%r30, %r32, %r34, %r35, %r36, %r38, %r40);
+	mov.s32 	%r42, %r41;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r42;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	80	0
+	ld.global.f32 	%f2, [%r42+0];
+	.loc	22	53	0
+	mov.u32 	%r43, bufHeight;
+	mov.u32 	%r44, %r43;
+	mov.u32 	%r45, 2;
+	mov.u32 	%r46, %r45;
+	mov.u32 	%r47, 4;
+	mov.u32 	%r48, %r47;
+	mov.u32 	%r49, %r10;
+	mov.u32 	%r50, %r11;
+	mov.u32 	%r51, 0;
+	mov.u32 	%r52, %r51;
+	mov.u32 	%r53, 0;
+	mov.u32 	%r54, %r53;
+	call (%r55), _rt_buffer_get, (%r44, %r46, %r48, %r49, %r50, %r52, %r54);
+	mov.s32 	%r56, %r55;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r56;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	80	0
+	ld.global.f32 	%f3, [%r56+0];
+	.loc	22	53	0
+	mov.u32 	%r57, bufHeight;
+	mov.u32 	%r58, %r57;
+	mov.u32 	%r59, 2;
+	mov.u32 	%r60, %r59;
+	mov.u32 	%r61, 4;
+	mov.u32 	%r62, %r61;
+	mov.u32 	%r63, %r12;
+	mov.u32 	%r64, %r13;
+	mov.u32 	%r65, 0;
+	mov.u32 	%r66, %r65;
+	mov.u32 	%r67, 0;
+	mov.u32 	%r68, %r67;
+	call (%r69), _rt_buffer_get, (%r58, %r60, %r62, %r63, %r64, %r66, %r68);
+	mov.s32 	%r70, %r69;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r70;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	80	0
+	ld.global.f32 	%f4, [%r70+0];
+	.loc	21	94	0
+	mov.f32 	%f5, 0f00000000;     	// 0
+	mov.f32 	%f6, 0f00000000;     	// 0
+	.loc	21	38	0
+	mov.f32 	%f7, 0f41200000;     	// 10
+	.loc	21	46	0
+	cvt.rn.f32.s32 	%f8, %r3;
+	neg.s32 	%r71, %r4;
+	mov.s32 	%r72, -1;
+	sub.s32 	%r73, %r72, %r4;
+	ld.global.v4.f32 	{%f9,%f10,%f11,_}, [centerPos+0];
+	sub.f32 	%f12, %f1, %f10;
+	sub.f32 	%f13, %f4, %f10;
+	sub.f32 	%f14, %f3, %f10;
+	cvt.rn.f32.s32 	%f15, %r9;
+	ld.global.v2.f32 	{%f16,%f17}, [gridSize+0];
+	mul.f32 	%f18, %f8, %f16;
+	cvt.rn.f32.s32 	%f19, %r71;
+	cvt.rn.f32.s32 	%f20, %r73;
+	ld.global.v4.f32 	{%f21,%f22,%f23,_}, [ray+0];
+	sub.f32 	%f24, %f12, %f22;
+	sub.f32 	%f25, %f12, %f13;
+	sub.f32 	%f26, %f14, %f12;
+	mul.f32 	%f27, %f15, %f16;
+	sub.f32 	%f28, %f18, %f9;
+	mul.f32 	%f29, %f19, %f17;
+	mul.f32 	%f30, %f20, %f17;
+	sub.f32 	%f31, %f27, %f9;
+	sub.f32 	%f32, %f28, %f21;
+	sub.f32 	%f33, %f29, %f11;
+	sub.f32 	%f34, %f30, %f11;
+	sub.f32 	%f35, %f31, %f28;
+	sub.f32 	%f36, %f28, %f31;
+	sub.f32 	%f37, %f33, %f33;
+	sub.f32 	%f38, %f33, %f23;
+	sub.f32 	%f39, %f34, %f33;
+	mul.f32 	%f40, %f26, %f36;
+	mul.f32 	%f41, %f35, %f37;
+	mul.f32 	%f42, %f25, %f39;
+	mul.f32 	%f43, %f35, %f25;
+	sub.f32 	%f44, %f43, %f40;
+	mul.f32 	%f45, %f39, %f36;
+	sub.f32 	%f46, %f45, %f41;
+	mul.f32 	%f47, %f26, %f37;
+	sub.f32 	%f48, %f47, %f42;
+	ld.global.f32 	%f49, [ray+16];
+	mul.f32 	%f50, %f46, %f49;
+	ld.global.f32 	%f51, [ray+12];
+	mad.f32 	%f52, %f48, %f51, %f50;
+	ld.global.f32 	%f53, [ray+20];
+	mad.f32 	%f54, %f44, %f53, %f52;
+	rcp.approx.f32 	%f55, %f54;
+	mul.f32 	%f56, %f24, %f46;
+	mad.f32 	%f57, %f48, %f32, %f56;
+	mad.f32 	%f58, %f44, %f38, %f57;
+	mul.f32 	%f59, %f55, %f58;
+	.loc	21	48	0
+	mov.s32 	%r74, 0;
+	mov.f32 	%f60, 0f00000000;    	// 0
+	setp.gt.f32 	%p1, %f49, %f60;
+	ld.global.f32 	%f61, [ray+28];
+	mov.f32 	%f62, 0f3f800000;    	// 1
+	add.f32 	%f63, %f61, %f62;
+	selp.f32 	%f64, %f63, %f61, %p1;
+	ld.global.f32 	%f65, [ray+32];
+	set.gt.u32.f32 	%r75, %f65, %f59;
+	neg.s32 	%r76, %r75;
+	set.lt.u32.f32 	%r77, %f64, %f59;
+	neg.s32 	%r78, %r77;
+	and.b32 	%r79, %r76, %r78;
+	mov.u32 	%r80, 0;
+	setp.eq.s32 	%p2, %r79, %r80;
+	@%p2 bra 	$Lt_0_18178;
+	.loc	21	54	0
+	mul.f32 	%f66, %f24, %f51;
+	mul.f32 	%f67, %f32, %f53;
+	mul.f32 	%f68, %f32, %f49;
+	sub.f32 	%f69, %f68, %f66;
+	mul.f32 	%f70, %f38, %f51;
+	sub.f32 	%f71, %f70, %f67;
+	mul.f32 	%f72, %f38, %f49;
+	mul.f32 	%f73, %f25, %f71;
+	mul.f32 	%f74, %f24, %f53;
+	sub.f32 	%f75, %f74, %f72;
+	mad.f32 	%f76, %f36, %f75, %f73;
+	mad.f32 	%f77, %f37, %f69, %f76;
+	mul.f32 	%f78, %f77, %f55;
+	mov.f32 	%f79, 0f00000000;    	// 0
+	setp.ge.f32 	%p3, %f78, %f79;
+	@!%p3 bra 	$Lt_0_18178;
+	.loc	21	58	0
+	mul.f32 	%f80, %f26, %f71;
+	mad.f32 	%f81, %f35, %f75, %f80;
+	mad.f32 	%f82, %f39, %f69, %f81;
+	mul.f32 	%f83, %f55, %f82;
+	.loc	21	57	0
+	mul.f32 	%f84, %f54, %f54;
+	add.f32 	%f85, %f77, %f82;
+	mul.f32 	%f86, %f54, %f85;
+	setp.ge.f32 	%p4, %f84, %f86;
+	@!%p4 bra 	$Lt_0_18178;
+	mov.f32 	%f87, 0f00000000;    	// 0
+	setp.ge.f32 	%p5, %f83, %f87;
+	@!%p5 bra 	$Lt_0_18178;
+	.loc	21	61	0
+	mov.f32 	%f7, %f59;
+	.loc	21	62	0
+	mov.f32 	%f5, %f78;
+	.loc	21	63	0
+	mov.f32 	%f6, %f83;
+	.loc	21	64	0
+	mov.s32 	%r74, 1;
+$Lt_0_18178:
+$L_0_12034:
+$Lt_0_13570:
+$Lt_0_13058:
+	.loc	21	101	0
+	mov.u32 	%r81, 0;
+	setp.eq.s32 	%p6, %r74, %r81;
+	@%p6 bra 	$Lt_0_14338;
+	.loc	22	99	0
+	mov.f32 	%f88, %f7;
+	call (%r82), _rt_potential_intersection, (%f88);
+	mov.s32 	%r83, %r82;
+	.loc	21	106	0
+	mov.u32 	%r84, 0;
+	setp.eq.s32 	%p7, %r83, %r84;
+	@%p7 bra 	$Lt_0_17154;
+	.loc	21	109	0
+	mov.f32 	%f89, 0f3f800000;    	// 1
+	sub.f32 	%f90, %f89, %f5;
+	sub.f32 	%f91, %f90, %f6;
+	mul.f32 	%f92, %f31, %f6;
+	mad.f32 	%f93, %f28, %f5, %f92;
+	mad.f32 	%f94, %f91, %f31, %f93;
+	mul.f32 	%f95, %f14, %f6;
+	mad.f32 	%f96, %f12, %f5, %f95;
+	mad.f32 	%f97, %f13, %f91, %f96;
+	st.global.v2.f32 	[position+0], {%f94,%f97};
+	mul.f32 	%f98, %f34, %f6;
+	mad.f32 	%f99, %f33, %f5, %f98;
+	mad.f32 	%f100, %f91, %f33, %f99;
+	st.global.f32 	[position+8], %f100;
+	ld.global.s32 	%r85, [useMaterial];
+	mov.u32 	%r86, 0;
+	setp.eq.s32 	%p8, %r85, %r86;
+	@%p8 bra 	$Lt_0_15362;
+	.loc	22	53	0
+	mov.u32 	%r87, bufNormal;
+	mov.u32 	%r88, %r87;
+	mov.u32 	%r89, 2;
+	mov.u32 	%r90, %r89;
+	mov.u32 	%r91, 12;
+	mov.u32 	%r92, %r91;
+	mov.u32 	%r93, %r14;
+	mov.u32 	%r94, %r13;
+	mov.u32 	%r95, 0;
+	mov.u32 	%r96, %r95;
+	mov.u32 	%r97, 0;
+	mov.u32 	%r98, %r97;
+	call (%r99), _rt_buffer_get, (%r88, %r90, %r92, %r93, %r94, %r96, %r98);
+	mov.s32 	%r100, %r99;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r100;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	113	0
+	ld.global.f32 	%f101, [%r100+0];
+	ld.global.f32 	%f102, [%r100+4];
+	ld.global.f32 	%f103, [%r100+8];
+	.loc	22	53	0
+	mov.u32 	%r101, bufNormal;
+	mov.u32 	%r102, %r101;
+	mov.u32 	%r103, 2;
+	mov.u32 	%r104, %r103;
+	mov.u32 	%r105, 12;
+	mov.u32 	%r106, %r105;
+	mov.u32 	%r107, %r10;
+	mov.u32 	%r108, %r11;
+	mov.u32 	%r109, 0;
+	mov.u32 	%r110, %r109;
+	mov.u32 	%r111, 0;
+	mov.u32 	%r112, %r111;
+	call (%r113), _rt_buffer_get, (%r102, %r104, %r106, %r107, %r108, %r110, %r112);
+	mov.s32 	%r100, %r113;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r100;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	114	0
+	ld.global.f32 	%f104, [%r100+0];
+	ld.global.f32 	%f105, [%r100+4];
+	ld.global.f32 	%f106, [%r100+8];
+	.loc	22	53	0
+	mov.u32 	%r114, bufNormal;
+	mov.u32 	%r115, %r114;
+	mov.u32 	%r116, 2;
+	mov.u32 	%r117, %r116;
+	mov.u32 	%r118, 12;
+	mov.u32 	%r119, %r118;
+	mov.u32 	%r120, %r12;
+	mov.u32 	%r121, %r13;
+	mov.u32 	%r122, 0;
+	mov.u32 	%r123, %r122;
+	mov.u32 	%r124, 0;
+	mov.u32 	%r125, %r124;
+	call (%r126), _rt_buffer_get, (%r115, %r117, %r119, %r120, %r121, %r123, %r125);
+	mov.s32 	%r100, %r126;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r100;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	115	0
+	ld.global.f32 	%f107, [%r100+0];
+	ld.global.f32 	%f108, [%r100+4];
+	ld.global.f32 	%f109, [%r100+8];
+	.loc	21	116	0
+	mul.f32 	%f110, %f104, %f5;
+	mul.f32 	%f111, %f107, %f6;
+	mul.f32 	%f112, %f105, %f5;
+	mul.f32 	%f113, %f108, %f6;
+	mul.f32 	%f114, %f106, %f5;
+	mul.f32 	%f115, %f109, %f6;
+	add.f32 	%f116, %f110, %f111;
+	add.f32 	%f117, %f112, %f113;
+	add.f32 	%f118, %f114, %f115;
+	mul.f32 	%f119, %f91, %f101;
+	mul.f32 	%f120, %f91, %f102;
+	mul.f32 	%f121, %f91, %f103;
+	add.f32 	%f122, %f116, %f119;
+	add.f32 	%f123, %f117, %f120;
+	add.f32 	%f124, %f118, %f121;
+	mul.f32 	%f125, %f123, %f123;
+	mad.f32 	%f126, %f122, %f122, %f125;
+	mad.f32 	%f127, %f124, %f124, %f126;
+	sqrt.approx.f32 	%f128, %f127;
+	rcp.approx.f32 	%f129, %f128;
+	mul.f32 	%f130, %f122, %f129;
+	mul.f32 	%f131, %f123, %f129;
+	st.global.v2.f32 	[shading_normal+0], {%f130,%f131};
+	mul.f32 	%f132, %f124, %f129;
+	st.global.f32 	[shading_normal+8], %f132;
+	ld.global.v2.u32 	{%r127,%r128}, [mapSize+0];
+	.loc	21	122	0
+	cvt.rn.f32.u32 	%f133, %r127;
+	cvt.rn.f32.u32 	%f134, %r9;
+	div.approx.f32 	%f135, %f134, %f133;
+	mul.f32 	%f136, %f135, %f6;
+	mad.f32 	%f137, %f135, %f5, %f136;
+	cvt.rn.f32.u32 	%f138, %r14;
+	div.approx.f32 	%f139, %f138, %f133;
+	mad.f32 	%f140, %f139, %f91, %f137;
+	cvt.rn.f32.u32 	%f141, %r128;
+	cvt.rn.f32.u32 	%f142, %r13;
+	div.approx.f32 	%f143, %f142, %f141;
+	mul.f32 	%f144, %f143, %f6;
+	cvt.rn.f32.u32 	%f145, %r7;
+	div.approx.f32 	%f146, %f145, %f141;
+	mad.f32 	%f147, %f5, %f146, %f144;
+	mad.f32 	%f148, %f91, %f143, %f147;
+	st.global.v2.f32 	[texcoord+0], {%f140,%f148};
+	bra.uni 	$Lt_0_15106;
+$Lt_0_15362:
+	.loc	21	127	0
+	mov.f32 	%f130, 0f00000000;   	// 0
+	mov.f32 	%f131, 0fbf800000;   	// -1
+	st.global.v2.f32 	[shading_normal+0], {%f130,%f131};
+	mov.f32 	%f132, 0f00000000;   	// 0
+	st.global.f32 	[shading_normal+8], %f132;
+	.loc	21	128	0
+	mov.f32 	%f149, 0f00000000;   	// 0
+	mov.f32 	%f150, 0f00000000;   	// 0
+	st.global.v2.f32 	[texcoord+0], {%f149,%f150};
+$Lt_0_15106:
+	mov.f32 	%f151, 0f00000000;   	// 0
+	st.global.f32 	[texcoord+8], %f151;
+	st.global.v2.f32 	[geometric_normal+0], {%f130,%f131};
+	.loc	21	130	0
+	st.global.f32 	[geometric_normal+8], %f132;
+	.loc	22	109	0
+	mov.u32 	%r129, 0;
+	mov.u32 	%r130, %r129;
+	call (%r131), _rt_report_intersection, (%r130);
+	bra.uni 	$Lt_0_17154;
+$Lt_0_14338:
+	.loc	21	38	0
+	mov.f32 	%f7, 0f41200000;     	// 10
+	.loc	21	46	0
+	sub.f32 	%f152, %f2, %f10;
+	sub.f32 	%f153, %f12, %f152;
+	sub.f32 	%f154, %f28, %f28;
+	mul.f32 	%f155, %f26, %f154;
+	sub.f32 	%f156, %f33, %f34;
+	mul.f32 	%f157, %f35, %f153;
+	sub.f32 	%f158, %f157, %f155;
+	mul.f32 	%f159, %f153, %f39;
+	mul.f32 	%f160, %f35, %f156;
+	mul.f32 	%f161, %f26, %f156;
+	sub.f32 	%f162, %f161, %f159;
+	mul.f32 	%f163, %f39, %f154;
+	sub.f32 	%f164, %f163, %f160;
+	mul.f32 	%f165, %f164, %f49;
+	mad.f32 	%f166, %f162, %f51, %f165;
+	mad.f32 	%f167, %f158, %f53, %f166;
+	rcp.approx.f32 	%f168, %f167;
+	mul.f32 	%f169, %f24, %f164;
+	mad.f32 	%f170, %f162, %f32, %f169;
+	mad.f32 	%f171, %f158, %f38, %f170;
+	mul.f32 	%f172, %f168, %f171;
+	.loc	21	48	0
+	mov.s32 	%r74, 0;
+	set.gt.u32.f32 	%r132, %f65, %f172;
+	neg.s32 	%r133, %r132;
+	set.lt.u32.f32 	%r134, %f64, %f172;
+	neg.s32 	%r135, %r134;
+	and.b32 	%r136, %r133, %r135;
+	mov.u32 	%r137, 0;
+	setp.eq.s32 	%p9, %r136, %r137;
+	@%p9 bra 	$Lt_0_18690;
+	.loc	21	54	0
+	mul.f32 	%f173, %f24, %f51;
+	mul.f32 	%f174, %f32, %f53;
+	mul.f32 	%f175, %f32, %f49;
+	sub.f32 	%f69, %f175, %f173;
+	mul.f32 	%f176, %f38, %f51;
+	sub.f32 	%f71, %f176, %f174;
+	mul.f32 	%f177, %f38, %f49;
+	mul.f32 	%f178, %f153, %f71;
+	mul.f32 	%f179, %f24, %f53;
+	sub.f32 	%f75, %f179, %f177;
+	mad.f32 	%f180, %f154, %f75, %f178;
+	mad.f32 	%f181, %f156, %f69, %f180;
+	mul.f32 	%f78, %f181, %f168;
+	mov.f32 	%f182, 0f00000000;   	// 0
+	setp.ge.f32 	%p10, %f78, %f182;
+	@!%p10 bra 	$Lt_0_18690;
+	.loc	21	58	0
+	mul.f32 	%f183, %f26, %f71;
+	mad.f32 	%f184, %f35, %f75, %f183;
+	mad.f32 	%f185, %f39, %f69, %f184;
+	mul.f32 	%f83, %f168, %f185;
+	.loc	21	57	0
+	mul.f32 	%f186, %f167, %f167;
+	add.f32 	%f187, %f181, %f185;
+	mul.f32 	%f188, %f167, %f187;
+	setp.ge.f32 	%p11, %f186, %f188;
+	@!%p11 bra 	$Lt_0_18690;
+	mov.f32 	%f189, 0f00000000;   	// 0
+	setp.ge.f32 	%p12, %f83, %f189;
+	@!%p12 bra 	$Lt_0_18690;
+	.loc	21	61	0
+	mov.f32 	%f7, %f172;
+	.loc	21	62	0
+	mov.f32 	%f5, %f78;
+	.loc	21	63	0
+	mov.f32 	%f6, %f83;
+	.loc	21	64	0
+	mov.s32 	%r74, 1;
+$Lt_0_18690:
+$L_0_12546:
+$Lt_0_16130:
+$Lt_0_15618:
+	.loc	21	136	0
+	mov.u32 	%r138, 0;
+	setp.eq.s32 	%p13, %r74, %r138;
+	@%p13 bra 	$Lt_0_17154;
+	.loc	22	99	0
+	mov.f32 	%f190, %f7;
+	call (%r139), _rt_potential_intersection, (%f190);
+	mov.s32 	%r140, %r139;
+	.loc	21	141	0
+	mov.u32 	%r141, 0;
+	setp.eq.s32 	%p14, %r140, %r141;
+	@%p14 bra 	$Lt_0_17154;
+	.loc	21	143	0
+	mov.f32 	%f191, 0f3f800000;   	// 1
+	sub.f32 	%f192, %f191, %f5;
+	sub.f32 	%f193, %f192, %f6;
+	mul.f32 	%f194, %f31, %f6;
+	mad.f32 	%f195, %f28, %f5, %f194;
+	mad.f32 	%f196, %f193, %f28, %f195;
+	mul.f32 	%f197, %f14, %f6;
+	mad.f32 	%f198, %f12, %f5, %f197;
+	mad.f32 	%f199, %f152, %f193, %f198;
+	st.global.v2.f32 	[position+0], {%f196,%f199};
+	mul.f32 	%f200, %f34, %f6;
+	mad.f32 	%f201, %f33, %f5, %f200;
+	mad.f32 	%f202, %f193, %f34, %f201;
+	st.global.f32 	[position+8], %f202;
+	ld.global.s32 	%r142, [useMaterial];
+	mov.u32 	%r143, 0;
+	setp.eq.s32 	%p15, %r142, %r143;
+	@%p15 bra 	$Lt_0_17922;
+	.loc	22	53	0
+	mov.u32 	%r144, bufNormal;
+	mov.u32 	%r145, %r144;
+	mov.u32 	%r146, 2;
+	mov.u32 	%r147, %r146;
+	mov.u32 	%r148, 12;
+	mov.u32 	%r149, %r148;
+	mov.u32 	%r150, %r14;
+	mov.u32 	%r151, %r13;
+	mov.u32 	%r152, 0;
+	mov.u32 	%r153, %r152;
+	mov.u32 	%r154, 0;
+	mov.u32 	%r155, %r154;
+	call (%r156), _rt_buffer_get, (%r145, %r147, %r149, %r150, %r151, %r153, %r155);
+	mov.s32 	%r100, %r156;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r100;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	147	0
+	ld.global.f32 	%f203, [%r100+0];
+	ld.global.f32 	%f204, [%r100+4];
+	ld.global.f32 	%f205, [%r100+8];
+	.loc	22	53	0
+	mov.u32 	%r157, bufNormal;
+	mov.u32 	%r158, %r157;
+	mov.u32 	%r159, 2;
+	mov.u32 	%r160, %r159;
+	mov.u32 	%r161, 12;
+	mov.u32 	%r162, %r161;
+	mov.u32 	%r163, %r10;
+	mov.u32 	%r164, %r11;
+	mov.u32 	%r165, 0;
+	mov.u32 	%r166, %r165;
+	mov.u32 	%r167, 0;
+	mov.u32 	%r168, %r167;
+	call (%r169), _rt_buffer_get, (%r158, %r160, %r162, %r163, %r164, %r166, %r168);
+	mov.s32 	%r100, %r169;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r100;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	148	0
+	ld.global.f32 	%f206, [%r100+0];
+	ld.global.f32 	%f207, [%r100+4];
+	ld.global.f32 	%f208, [%r100+8];
+	.loc	22	53	0
+	mov.u32 	%r170, bufNormal;
+	mov.u32 	%r171, %r170;
+	mov.u32 	%r172, 2;
+	mov.u32 	%r173, %r172;
+	mov.u32 	%r174, 12;
+	mov.u32 	%r175, %r174;
+	mov.u32 	%r176, %r14;
+	mov.u32 	%r177, %r8;
+	mov.u32 	%r178, 0;
+	mov.u32 	%r179, %r178;
+	mov.u32 	%r180, 0;
+	mov.u32 	%r181, %r180;
+	call (%r182), _rt_buffer_get, (%r171, %r173, %r175, %r176, %r177, %r179, %r181);
+	mov.s32 	%r100, %r182;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r100;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	149	0
+	ld.global.f32 	%f209, [%r100+0];
+	ld.global.f32 	%f210, [%r100+4];
+	ld.global.f32 	%f211, [%r100+8];
+	.loc	21	150	0
+	mul.f32 	%f212, %f206, %f5;
+	mul.f32 	%f213, %f209, %f6;
+	mul.f32 	%f214, %f207, %f5;
+	mul.f32 	%f215, %f210, %f6;
+	mul.f32 	%f216, %f208, %f5;
+	mul.f32 	%f217, %f211, %f6;
+	add.f32 	%f218, %f212, %f213;
+	add.f32 	%f219, %f214, %f215;
+	add.f32 	%f220, %f216, %f217;
+	mul.f32 	%f221, %f193, %f203;
+	mul.f32 	%f222, %f193, %f204;
+	mul.f32 	%f223, %f193, %f205;
+	add.f32 	%f224, %f218, %f221;
+	add.f32 	%f225, %f219, %f222;
+	add.f32 	%f226, %f220, %f223;
+	mul.f32 	%f227, %f225, %f225;
+	mad.f32 	%f228, %f224, %f224, %f227;
+	mad.f32 	%f229, %f226, %f226, %f228;
+	sqrt.approx.f32 	%f230, %f229;
+	rcp.approx.f32 	%f231, %f230;
+	mul.f32 	%f130, %f224, %f231;
+	mul.f32 	%f131, %f225, %f231;
+	st.global.v2.f32 	[shading_normal+0], {%f130,%f131};
+	mul.f32 	%f132, %f226, %f231;
+	st.global.f32 	[shading_normal+8], %f132;
+	ld.global.v2.u32 	{%r183,%r184}, [mapSize+0];
+	.loc	21	156	0
+	cvt.rn.f32.u32 	%f232, %r183;
+	cvt.rn.f32.u32 	%f233, %r14;
+	div.approx.f32 	%f234, %f233, %f232;
+	mul.f32 	%f235, %f234, %f6;
+	cvt.rn.f32.u32 	%f236, %r9;
+	div.approx.f32 	%f237, %f236, %f232;
+	mad.f32 	%f238, %f5, %f237, %f235;
+	mad.f32 	%f239, %f193, %f234, %f238;
+	cvt.rn.f32.u32 	%f240, %r184;
+	cvt.rn.f32.u32 	%f241, %r7;
+	div.approx.f32 	%f242, %f241, %f240;
+	mul.f32 	%f243, %f242, %f6;
+	mad.f32 	%f244, %f242, %f5, %f243;
+	cvt.rn.f32.u32 	%f245, %r13;
+	div.approx.f32 	%f246, %f245, %f240;
+	mad.f32 	%f247, %f246, %f193, %f244;
+	st.global.v2.f32 	[texcoord+0], {%f239,%f247};
+	bra.uni 	$Lt_0_17666;
+$Lt_0_17922:
+	.loc	21	161	0
+	mov.f32 	%f248, 0f00000000;   	// 0
+	mov.f32 	%f249, 0f00000000;   	// 0
+	st.global.v2.f32 	[texcoord+0], {%f248,%f249};
+	.loc	21	162	0
+	mov.f32 	%f130, 0f00000000;   	// 0
+	mov.f32 	%f131, 0fbf800000;   	// -1
+	st.global.v2.f32 	[shading_normal+0], {%f130,%f131};
+	mov.f32 	%f132, 0f00000000;   	// 0
+	st.global.f32 	[shading_normal+8], %f132;
+$Lt_0_17666:
+	mov.f32 	%f250, 0f00000000;   	// 0
+	st.global.f32 	[texcoord+8], %f250;
+	st.global.v2.f32 	[geometric_normal+0], {%f130,%f131};
+	.loc	21	164	0
+	st.global.f32 	[geometric_normal+8], %f132;
+	.loc	22	109	0
+	mov.u32 	%r185, 0;
+	mov.u32 	%r186, %r185;
+	call (%r187), _rt_report_intersection, (%r186);
+$Lt_0_17154:
+$Lt_0_16642:
+$Lt_0_14082:
+	.loc	21	169	0
+	exit;
+$LDWend__Z16TerrainIntersecti:
+	} // _Z16TerrainIntersecti
+
+	.entry _Z13TerrainBoundsiPf (
+		.param .s32 __cudaparm__Z13TerrainBoundsiPf_primIdx,
+		.param .u32 __cudaparm__Z13TerrainBoundsiPf_result)
+	{
+	.reg .u32 %ra1;
+	.reg .u32 %r<73>;
+	.reg .f32 %f<31>;
+	.loc	21	171	0
+$LDWbegin__Z13TerrainBoundsiPf:
+	.loc	21	173	0
+	ld.global.u32 	%r1, [mapSize+0];
+	ld.param.s32 	%r2, [__cudaparm__Z13TerrainBoundsiPf_primIdx];
+	rem.u32 	%r3, %r2, %r1;
+	mov.s32 	%r4, %r3;
+	div.u32 	%r5, %r2, %r1;
+	mov.s32 	%r6, %r5;
+	.loc	22	53	0
+	mov.s32 	%r7, %r6;
+	mov.s32 	%r8, %r4;
+	mov.u32 	%r9, bufHeight;
+	mov.u32 	%r10, %r9;
+	mov.u32 	%r11, 2;
+	mov.u32 	%r12, %r11;
+	mov.u32 	%r13, 4;
+	mov.u32 	%r14, %r13;
+	mov.u32 	%r15, %r8;
+	mov.u32 	%r16, %r7;
+	mov.u32 	%r17, 0;
+	mov.u32 	%r18, %r17;
+	mov.u32 	%r19, 0;
+	mov.u32 	%r20, %r19;
+	call (%r21), _rt_buffer_get, (%r10, %r12, %r14, %r15, %r16, %r18, %r20);
+	mov.s32 	%r22, %r21;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r22;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	178	0
+	ld.global.f32 	%f1, [%r22+0];
+	.loc	22	53	0
+	add.u32 	%r23, %r5, 1;
+	mov.u32 	%r24, bufHeight;
+	mov.u32 	%r25, %r24;
+	mov.u32 	%r26, 2;
+	mov.u32 	%r27, %r26;
+	mov.u32 	%r28, 4;
+	mov.u32 	%r29, %r28;
+	mov.u32 	%r30, %r8;
+	mov.u32 	%r31, %r23;
+	mov.u32 	%r32, 0;
+	mov.u32 	%r33, %r32;
+	mov.u32 	%r34, 0;
+	mov.u32 	%r35, %r34;
+	call (%r36), _rt_buffer_get, (%r25, %r27, %r29, %r30, %r31, %r33, %r35);
+	mov.s32 	%r37, %r36;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r37;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	178	0
+	ld.global.f32 	%f2, [%r37+0];
+	.loc	22	53	0
+	add.u32 	%r38, %r3, 1;
+	mov.s32 	%r39, %r38;
+	mov.u32 	%r40, bufHeight;
+	mov.u32 	%r41, %r40;
+	mov.u32 	%r42, 2;
+	mov.u32 	%r43, %r42;
+	mov.u32 	%r44, 4;
+	mov.u32 	%r45, %r44;
+	mov.u32 	%r46, %r39;
+	mov.u32 	%r47, %r23;
+	mov.u32 	%r48, 0;
+	mov.u32 	%r49, %r48;
+	mov.u32 	%r50, 0;
+	mov.u32 	%r51, %r50;
+	call (%r52), _rt_buffer_get, (%r41, %r43, %r45, %r46, %r47, %r49, %r51);
+	mov.s32 	%r53, %r52;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r53;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	178	0
+	ld.global.f32 	%f3, [%r53+0];
+	.loc	22	53	0
+	mov.u32 	%r54, bufHeight;
+	mov.u32 	%r55, %r54;
+	mov.u32 	%r56, 2;
+	mov.u32 	%r57, %r56;
+	mov.u32 	%r58, 4;
+	mov.u32 	%r59, %r58;
+	mov.u32 	%r60, %r39;
+	mov.u32 	%r61, %r7;
+	mov.u32 	%r62, 0;
+	mov.u32 	%r63, %r62;
+	mov.u32 	%r64, 0;
+	mov.u32 	%r65, %r64;
+	call (%r66), _rt_buffer_get, (%r55, %r57, %r59, %r60, %r61, %r63, %r65);
+	mov.s32 	%r67, %r66;
+	.loc	22	62	0
+	mov.s32 	%ra1, %r67;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	21	178	0
+	ld.global.f32 	%f4, [%r67+0];
+	.loc	21	186	0
+	cvt.rn.f32.s32 	%f5, %r3;
+	ld.global.v2.f32 	{%f6,%f7}, [gridSize+0];
+	mul.f32 	%f8, %f5, %f6;
+	ld.param.u32 	%r68, [__cudaparm__Z13TerrainBoundsiPf_result];
+	st.global.f32 	[%r68+0], %f8;
+	.loc	21	187	0
+	min.f32 	%f9, %f2, %f1;
+	min.f32 	%f10, %f4, %f3;
+	min.f32 	%f11, %f9, %f10;
+	st.global.f32 	[%r68+4], %f11;
+	.loc	21	188	0
+	mov.s32 	%r69, -1;
+	sub.s32 	%r70, %r69, %r5;
+	cvt.rn.f32.s32 	%f12, %r70;
+	mul.f32 	%f13, %f12, %f7;
+	st.global.f32 	[%r68+8], %f13;
+	.loc	21	189	0
+	cvt.rn.f32.s32 	%f14, %r38;
+	mul.f32 	%f15, %f14, %f6;
+	st.global.f32 	[%r68+12], %f15;
+	.loc	21	190	0
+	max.f32 	%f16, %f2, %f1;
+	max.f32 	%f17, %f4, %f3;
+	max.f32 	%f18, %f16, %f17;
+	st.global.f32 	[%r68+16], %f18;
+	.loc	21	191	0
+	neg.s32 	%r71, %r5;
+	cvt.rn.f32.s32 	%f19, %r71;
+	mul.f32 	%f20, %f19, %f7;
+	st.global.f32 	[%r68+20], %f20;
+	ld.global.v4.f32 	{%f21,%f22,%f23,_}, [centerPos+0];
+	.loc	21	192	0
+	sub.f32 	%f24, %f8, %f21;
+	st.global.f32 	[%r68+0], %f24;
+	sub.f32 	%f25, %f11, %f22;
+	st.global.f32 	[%r68+4], %f25;
+	sub.f32 	%f26, %f13, %f23;
+	st.global.f32 	[%r68+8], %f26;
+	.loc	21	193	0
+	sub.f32 	%f27, %f15, %f21;
+	st.global.f32 	[%r68+12], %f27;
+	sub.f32 	%f28, %f18, %f22;
+	st.global.f32 	[%r68+16], %f28;
+	sub.f32 	%f29, %f20, %f23;
+	st.global.f32 	[%r68+20], %f29;
+	.loc	21	194	0
+	exit;
+$LDWend__Z13TerrainBoundsiPf:
+	} // _Z13TerrainBoundsiPf
+
+	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
+	{
+	.loc	22	34	0
+$LDWbegin__ZN5optix16rt_undefined_useEi:
+	.loc	22	36	0
+	ret;
+$LDWend__ZN5optix16rt_undefined_useEi:
+	} // _ZN5optix16rt_undefined_useEi
+	.global .u32 _ZN21rti_internal_register20reg_bitness_detectorE;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail0E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail1E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail2E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail3E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail4E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail5E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail6E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail7E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail8E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail9E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail0E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail1E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail2E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail3E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail4E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail5E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail6E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail7E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail8E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail9E;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_xE;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_yE;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_zE;
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo11useMaterialE[8] = {82,97,121,0,4,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo8positionE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo8texcoordE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo16geometric_normalE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo14shading_normalE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo3rayE[8] = {82,97,121,0,36,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo7mapSizeE[8] = {82,97,121,0,8,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo8gridSizeE[8] = {82,97,121,0,8,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo9centerPosE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 1 .b8 _ZN21rti_internal_typename11useMaterialE[4] = {0x69,0x6e,0x74,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename8positionE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename8texcoordE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename16geometric_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename14shading_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename3rayE[11] = {0x6f,0x70,0x74,0x69,0x78,0x3a,0x3a,0x52,0x61,0x79,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename7mapSizeE[6] = {0x75,0x69,0x6e,0x74,0x32,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename8gridSizeE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x32,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename9centerPosE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic11useMaterialE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic8positionE[19] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x70,0x6f,0x73,0x69,0x74,0x69,0x6f,0x6e,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic8texcoordE[19] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x74,0x65,0x78,0x63,0x6f,0x6f,0x72,0x64,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic16geometric_normalE[27] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x67,0x65,0x6f,0x6d,0x65,0x74,0x72,0x69,0x63,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic14shading_normalE[25] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x73,0x68,0x61,0x64,0x69,0x6e,0x67,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic3rayE[13] = {0x72,0x74,0x43,0x75,0x72,0x72,0x65,0x6e,0x74,0x52,0x61,0x79,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic7mapSizeE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic8gridSizeE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic9centerPosE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation11useMaterialE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation8positionE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation8texcoordE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation16geometric_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation14shading_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation3rayE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation7mapSizeE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation8gridSizeE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation9centerPosE[1] = {0x0};
+

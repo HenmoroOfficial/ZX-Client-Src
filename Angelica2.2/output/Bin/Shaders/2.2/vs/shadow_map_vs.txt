@@ -1,0 +1,83 @@
+; DESCRIPTION:
+; Vertex shader used to caculate shadowmap
+;
+; CREATED BY: doujianwei, 2012/4/20
+
+
+; vertex decl
+;------------------------------------------------------------------------------
+; v0 	  = position in world space
+; v1	  = normal in world space
+;------------------------------------------------------------------------------
+
+; const buffer
+;------------------------------------------------------------------------------
+; c0 	  = {1.0f, 0.0f, 0.5f, W}; W = if render shadow ? 0.0 : 1.0 
+; c1-c4	  = view matrix * projection matrix
+; c5-c8	  = light_view_matrix * light_projection_matrix * light_view_scale
+; c9	  = light direction
+; c10	  = diffuse color
+; c11	  = reverse ambient color  = A1
+; c12	  = vertical ambient color = A2
+; c13     = control color = if render shadow ? (1.0,1.0,1.0,1.0) : (0.0,0.0,0.0,0.0) = A3
+;------------------------------------------------------------------------------
+
+; output buffer
+;------------------------------------------------------------------------------
+; oPos	= Output position
+; oD0	= Diffuse * max(0,normal_dot_light(-N*L))
+; oT0	= shadow map projected texture uv
+; oT1	= shadow map projected depth 
+; oT2   = max(0,-normal_dot_light(-N*L)) * A1 * c0.z
+; oT3   = (1.0 - abs(normal_dot_light(-N*L))) * A2 * c0.z * c0.w + A3
+;------------------------------------------------------------------------------
+
+vs.1.1
+
+dcl_position v0
+dcl_normal   v1
+
+; Transfrom position from world space to cuboid space and output it
+m4x4 oPos, v0, c1
+
+; Calculate projected shadow map uv
+m4x4 r1, v0, c5
+mov oT0, r1
+mov oT1, r1.zzzw
+
+; normalize normal
+dp3 r1.w, v1, v1
+rsq r1.w, r1.w
+mul r1, v1, r1.w
+
+; normal_dot_light(-N*L)
+mov r2, c0.yyyy			
+dp3 r2.x, r1, -c9     		
+
+mov r1.x,-r2.x			
+max r1.x,r1.x,c0.y		
+
+min r1.y,r2.x,-r2.x		 
+max r1.y,r2.x,-r2.x		
+add r1.y,c0.x,-r1.y		
+
+mul r3.x,r1.x,c0.z
+mul oT2,r3.x,c11			
+	
+mul r1.y,r1.y,c0.z
+mul r1.y,r1.y,c0.w
+mul r3,r1.y,c12			
+add oT3,r3,c13				
+		
+mov oT4.xyz,r2.xxx			
+                                                    
+lit r2,r2
+
+mul r2.y,r2.y,c0.z
+mul r0.rgb,r2.y,c10.rgb  	
+mov r0.a, c10.a
+min oD0, r0, c0.x 
+
+mov oD1, c0.yyyx
+
+mov oFog, c0.x

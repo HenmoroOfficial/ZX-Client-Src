@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A3DPlatform", "A3DPlatform.vcproj", "{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugRelease|Win32 = DebugRelease|Win32
+		Release|Win32 = Release|Win32
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Release|Win32 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Debug|Win32.Build.0 = Debug|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.DebugRelease|Win32.ActiveCfg = DebugRelease|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.DebugRelease|Win32.Build.0 = DebugRelease|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Release|Win32.ActiveCfg = Release|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Release|Win32.Build.0 = Release|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{CED5CF55-DF0C-4865-90AB-CF2EC25A2510}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

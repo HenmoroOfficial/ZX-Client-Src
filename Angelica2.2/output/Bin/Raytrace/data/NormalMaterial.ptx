@@ -1,0 +1,292 @@
+	.version 1.4
+	.target sm_10, map_f64_to_f32
+	// compiled with D:\CUDA4.1\v4.1\bin/../open64/lib//be.exe
+	// nvopencc 4.1 built on 2012-01-13
+
+	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
+
+	//-----------------------------------------------------------
+	// Compiling C:/DOCUME~1/DevUser/LOCALS~1/Temp/IB_CPU_0/tmpxft_00001698_00000000-11_NormalMaterial.cpp3.i (C:/DOCUME~1/DevUser/LOCALS~1/Temp/IB_CPU_0/ccBI#.a05832)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_10, Endian:little, Pointer Size:32
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m0	(Report errors only)
+	//-----------------------------------------------------------
+
+	.file	1	"C:/DOCUME~1/DevUser/LOCALS~1/Temp/IB_CPU_0/tmpxft_00001698_00000000-10_NormalMaterial.cudafe2.gpu"
+	.file	2	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\internal\optix_defines.h"
+	.file	3	"D:\code\RayTraceLightMap\RayTraceLightMap\Include\OptixCommon.h"
+	.file	4	"C:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE\crtdefs.h"
+	.file	5	"D:\CUDA4.1\v4.1\include\crt/device_runtime.h"
+	.file	6	"D:\CUDA4.1\v4.1\include\host_defines.h"
+	.file	7	"D:\CUDA4.1\v4.1\include\builtin_types.h"
+	.file	8	"d:\cuda4.1\v4.1\include\device_types.h"
+	.file	9	"d:\cuda4.1\v4.1\include\host_defines.h"
+	.file	10	"d:\cuda4.1\v4.1\include\driver_types.h"
+	.file	11	"d:\cuda4.1\v4.1\include\surface_types.h"
+	.file	12	"d:\cuda4.1\v4.1\include\texture_types.h"
+	.file	13	"d:\cuda4.1\v4.1\include\vector_types.h"
+	.file	14	"d:\cuda4.1\v4.1\include\builtin_types.h"
+	.file	15	"D:\CUDA4.1\v4.1\include\device_launch_parameters.h"
+	.file	16	"d:\cuda4.1\v4.1\include\crt\storage_class.h"
+	.file	17	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\optixu/optixu_math.h"
+	.file	18	"D:/code/RayTraceLightMap/RayTraceLightMap/Cuda/NormalMaterial.cu"
+	.file	19	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\internal/optix_internal.h"
+	.file	20	"d:\program files\nvidia corporation\optix sdk 2.5.0\include\optix_device.h"
+	.file	21	"D:\CUDA4.1\v4.1\include\common_functions.h"
+	.file	22	"d:\cuda4.1\v4.1\include\math_functions.h"
+	.file	23	"d:\cuda4.1\v4.1\include\math_constants.h"
+	.file	24	"d:\cuda4.1\v4.1\include\device_functions.h"
+	.file	25	"d:\cuda4.1\v4.1\include\sm_11_atomic_functions.h"
+	.file	26	"d:\cuda4.1\v4.1\include\sm_12_atomic_functions.h"
+	.file	27	"d:\cuda4.1\v4.1\include\sm_13_double_functions.h"
+	.file	28	"d:\cuda4.1\v4.1\include\sm_20_atomic_functions.h"
+	.file	29	"d:\cuda4.1\v4.1\include\sm_20_intrinsics.h"
+	.file	30	"d:\cuda4.1\v4.1\include\surface_functions.h"
+	.file	31	"d:\cuda4.1\v4.1\include\texture_fetch_functions.h"
+	.file	32	"d:\cuda4.1\v4.1\include\math_functions_dbl_ptx1.h"
+
+	.global .u32 diffuseColor;
+	.global .s32 useMaterial;
+	.tex .u32 texSampler;
+	.global .align 16 .b8 rcUV[16];
+	.global .align 16 .b8 shading_normal[12];
+	.global .align 16 .b8 position[12];
+	.global .align 8 .b8 texcoord[12];
+	.global .align 16 .b8 prd_radiance[28];
+
+	.entry _Z10ClosestHitv
+	{
+	.reg .u32 %ra1;
+	.reg .u32 %r<46>;
+	.reg .f32 %f<39>;
+	.reg .pred %p<6>;
+	.loc	18	31	0
+$LDWbegin__Z10ClosestHitv:
+	.loc	19	168	0
+	mov.s32 	%r1, 7937;
+	mov.u32 	%r2, %r1;
+	ld.global.v4.f32 	{%f1,%f2,%f3,_}, [shading_normal+0];
+	mov.f32 	%f4, %f1;
+	mov.f32 	%f5, %f2;
+	mov.f32 	%f6, %f3;
+	mov.f32 	%f7, 0f00000000;     	// 0
+	mov.f32 	%f8, %f7;
+	call (%f9, %f10, %f11, %f12), _rt_transform_tuple, (%r2, %f4, %f5, %f6, %f8);
+	mov.f32 	%f13, %f9;
+	mov.f32 	%f14, %f10;
+	mov.f32 	%f15, %f11;
+	mov.f32 	%f16, %f12;
+	.loc	19	172	0
+	cvt.rzi.s32.f32 	%ra1, %f13;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	19	173	0
+	cvt.rzi.s32.f32 	%ra1, %f14;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	19	174	0
+	cvt.rzi.s32.f32 	%ra1, %f15;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	19	175	0
+	cvt.rzi.s32.f32 	%ra1, %f16;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	18	36	0
+	mov.u32 	%r3, 0;
+	mov.u32 	%r4, 0;
+	mov.u32 	%r5, 0;
+	mov.u32 	%r6, 0;
+	ld.global.s32 	%r7, [useMaterial];
+	mov.u32 	%r8, 0;
+	setp.eq.s32 	%p1, %r7, %r8;
+	@%p1 bra 	$Lt_0_1026;
+	ld.global.v2.f32 	{%f17,%f18}, [texcoord+0];
+	ld.global.v2.f32 	{%f19,%f20}, [rcUV+0];
+	ld.global.v2.f32 	{%f21,%f22}, [rcUV+8];
+	.loc	18	40	0
+	cvt.rmi.f32.f32 	%f23, %f17;
+	sub.f32 	%f24, %f17, %f23;
+	mad.f32 	%f25, %f21, %f24, %f19;
+	mov.f32 	%f26, %f25;
+	cvt.rmi.f32.f32 	%f27, %f18;
+	sub.f32 	%f28, %f18, %f27;
+	mad.f32 	%f29, %f22, %f28, %f20;
+	mov.f32 	%f30, %f29;
+	mov.f32 	%f31, 0f00000000;    	// 0
+	mov.f32 	%f32, %f31;
+	mov.f32 	%f33, 0f00000000;    	// 0
+	mov.f32 	%f34, %f33;
+	tex.2d.v4.u32.f32 {%r9,%r10,%r11,%r12},[texSampler,{%f26,%f30,%f32,%f34}];
+	mov.s32 	%r13, %r9;
+	mov.s32 	%r14, %r10;
+	mov.s32 	%r15, %r11;
+	mov.s32 	%r16, %r12;
+	cvt.u8.u32 	%r17, %r16;
+	mov.s32 	%r6, %r17;
+	.loc	18	42	0
+	ld.global.u8 	%r18, [diffuseColor];
+	cvt.u8.u32 	%r19, %r13;
+	mul.lo.s32 	%r20, %r17, %r19;
+	mul.lo.s32 	%r21, %r18, %r20;
+	mov.s32 	%r22, -2130607613;
+	mov.s32 	%r23, 0;
+	setp.lt.s32 	%p2, %r21, %r23;
+	abs.s32 	%r24, %r21;
+	mul.hi.u32 	%r25, %r24, %r22;
+	shr.s32 	%r26, %r25, 15;
+	@%p2 sub.s32 	%r26, %r23, %r26;
+	mov.s32 	%r3, %r26;
+	.loc	18	43	0
+	ld.global.u8 	%r27, [diffuseColor+1];
+	cvt.u8.u32 	%r28, %r14;
+	mul.lo.s32 	%r29, %r17, %r28;
+	mul.lo.s32 	%r30, %r27, %r29;
+	mov.s32 	%r31, -2130607613;
+	mov.s32 	%r32, 0;
+	setp.lt.s32 	%p3, %r30, %r32;
+	abs.s32 	%r33, %r30;
+	mul.hi.u32 	%r34, %r33, %r31;
+	shr.s32 	%r35, %r34, 15;
+	@%p3 sub.s32 	%r35, %r32, %r35;
+	mov.s32 	%r4, %r35;
+	.loc	18	44	0
+	ld.global.u8 	%r36, [diffuseColor+2];
+	cvt.u8.u32 	%r37, %r15;
+	mul.lo.s32 	%r38, %r17, %r37;
+	mul.lo.s32 	%r39, %r36, %r38;
+	mov.s32 	%r40, -2130607613;
+	mov.s32 	%r41, 0;
+	setp.lt.s32 	%p4, %r39, %r41;
+	abs.s32 	%r42, %r39;
+	mul.hi.u32 	%r43, %r42, %r40;
+	shr.s32 	%r44, %r43, 15;
+	@%p4 sub.s32 	%r44, %r41, %r44;
+	mov.s32 	%r5, %r44;
+$Lt_0_1026:
+	ld.global.v4.f32 	{%f35,%f36,%f37,_}, [position+0];
+	st.global.v2.f32 	[prd_radiance+0], {%f35,%f36};
+	.loc	18	46	0
+	st.global.f32 	[prd_radiance+8], %f37;
+	.loc	18	47	0
+	st.global.f32 	[prd_radiance+12], %f13;
+	st.global.v2.f32 	[prd_radiance+16], {%f14,%f15};
+	st.global.v4.u8 	[prd_radiance+24], {%r3,%r4,%r5,%r6};
+	.loc	18	50	0
+	exit;
+$LDWend__Z10ClosestHitv:
+	} // _Z10ClosestHitv
+	.global .align 1 .b8 prd_shadow[1];
+
+	.entry _Z6AnyHitv
+	{
+	.reg .u16 %rh<3>;
+	.reg .u32 %r<9>;
+	.reg .f32 %f<20>;
+	.reg .pred %p<3>;
+	.loc	18	52	0
+$LDWbegin__Z6AnyHitv:
+	ld.global.v2.f32 	{%f1,%f2}, [texcoord+0];
+	ld.global.v2.f32 	{%f3,%f4}, [rcUV+0];
+	ld.global.v2.f32 	{%f5,%f6}, [rcUV+8];
+	.loc	18	63	0
+	cvt.rmi.f32.f32 	%f7, %f1;
+	sub.f32 	%f8, %f1, %f7;
+	mad.f32 	%f9, %f5, %f8, %f3;
+	mov.f32 	%f10, %f9;
+	cvt.rmi.f32.f32 	%f11, %f2;
+	sub.f32 	%f12, %f2, %f11;
+	mad.f32 	%f13, %f6, %f12, %f4;
+	mov.f32 	%f14, %f13;
+	mov.f32 	%f15, 0f00000000;    	// 0
+	mov.f32 	%f16, %f15;
+	mov.f32 	%f17, 0f00000000;    	// 0
+	mov.f32 	%f18, %f17;
+	tex.2d.v4.u32.f32 {%r1,%r2,%r3,%r4},[texSampler,{%f10,%f14,%f16,%f18}];
+	mov.s32 	%r5, %r4;
+	cvt.s8.s32 	%r6, %r5;
+	mov.u32 	%r7, 0;
+	setp.lt.s32 	%p1, %r6, %r7;
+	@%p1 bra 	$Lt_1_1282;
+	.loc	19	118	0
+	call _rt_ignore_intersection, ();
+	bra.uni 	$Lt_1_1026;
+$Lt_1_1282:
+	.loc	18	70	0
+	mov.u16 	%rh1, 0;
+	st.global.u8 	[prd_shadow+0], %rh1;
+	.loc	19	123	0
+	call _rt_terminate_ray, ();
+$Lt_1_1026:
+	.loc	18	74	0
+	exit;
+$LDWend__Z6AnyHitv:
+	} // _Z6AnyHitv
+
+	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
+	{
+	.loc	19	34	0
+$LDWbegin__ZN5optix16rt_undefined_useEi:
+	.loc	19	36	0
+	ret;
+$LDWend__ZN5optix16rt_undefined_useEi:
+	} // _ZN5optix16rt_undefined_useEi
+	.global .u32 _ZN21rti_internal_register20reg_bitness_detectorE;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail0E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail1E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail2E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail3E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail4E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail5E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail6E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail7E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail8E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail9E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail0E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail1E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail2E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail3E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail4E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail5E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail6E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail7E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail8E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail9E;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_xE;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_yE;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_zE;
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo12diffuseColorE[8] = {82,97,121,0,4,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo11useMaterialE[8] = {82,97,121,0,4,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo4rcUVE[8] = {82,97,121,0,16,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo14shading_normalE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo8positionE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo8texcoordE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo12prd_radianceE[8] = {82,97,121,0,28,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo10prd_shadowE[8] = {82,97,121,0,1,0,0,0};
+	.global .align 1 .b8 _ZN21rti_internal_typename12diffuseColorE[5] = {0x75,0x69,0x6e,0x74,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename11useMaterialE[4] = {0x69,0x6e,0x74,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename4rcUVE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x34,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename14shading_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename8positionE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename8texcoordE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename12prd_radianceE[11] = {0x50,0x65,0x72,0x52,0x61,0x79,0x44,0x61,0x74,0x61,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename10prd_shadowE[7] = {0x75,0x63,0x68,0x61,0x72,0x31,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic12diffuseColorE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic11useMaterialE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic4rcUVE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic14shading_normalE[25] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x73,0x68,0x61,0x64,0x69,0x6e,0x67,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic8positionE[19] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x70,0x6f,0x73,0x69,0x74,0x69,0x6f,0x6e,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic8texcoordE[19] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x74,0x65,0x78,0x63,0x6f,0x6f,0x72,0x64,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic12prd_radianceE[10] = {0x72,0x74,0x50,0x61,0x79,0x6c,0x6f,0x61,0x64,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic10prd_shadowE[10] = {0x72,0x74,0x50,0x61,0x79,0x6c,0x6f,0x61,0x64,0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation12diffuseColorE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation11useMaterialE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation4rcUVE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation14shading_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation8positionE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation8texcoordE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation12prd_radianceE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation10prd_shadowE[1] = {0x0};
+

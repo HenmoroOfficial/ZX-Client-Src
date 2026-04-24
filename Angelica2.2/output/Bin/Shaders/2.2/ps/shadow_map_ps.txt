@@ -1,0 +1,66 @@
+; DESCRIPTION:
+; Pixel shader used to caculate shadowmap
+; in shadow:     normal_dot_light(-N*L) >= 0, color = vertical ambient color = A2
+;	         normal_dot_light(-N*L) <  0, color = -normal_dot_light(-N*L) * A1
+; not in shadow: now normal_dot_light(-N*L) must be >= 0
+;		 color = Diffuse * normal_dot_light(-N*L) + (1.0 - normal_dot_light(-N*L)) * A2
+;
+; CREATED BY: doujianwei, 2012/4/20
+
+; input buffer
+;------------------------------------------------------------------------------
+; t0  	= projected shadow map
+; t1 	= projected shadow map texture coord's zzzw
+; t2   	= backface color    
+; t3    = normal color  
+; t4.x  = normal_dot_light(-N*L)
+; t4.y  = normal_dot_light(-N*L)
+; t4.z  = normal_dot_light(-N*L)
+; v0    = Diffuse * max(0,normal_dot_light(-N*L))  
+;------------------------------------------------------------------------------
+
+ps.1.4
+
+def c0,  1.0f,  0.0f,  0.0f,  1.0f
+def c1,  0.0f,  0.0f,  0.0f,  0.0f
+def c2,  1.0f,  1.0f,  1.0f,  1.0f 
+def c3, -1.0f, -1.0f, -1.0f, -1.0f
+
+texld r0, t0_dw.xyw	 ; shadowmap depth from texture
+texcrd r1.xy, t1_dw.xyw	 ; shadowmap depth
+
+texcrd r2.rgb,t2.xyz	 ; backface color   
+texcrd r3.rgb,t3.xyz	 ; normal color  
+texcrd r4.rgb,t4.xyz	 ; value
+
+sub r0, r0, r1.r	 
+	
+mov r4.a,c0.x		 
+cmp r5,r4,c2,c3		 
+			 
+mov r0.a,c0.x
+mul r0,r0,r5		  
+			  
+cmp r5,r5,c2,c1		 
+add r5.y,c0.x,-r5.x	 
+
+phase
+
+;in shadow & normal_dot_light(-N*L) > 0: kill
+texkill r0
+
+mov r3.a,c0.x		
+add r3,r3,v0		 	 
+
+mov r2.a,c0.x		 
+mul r2,r5.y,r2		 
+
+mad r2,r5.x,r3,r2			
+	 
+sub r3,r2,c2		 
+cmp r0,r3,c2,r2	
+
+
+
+
+
