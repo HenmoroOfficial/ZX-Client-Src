@@ -1,0 +1,16 @@
+string entrynames = "ps_2_0 ps_main";
+
+sampler 		sampIntZ 				: register(s0);
+float zn;
+float zf;
+
+
+float4 ps_main(in float2 texcoord : TEXCOORD0) : COLOR0
+{
+	float zr = tex2D(sampIntZ, texcoord).r;      //Z buffer读取的结果. 非线性.
+	float dis = zf - zn;
+	//float z = (zn * zf) / ( dis * (zf / dis - zr)) / zf;	//转换为线性
+	float z = zn / (zf -  dis * zr);	//转换为线性
+	return float4(z,z,z,z);
+}
+

@@ -1,0 +1,17 @@
+SCC = This is a Source Code Control file
+
+[GfxCommon2.1.sln]
+SCC_Aux_Path = "\\elementserver\gameserver_mmorpg"
+SCC_Project_Name = "$/Common/GfxCommon2", UHCCAAAA
+
+[GfxCommon2.1.vcproj]
+SCC_Aux_Path = "\\elementserver\gameserver_mmorpg"
+SCC_Project_Name = "$/Common/GfxCommon2", UHCCAAAA
+
+[GfxCommon2.2.vcproj]
+SCC_Aux_Path = "\\elementserver\gameserver_mmorpg"
+SCC_Project_Name = "$/Common/GfxCommon2", UHCCAAAA
+
+[GfxCommon2.2_NoAudio.vcproj]
+SCC_Aux_Path = "\\elementserver\gameserver_mmorpg"
+SCC_Project_Name = "$/Common/GfxCommon2", UHCCAAAA

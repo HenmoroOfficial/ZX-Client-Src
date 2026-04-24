@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[shaders.sln]
+SCC_Aux_Path = "\\elementserver\gameserver_mmorpg"
+SCC_Project_Name = "$/Projects2.2/Angelica2.2/Bin/shaders", PCGCAAAA
+
+[shaders.vcproj]
+SCC_Aux_Path = "\\elementserver\GameServer_MMORPG\"
+SCC_Project_Name = "$/Projects2.2/Angelica2.2/Bin/shaders", PCGCAAAA
