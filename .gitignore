@@ -82,3 +82,11 @@ Angelica2.2/**/*.idb
 Angelica2.2/**/*.tlog
 Angelica2.2/**/*.tmp
 Angelica2.2/**/*.cache
+
+# Keep the ZElement payload in version control as well. Most of this tree is
+# part of the imported client drop, not disposable local output.
+!ZElement/
+!ZElement/**
+
+# GitHub rejects files over 100 MB. Keep this local Visual Studio cache out.
+ZElement/ZElement2.2.ncb
