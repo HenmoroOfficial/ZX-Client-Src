@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int gs_id;
+		int map_id;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGGETFIELD };
+	public:
+		InstancingGetField() { type = PROTOCOL_INSTANCINGGETFIELD; }
+		InstancingGetField(void*) : Protocol(PROTOCOL_INSTANCINGGETFIELD) { }
+		InstancingGetField (int l_roleid,int l_gs_id,int l_map_id,
+			unsigned int l_localsid)
+			 : roleid(l_roleid),gs_id(l_gs_id),map_id(l_map_id)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGGETFIELD;
+		}
+
+		InstancingGetField(const InstancingGetField &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),gs_id(rhs.gs_id),map_id(rhs.map_id)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingGetField(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << gs_id;
+			os << map_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> gs_id;
+			os >> map_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

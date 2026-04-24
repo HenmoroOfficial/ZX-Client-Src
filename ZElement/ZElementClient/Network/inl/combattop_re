@@ -1,0 +1,50 @@
+	public:
+		int mapid;
+		int attacker;
+		int defender;
+		std::vector<CombatRecord> list;
+		int handle;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_COMBATTOP_RE };
+	public:
+		CombatTop_Re() { type = PROTOCOL_COMBATTOP_RE; }
+		CombatTop_Re(void*) : Protocol(PROTOCOL_COMBATTOP_RE) { }
+		CombatTop_Re (int l_mapid,int l_attacker,int l_defender,
+			const std::vector<CombatRecord>& l_list,int l_handle = 0,unsigned int l_localsid = 0)
+			 : mapid(l_mapid),attacker(l_attacker),defender(l_defender)
+			,list(l_list),handle(l_handle),localsid(l_localsid)
+		{
+			type = PROTOCOL_COMBATTOP_RE;
+		}
+
+		CombatTop_Re(const CombatTop_Re &rhs)
+			: Protocol(rhs),mapid(rhs.mapid),attacker(rhs.attacker),defender(rhs.defender)
+			,list(rhs.list),handle(rhs.handle),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CombatTop_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << mapid;
+			os << attacker;
+			os << defender;
+			os << list;
+			os << handle;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> mapid;
+			os >> attacker;
+			os >> defender;
+			os >> list;
+			os >> handle;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

@@ -1,0 +1,47 @@
+	public:
+		int category;
+		std::vector<GConsignListNode> nodes;
+		int page;
+		unsigned int localsid;
+		int retcode;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNLISTALL_RE };
+	public:
+		ConsignListAll_Re() { type = PROTOCOL_CONSIGNLISTALL_RE; }
+		ConsignListAll_Re(void*) : Protocol(PROTOCOL_CONSIGNLISTALL_RE) { }
+		ConsignListAll_Re (int l_category,const std::vector<GConsignListNode>& l_nodes,int l_page,
+			unsigned int l_localsid,int l_retcode = 0)
+			 : category(l_category),nodes(l_nodes),page(l_page)
+			,localsid(l_localsid),retcode(l_retcode)
+		{
+			type = PROTOCOL_CONSIGNLISTALL_RE;
+		}
+
+		ConsignListAll_Re(const ConsignListAll_Re &rhs)
+			: Protocol(rhs),category(rhs.category),nodes(rhs.nodes),page(rhs.page)
+			,localsid(rhs.localsid),retcode(rhs.retcode) { }
+
+		GNET::Protocol *Clone() const { return new ConsignListAll_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << category;
+			os << nodes;
+			os << page;
+			os << localsid;
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> category;
+			os >> nodes;
+			os >> page;
+			os >> localsid;
+			os >> retcode;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 65536; }

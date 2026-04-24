@@ -1,0 +1,38 @@
+	public:
+		int retcode;
+		int factionid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_HOSTILEPROTECT_RE };
+	public:
+		HostileProtect_Re() { type = PROTOCOL_HOSTILEPROTECT_RE; }
+		HostileProtect_Re(void*) : Protocol(PROTOCOL_HOSTILEPROTECT_RE) { }
+		HostileProtect_Re (int l_retcode,int l_factionid,unsigned int l_localsid)
+			 : retcode(l_retcode),factionid(l_factionid),localsid(l_localsid)
+		{
+			type = PROTOCOL_HOSTILEPROTECT_RE;
+		}
+
+		HostileProtect_Re(const HostileProtect_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),factionid(rhs.factionid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new HostileProtect_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << factionid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> factionid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

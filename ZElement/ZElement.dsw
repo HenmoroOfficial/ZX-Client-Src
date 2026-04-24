@@ -1,0 +1,199 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "AUInterface"=.\ZAUInterface\AUInterface.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZAUInterface", IWIAAAAA
+    .\zauinterface
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AnimationCore"=.\AnimationCore\AnimationCore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/AnimationCore", UHCCAAAA
+    .\animationcore
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CHBasedCD"=.\ZCHBasedCD\CHBasedCD.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZCHBasedCD", UQJAAAAA
+    .\zchbasedcd
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ElementClient"=.\ZElementClient\ElementClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZElementClient", AQDAAAAA
+    .\zelementclient
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AUInterface
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CHBasedCD
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ElementSkill
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FWEditorLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name AnimationCore
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ElementData"=.\ZElementData\ElementData.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZElementData", OWEAAAAA
+    .\zelementdata
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ElementSkill"=.\ZElementSkill\ElementSkill.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZElementSkill", CBHAAAAA
+    .\zelementskill
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FWEditorLib"=.\ZFWEditorLib\FWEditorLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZFWEditorLib", JCJAAAAA
+    .\zfweditorlib
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "HintTool"=.\ZHintTool\HintTool.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZHintTool", SKFBAAAA
+    .\zhinttool
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ModelView"=.\MODELVIEW\ModelView.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/MODELVIEW", FPNAAAAA
+    .\modelview
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ZAnimationEditor"=.\ZAnimationEditor\ZAnimationEditor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement/ZAnimationEditor", HWCCAAAA
+    .\zanimationeditor
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name AnimationCore
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ZElement", RIDAAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

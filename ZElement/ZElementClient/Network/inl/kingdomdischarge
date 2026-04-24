@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int candidate;
+		char title;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMDISCHARGE };
+	public:
+		KingdomDischarge() { type = PROTOCOL_KINGDOMDISCHARGE; }
+		KingdomDischarge(void*) : Protocol(PROTOCOL_KINGDOMDISCHARGE) { }
+		KingdomDischarge (int l_roleid,int l_candidate,char l_title,
+			int l_localsid = 0)
+			 : roleid(l_roleid),candidate(l_candidate),title(l_title)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMDISCHARGE;
+		}
+
+		KingdomDischarge(const KingdomDischarge &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),candidate(rhs.candidate),title(rhs.title)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomDischarge(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << candidate;
+			os << title;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> candidate;
+			os >> title;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONRESIGN };
+	public:
+		FactionResign() { type = PROTOCOL_FACTIONRESIGN; }
+		FactionResign(void*) : Protocol(PROTOCOL_FACTIONRESIGN) { }
+		FactionResign (int l_roleid,char l_scale = 0)
+			 : roleid(l_roleid),scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONRESIGN;
+		}
+
+		FactionResign(const FactionResign &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionResign(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

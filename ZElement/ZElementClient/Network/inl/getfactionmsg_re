@@ -1,0 +1,59 @@
+	public:
+		int retcode;
+		int roleid;
+		int pageid;
+		unsigned int localsid;
+		int fid;
+		std::vector<FactionMsgItem> msgs;
+		int totalsize;
+		char haspost;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFACTIONMSG_RE };
+	public:
+		GetFactionMsg_Re() { type = PROTOCOL_GETFACTIONMSG_RE; }
+		GetFactionMsg_Re(void*) : Protocol(PROTOCOL_GETFACTIONMSG_RE) { }
+		GetFactionMsg_Re (int l_retcode,int l_roleid,int l_pageid = 0,
+			unsigned int l_localsid = 0,int l_fid = 0,const std::vector<FactionMsgItem>& l_msgs = std::vector<FactionMsgItem>(),
+			int l_totalsize = 0,char l_haspost = 0)
+			 : retcode(l_retcode),roleid(l_roleid),pageid(l_pageid)
+			,localsid(l_localsid),fid(l_fid),msgs(l_msgs)
+			,totalsize(l_totalsize),haspost(l_haspost)
+		{
+			type = PROTOCOL_GETFACTIONMSG_RE;
+		}
+
+		GetFactionMsg_Re(const GetFactionMsg_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),pageid(rhs.pageid)
+			,localsid(rhs.localsid),fid(rhs.fid),msgs(rhs.msgs)
+			,totalsize(rhs.totalsize),haspost(rhs.haspost) { }
+
+		GNET::Protocol *Clone() const { return new GetFactionMsg_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << pageid;
+			os << localsid;
+			os << fid;
+			os << msgs;
+			os << totalsize;
+			os << haspost;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> pageid;
+			os >> localsid;
+			os >> fid;
+			os >> msgs;
+			os >> totalsize;
+			os >> haspost;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 65536; }

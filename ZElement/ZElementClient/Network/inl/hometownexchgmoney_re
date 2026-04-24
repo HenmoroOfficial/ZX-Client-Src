@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		int64_t hometown_money;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_HOMETOWNEXCHGMONEY_RE };
+	public:
+		HometownExchgMoney_Re() { type = PROTOCOL_HOMETOWNEXCHGMONEY_RE; }
+		HometownExchgMoney_Re(void*) : Protocol(PROTOCOL_HOMETOWNEXCHGMONEY_RE) { }
+		HometownExchgMoney_Re (int l_retcode,int l_roleid = 0,int64_t l_hometown_money = 0,
+			int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),hometown_money(l_hometown_money)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_HOMETOWNEXCHGMONEY_RE;
+		}
+
+		HometownExchgMoney_Re(const HometownExchgMoney_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),hometown_money(rhs.hometown_money)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new HometownExchgMoney_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << hometown_money;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> hometown_money;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

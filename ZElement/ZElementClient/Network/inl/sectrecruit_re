@@ -1,0 +1,47 @@
+	public:
+		int retcode;
+		int sectid;
+		int disciple;
+		Octets name;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SECTRECRUIT_RE };
+	public:
+		SectRecruit_Re() { type = PROTOCOL_SECTRECRUIT_RE; }
+		SectRecruit_Re(void*) : Protocol(PROTOCOL_SECTRECRUIT_RE) { }
+		SectRecruit_Re (int l_retcode,int l_sectid,int l_disciple,
+			const Octets& l_name = Octets(0),unsigned int l_localsid = 0)
+			 : retcode(l_retcode),sectid(l_sectid),disciple(l_disciple)
+			,name(l_name),localsid(l_localsid)
+		{
+			type = PROTOCOL_SECTRECRUIT_RE;
+		}
+
+		SectRecruit_Re(const SectRecruit_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),sectid(rhs.sectid),disciple(rhs.disciple)
+			,name(rhs.name),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SectRecruit_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << sectid;
+			os << disciple;
+			os << name;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> sectid;
+			os >> disciple;
+			os >> name;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

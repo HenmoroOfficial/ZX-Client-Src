@@ -1,0 +1,82 @@
+#ifndef __GNET_TEAMRAIDROLEBRIEF_RPCDATA
+#define __GNET_TEAMRAIDROLEBRIEF_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class TeamRaidRoleBrief : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		unsigned char occup;
+		unsigned char gender;
+		unsigned char faceid;
+		unsigned char hairid;
+
+	public:
+		TeamRaidRoleBrief (int l_roleid = 0,unsigned char l_occup = 0,unsigned char l_gender = 0
+			,unsigned char l_faceid = 0,unsigned char l_hairid = 0)
+			: roleid(l_roleid),occup(l_occup),gender(l_gender)
+			,faceid(l_faceid),hairid(l_hairid)
+		{
+		}
+
+		TeamRaidRoleBrief(const TeamRaidRoleBrief &rhs)
+			: roleid(rhs.roleid),occup(rhs.occup),gender(rhs.gender),
+			faceid(rhs.faceid),hairid(rhs.hairid) { }
+
+		Rpc::Data *Clone() const { return new TeamRaidRoleBrief(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const TeamRaidRoleBrief *r = dynamic_cast<const TeamRaidRoleBrief *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				occup = r->occup;
+				gender = r->gender;
+				faceid = r->faceid;
+				hairid = r->hairid;
+			}
+			return *this;
+		}
+
+		TeamRaidRoleBrief& operator = (const TeamRaidRoleBrief &rhs)
+		{
+			const TeamRaidRoleBrief *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				occup = r->occup;
+				gender = r->gender;
+				faceid = r->faceid;
+				hairid = r->hairid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << occup;
+			os << gender;
+			os << faceid;
+			os << hairid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> occup;
+			os >> gender;
+			os >> faceid;
+			os >> hairid;
+			return os;
+		}
+
+	};
+};
+#endif

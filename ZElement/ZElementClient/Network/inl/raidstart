@@ -1,0 +1,50 @@
+	public:
+		int roleid;
+		int raidroom_id;
+		int map_id;
+		unsigned int localsid;
+		int raid_type;
+		Octets raid_data;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDSTART };
+	public:
+		RaidStart() { type = PROTOCOL_RAIDSTART; }
+		RaidStart(void*) : Protocol(PROTOCOL_RAIDSTART) { }
+		RaidStart (int l_roleid,int l_raidroom_id = 0,int l_map_id = 0,
+			unsigned int l_localsid = 0,int l_raid_type = 0,const Octets& l_raid_data = Octets())
+			 : roleid(l_roleid),raidroom_id(l_raidroom_id),map_id(l_map_id)
+			,localsid(l_localsid),raid_type(l_raid_type),raid_data(l_raid_data)
+		{
+			type = PROTOCOL_RAIDSTART;
+		}
+
+		RaidStart(const RaidStart &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),raidroom_id(rhs.raidroom_id),map_id(rhs.map_id)
+			,localsid(rhs.localsid),raid_type(rhs.raid_type),raid_data(rhs.raid_data) { }
+
+		GNET::Protocol *Clone() const { return new RaidStart(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << raidroom_id;
+			os << map_id;
+			os << localsid;
+			os << raid_type;
+			os << raid_data;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> raidroom_id;
+			os >> map_id;
+			os >> localsid;
+			os >> raid_type;
+			os >> raid_data;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 512; }

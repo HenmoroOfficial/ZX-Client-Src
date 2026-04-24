@@ -1,0 +1,47 @@
+	public:
+		unsigned char result;
+		int voted_roleid;
+		unsigned short agree_number;
+		unsigned short total_number;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDVOTERESULT };
+	public:
+		RaidVoteResult() { type = PROTOCOL_RAIDVOTERESULT; }
+		RaidVoteResult(void*) : Protocol(PROTOCOL_RAIDVOTERESULT) { }
+		RaidVoteResult (unsigned char l_result,int l_voted_roleid = 0,unsigned short l_agree_number = 0,
+			unsigned short l_total_number = 0,unsigned int l_localsid = 0)
+			 : result(l_result),voted_roleid(l_voted_roleid),agree_number(l_agree_number)
+			,total_number(l_total_number),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDVOTERESULT;
+		}
+
+		RaidVoteResult(const RaidVoteResult &rhs)
+			: Protocol(rhs),result(rhs.result),voted_roleid(rhs.voted_roleid),agree_number(rhs.agree_number)
+			,total_number(rhs.total_number),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidVoteResult(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << result;
+			os << voted_roleid;
+			os << agree_number;
+			os << total_number;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> result;
+			os >> voted_roleid;
+			os >> agree_number;
+			os >> total_number;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

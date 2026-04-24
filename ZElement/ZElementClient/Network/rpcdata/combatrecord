@@ -1,0 +1,82 @@
+#ifndef __GNET_COMBATRECORD_RPCDATA
+#define __GNET_COMBATRECORD_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CombatRecord : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets rolename;
+		unsigned int factionid;
+		int kills;
+		int deaths;
+
+	public:
+		CombatRecord (int l_roleid = 0,const Octets& l_rolename = Octets(),unsigned int l_factionid = 0
+			,int l_kills = 0,int l_deaths = 0)
+			: roleid(l_roleid),rolename(l_rolename),factionid(l_factionid)
+			,kills(l_kills),deaths(l_deaths)
+		{
+		}
+
+		CombatRecord(const CombatRecord &rhs)
+			: roleid(rhs.roleid),rolename(rhs.rolename),factionid(rhs.factionid),
+			kills(rhs.kills),deaths(rhs.deaths) { }
+
+		Rpc::Data *Clone() const { return new CombatRecord(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CombatRecord *r = dynamic_cast<const CombatRecord *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				factionid = r->factionid;
+				kills = r->kills;
+				deaths = r->deaths;
+			}
+			return *this;
+		}
+
+		CombatRecord& operator = (const CombatRecord &rhs)
+		{
+			const CombatRecord *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				factionid = r->factionid;
+				kills = r->kills;
+				deaths = r->deaths;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << rolename;
+			os << factionid;
+			os << kills;
+			os << deaths;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> rolename;
+			os >> factionid;
+			os >> kills;
+			os >> deaths;
+			return os;
+		}
+
+	};
+};
+#endif

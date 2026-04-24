@@ -1,0 +1,32 @@
+	public:
+		Octets data;
+		enum { PROTOCOL_TYPE = PROTOCOL_HOMETOWNDATASEND };
+	public:
+		HometowndataSend() { type = PROTOCOL_HOMETOWNDATASEND; }
+		HometowndataSend(void*) : Protocol(PROTOCOL_HOMETOWNDATASEND) { }
+		HometowndataSend (const Octets& l_data)
+			 : data(l_data)
+		{
+			type = PROTOCOL_HOMETOWNDATASEND;
+		}
+
+		HometowndataSend(const HometowndataSend &rhs)
+			: Protocol(rhs),data(rhs.data) { }
+
+		GNET::Protocol *Clone() const { return new HometowndataSend(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << data;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> data;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

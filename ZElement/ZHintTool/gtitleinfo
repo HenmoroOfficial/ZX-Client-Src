@@ -1,0 +1,59 @@
+#ifndef __GNET_GTITLEINFO_RPCDATA
+#define __GNET_GTITLEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GTitleInfo : public GNET::Rpc::Data
+	{
+	public:
+		Octets  titlelist;
+
+	public:
+		GTitleInfo (const Octets & l_titlelist =  Octets (0))
+			: titlelist(l_titlelist)
+		{
+		}
+
+		GTitleInfo(const GTitleInfo &rhs)
+			: titlelist(rhs.titlelist) { }
+
+		Rpc::Data *Clone() const { return new GTitleInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GTitleInfo *r = dynamic_cast<const GTitleInfo *>(&rhs);
+			if (r && r != this)
+			{
+				titlelist = r->titlelist;
+			}
+			return *this;
+		}
+
+		GTitleInfo& operator = (const GTitleInfo &rhs)
+		{
+			const GTitleInfo *r = &rhs;
+			if (r && r != this)
+			{
+				titlelist = r->titlelist;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << titlelist;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> titlelist;
+			return os;
+		}
+
+	};
+};
+#endif

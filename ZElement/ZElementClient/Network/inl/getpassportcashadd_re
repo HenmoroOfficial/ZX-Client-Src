@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		int localsid;
+		int64_t cashadd;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETPASSPORTCASHADD_RE };
+	public:
+		GetPassportCashAdd_Re() { type = PROTOCOL_GETPASSPORTCASHADD_RE; }
+		GetPassportCashAdd_Re(void*) : Protocol(PROTOCOL_GETPASSPORTCASHADD_RE) { }
+		GetPassportCashAdd_Re (int l_retcode,int l_roleid,int l_localsid = 0,
+			int64_t l_cashadd = 0)
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid)
+			,cashadd(l_cashadd)
+		{
+			type = PROTOCOL_GETPASSPORTCASHADD_RE;
+		}
+
+		GetPassportCashAdd_Re(const GetPassportCashAdd_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid)
+			,cashadd(rhs.cashadd) { }
+
+		GNET::Protocol *Clone() const { return new GetPassportCashAdd_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << cashadd;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> cashadd;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

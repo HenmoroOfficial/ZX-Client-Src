@@ -1,0 +1,50 @@
+	public:
+		int zoneid;
+		int64_t roleid;
+		int64_t accid;
+		int64_t accusation_roleid;
+		int64_t accusation_accid;
+		int result;
+		enum { PROTOCOL_TYPE = PROTOCOL_ACACCUSE_RE };
+	public:
+		ACAccuse_Re() { type = PROTOCOL_ACACCUSE_RE; }
+		ACAccuse_Re(void*) : Protocol(PROTOCOL_ACACCUSE_RE) { }
+		ACAccuse_Re (int l_zoneid,int64_t l_roleid,int64_t l_accid,
+			int64_t l_accusation_roleid,int64_t l_accusation_accid,int l_result)
+			 : zoneid(l_zoneid),roleid(l_roleid),accid(l_accid)
+			,accusation_roleid(l_accusation_roleid),accusation_accid(l_accusation_accid),result(l_result)
+		{
+			type = PROTOCOL_ACACCUSE_RE;
+		}
+
+		ACAccuse_Re(const ACAccuse_Re &rhs)
+			: Protocol(rhs),zoneid(rhs.zoneid),roleid(rhs.roleid),accid(rhs.accid)
+			,accusation_roleid(rhs.accusation_roleid),accusation_accid(rhs.accusation_accid),result(rhs.result) { }
+
+		GNET::Protocol *Clone() const { return new ACAccuse_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << zoneid;
+			os << roleid;
+			os << accid;
+			os << accusation_roleid;
+			os << accusation_accid;
+			os << result;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> zoneid;
+			os >> roleid;
+			os >> accid;
+			os >> accusation_roleid;
+			os >> accusation_accid;
+			os >> result;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }

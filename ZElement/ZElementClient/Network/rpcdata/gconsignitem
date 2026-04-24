@@ -1,0 +1,118 @@
+#ifndef __GNET_GCONSIGNITEM_RPCDATA
+#define __GNET_GCONSIGNITEM_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GConsignItem : public GNET::Rpc::Data
+	{
+	public:
+		int64_t sn;
+		int state;
+		int fin_type;
+		unsigned char consign_type;
+		unsigned int money;
+		unsigned int item_id;
+		int item_cnt;
+		int post_endtime;
+		int show_endtime;
+		int sell_endtime;
+		int price;
+
+	public:
+		GConsignItem (int64_t l_sn = 0,int l_state = 0,int l_fin_type = 0
+			,unsigned char l_consign_type = 0,unsigned int l_money = 0,unsigned int l_item_id = 0
+			,int l_item_cnt = 0,int l_post_endtime = 0,int l_show_endtime = 0
+			,int l_sell_endtime = 0,int l_price = 0)
+			: sn(l_sn),state(l_state),fin_type(l_fin_type)
+			,consign_type(l_consign_type),money(l_money),item_id(l_item_id)
+			,item_cnt(l_item_cnt),post_endtime(l_post_endtime),show_endtime(l_show_endtime)
+			,sell_endtime(l_sell_endtime),price(l_price)
+		{
+		}
+
+		GConsignItem(const GConsignItem &rhs)
+			: sn(rhs.sn),state(rhs.state),fin_type(rhs.fin_type),
+			consign_type(rhs.consign_type),money(rhs.money),item_id(rhs.item_id),
+			item_cnt(rhs.item_cnt),post_endtime(rhs.post_endtime),show_endtime(rhs.show_endtime),
+			sell_endtime(rhs.sell_endtime),price(rhs.price) { }
+
+		Rpc::Data *Clone() const { return new GConsignItem(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GConsignItem *r = dynamic_cast<const GConsignItem *>(&rhs);
+			if (r && r != this)
+			{
+				sn = r->sn;
+				state = r->state;
+				fin_type = r->fin_type;
+				consign_type = r->consign_type;
+				money = r->money;
+				item_id = r->item_id;
+				item_cnt = r->item_cnt;
+				post_endtime = r->post_endtime;
+				show_endtime = r->show_endtime;
+				sell_endtime = r->sell_endtime;
+				price = r->price;
+			}
+			return *this;
+		}
+
+		GConsignItem& operator = (const GConsignItem &rhs)
+		{
+			const GConsignItem *r = &rhs;
+			if (r && r != this)
+			{
+				sn = r->sn;
+				state = r->state;
+				fin_type = r->fin_type;
+				consign_type = r->consign_type;
+				money = r->money;
+				item_id = r->item_id;
+				item_cnt = r->item_cnt;
+				post_endtime = r->post_endtime;
+				show_endtime = r->show_endtime;
+				sell_endtime = r->sell_endtime;
+				price = r->price;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << sn;
+			os << state;
+			os << fin_type;
+			os << consign_type;
+			os << money;
+			os << item_id;
+			os << item_cnt;
+			os << post_endtime;
+			os << show_endtime;
+			os << sell_endtime;
+			os << price;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> sn;
+			os >> state;
+			os >> fin_type;
+			os >> consign_type;
+			os >> money;
+			os >> item_id;
+			os >> item_cnt;
+			os >> post_endtime;
+			os >> show_endtime;
+			os >> sell_endtime;
+			os >> price;
+			return os;
+		}
+
+	};
+};
+#endif

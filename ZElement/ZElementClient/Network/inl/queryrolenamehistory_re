@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		Octets name;
+		unsigned int localsid;
+		std::vector<NameHistory> list;
+		enum { PROTOCOL_TYPE = PROTOCOL_QUERYROLENAMEHISTORY_RE };
+	public:
+		QueryRolenameHistory_Re() { type = PROTOCOL_QUERYROLENAMEHISTORY_RE; }
+		QueryRolenameHistory_Re(void*) : Protocol(PROTOCOL_QUERYROLENAMEHISTORY_RE) { }
+		QueryRolenameHistory_Re (int l_retcode,const Octets& l_name,unsigned int l_localsid,
+			const std::vector<NameHistory>& l_list)
+			 : retcode(l_retcode),name(l_name),localsid(l_localsid)
+			,list(l_list)
+		{
+			type = PROTOCOL_QUERYROLENAMEHISTORY_RE;
+		}
+
+		QueryRolenameHistory_Re(const QueryRolenameHistory_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),name(rhs.name),localsid(rhs.localsid)
+			,list(rhs.list) { }
+
+		GNET::Protocol *Clone() const { return new QueryRolenameHistory_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << name;
+			os << localsid;
+			os << list;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> name;
+			os >> localsid;
+			os >> list;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

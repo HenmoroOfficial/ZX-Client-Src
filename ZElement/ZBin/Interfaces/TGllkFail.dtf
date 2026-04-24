@@ -1,0 +1,3 @@
+DIALOG "Win_TGllkFail" 0 0 308 178 0 1 10 "" "TinyGame\Windows\HelpWindow.tga" "" 0 0 -1 -1 "" 0 0 96 96 96 255 1 0
+IMAGEPICTURE "Pic_FailPic" "" "" 66 17 184 116 1 0 "TinyGame\TGllk\GameLose.tga" ""
+STILLIMAGEBUTTON "Btn_ReturnMain" "return" "" 110 136 103 25 0 0 0 0 2 14 255 228 134 255 "TinyGame\Button\BlueButtonUp.tga" "TinyGame\Button\BlueButtonDown.tga" "TinyGame\Button\BlueButtonDown.tga" 3 1 0

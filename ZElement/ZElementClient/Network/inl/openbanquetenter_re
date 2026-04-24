@@ -1,0 +1,47 @@
+	public:
+		unsigned short retcode;
+		int roleid;
+		int endtime;
+		unsigned int localsid;
+		char iscross;
+		enum { PROTOCOL_TYPE = PROTOCOL_OPENBANQUETENTER_RE };
+	public:
+		OpenBanquetEnter_Re() { type = PROTOCOL_OPENBANQUETENTER_RE; }
+		OpenBanquetEnter_Re(void*) : Protocol(PROTOCOL_OPENBANQUETENTER_RE) { }
+		OpenBanquetEnter_Re (unsigned short l_retcode,int l_roleid,int l_endtime = 0,
+			unsigned int l_localsid = 0,char l_iscross = 0)
+			 : retcode(l_retcode),roleid(l_roleid),endtime(l_endtime)
+			,localsid(l_localsid),iscross(l_iscross)
+		{
+			type = PROTOCOL_OPENBANQUETENTER_RE;
+		}
+
+		OpenBanquetEnter_Re(const OpenBanquetEnter_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),endtime(rhs.endtime)
+			,localsid(rhs.localsid),iscross(rhs.iscross) { }
+
+		GNET::Protocol *Clone() const { return new OpenBanquetEnter_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << endtime;
+			os << localsid;
+			os << iscross;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> endtime;
+			os >> localsid;
+			os >> iscross;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

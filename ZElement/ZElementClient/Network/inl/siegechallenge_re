@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int battle_id;
+		int begin_time;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SIEGECHALLENGE_RE };
+	public:
+		SiegeChallenge_Re() { type = PROTOCOL_SIEGECHALLENGE_RE; }
+		SiegeChallenge_Re(void*) : Protocol(PROTOCOL_SIEGECHALLENGE_RE) { }
+		SiegeChallenge_Re (int l_retcode,int l_battle_id = 0,int l_begin_time = 0,
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),battle_id(l_battle_id),begin_time(l_begin_time)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_SIEGECHALLENGE_RE;
+		}
+
+		SiegeChallenge_Re(const SiegeChallenge_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),battle_id(rhs.battle_id),begin_time(rhs.begin_time)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SiegeChallenge_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << battle_id;
+			os << begin_time;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> battle_id;
+			os >> begin_time;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

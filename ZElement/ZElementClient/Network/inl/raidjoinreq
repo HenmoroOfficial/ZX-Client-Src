@@ -1,0 +1,47 @@
+	public:
+		int masterid;
+		int map_id;
+		int raidroom_id;
+		int requester;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDJOINREQ };
+	public:
+		RaidJoinReq() { type = PROTOCOL_RAIDJOINREQ; }
+		RaidJoinReq(void*) : Protocol(PROTOCOL_RAIDJOINREQ) { }
+		RaidJoinReq (int l_masterid,int l_map_id = 0,int l_raidroom_id = 0,
+			int l_requester = 0,unsigned int l_localsid = 0)
+			 : masterid(l_masterid),map_id(l_map_id),raidroom_id(l_raidroom_id)
+			,requester(l_requester),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDJOINREQ;
+		}
+
+		RaidJoinReq(const RaidJoinReq &rhs)
+			: Protocol(rhs),masterid(rhs.masterid),map_id(rhs.map_id),raidroom_id(rhs.raidroom_id)
+			,requester(rhs.requester),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidJoinReq(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << masterid;
+			os << map_id;
+			os << raidroom_id;
+			os << requester;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> masterid;
+			os >> map_id;
+			os >> raidroom_id;
+			os >> requester;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

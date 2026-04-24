@@ -1,0 +1,50 @@
+	public:
+		int roleid;
+		int apply_roleid;
+		Octets apply_rolename;
+		char message_type;
+		int message_id;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSAPPLYNOTIFY };
+	public:
+		SNSApplyNotify() { type = PROTOCOL_SNSAPPLYNOTIFY; }
+		SNSApplyNotify(void*) : Protocol(PROTOCOL_SNSAPPLYNOTIFY) { }
+		SNSApplyNotify (int l_roleid,int l_apply_roleid = 0,const Octets& l_apply_rolename = Octets(),
+			char l_message_type = 0,int l_message_id = 0,int l_localsid = 0)
+			 : roleid(l_roleid),apply_roleid(l_apply_roleid),apply_rolename(l_apply_rolename)
+			,message_type(l_message_type),message_id(l_message_id),localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSAPPLYNOTIFY;
+		}
+
+		SNSApplyNotify(const SNSApplyNotify &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),apply_roleid(rhs.apply_roleid),apply_rolename(rhs.apply_rolename)
+			,message_type(rhs.message_type),message_id(rhs.message_id),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSApplyNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << apply_roleid;
+			os << apply_rolename;
+			os << message_type;
+			os << message_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> apply_roleid;
+			os >> apply_rolename;
+			os >> message_type;
+			os >> message_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 256; }

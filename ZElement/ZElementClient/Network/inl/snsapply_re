@@ -1,0 +1,62 @@
+	public:
+		int retcode;
+		int roleid;
+		char oper;
+		char message_type;
+		int message_id;
+		short index;
+		short dst_index;
+		Octets message;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSAPPLY_RE };
+	public:
+		SNSApply_Re() { type = PROTOCOL_SNSAPPLY_RE; }
+		SNSApply_Re(void*) : Protocol(PROTOCOL_SNSAPPLY_RE) { }
+		SNSApply_Re (int l_retcode,int l_roleid = 0,char l_oper = 0,
+			char l_message_type = 0,int l_message_id = 0,short l_index = 0,
+			short l_dst_index = 0,const Octets& l_message = Octets(),int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),oper(l_oper)
+			,message_type(l_message_type),message_id(l_message_id),index(l_index)
+			,dst_index(l_dst_index),message(l_message),localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSAPPLY_RE;
+		}
+
+		SNSApply_Re(const SNSApply_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),oper(rhs.oper)
+			,message_type(rhs.message_type),message_id(rhs.message_id),index(rhs.index)
+			,dst_index(rhs.dst_index),message(rhs.message),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSApply_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << oper;
+			os << message_type;
+			os << message_id;
+			os << index;
+			os << dst_index;
+			os << message;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> oper;
+			os >> message_type;
+			os >> message_id;
+			os >> index;
+			os >> dst_index;
+			os >> message;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 256; }

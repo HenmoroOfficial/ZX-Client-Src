@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int status;
+		TerritoryBriefVector tlist;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TERRITORYMAPGET_RE };
+	public:
+		TerritoryMapGet_Re() { type = PROTOCOL_TERRITORYMAPGET_RE; }
+		TerritoryMapGet_Re(void*) : Protocol(PROTOCOL_TERRITORYMAPGET_RE) { }
+		TerritoryMapGet_Re (int l_retcode,int l_status = 0,const TerritoryBriefVector& l_tlist = TerritoryBriefVector(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),status(l_status),tlist(l_tlist)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_TERRITORYMAPGET_RE;
+		}
+
+		TerritoryMapGet_Re(const TerritoryMapGet_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),status(rhs.status),tlist(rhs.tlist)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TerritoryMapGet_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << status;
+			os << tlist;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> status;
+			os >> tlist;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 8192; }

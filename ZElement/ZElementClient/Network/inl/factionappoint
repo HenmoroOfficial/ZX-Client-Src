@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int candidate;
+		char title;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONAPPOINT };
+	public:
+		FactionAppoint() { type = PROTOCOL_FACTIONAPPOINT; }
+		FactionAppoint(void*) : Protocol(PROTOCOL_FACTIONAPPOINT) { }
+		FactionAppoint (int l_roleid,int l_candidate,char l_title,
+			char l_scale = 0)
+			 : roleid(l_roleid),candidate(l_candidate),title(l_title)
+			,scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONAPPOINT;
+		}
+
+		FactionAppoint(const FactionAppoint &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),candidate(rhs.candidate),title(rhs.title)
+			,scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionAppoint(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << candidate;
+			os << title;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> candidate;
+			os >> title;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

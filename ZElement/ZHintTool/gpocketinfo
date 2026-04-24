@@ -1,0 +1,116 @@
+#ifndef __GNET_GPOCKETINFO_RPCDATA
+#define __GNET_GPOCKETINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "groleinventory"
+#include "gpocketinventory"
+#include "grolestorehouse"
+
+namespace GNET
+{
+	class GPocketInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int money;
+		GRoleInventoryVector equipment;
+		unsigned int role_pocket_capacity;
+		GRoleInventoryVector role_pocket;
+		short pet_pocket_capacity;
+		GPocketInventoryVector pet_pocket;
+		GRoleInventoryVector fashion;
+		short mountwing_capacity;
+		GRoleInventoryVector mountwing;
+		GRoleStorehouse storehouse;
+
+	public:
+		GPocketInfo (unsigned int l_money = 0,const GRoleInventoryVector& l_equipment = GRoleInventoryVector(),unsigned int l_role_pocket_capacity = 0
+			,const GRoleInventoryVector& l_role_pocket = GRoleInventoryVector(),short l_pet_pocket_capacity = 0,const GPocketInventoryVector& l_pet_pocket = GPocketInventoryVector()
+			,const GRoleInventoryVector& l_fashion = GRoleInventoryVector(),short l_mountwing_capacity = 0,const GRoleInventoryVector& l_mountwing = GRoleInventoryVector()
+			,const GRoleStorehouse& l_storehouse = GRoleStorehouse())
+			: money(l_money),equipment(l_equipment),role_pocket_capacity(l_role_pocket_capacity)
+			,role_pocket(l_role_pocket),pet_pocket_capacity(l_pet_pocket_capacity),pet_pocket(l_pet_pocket)
+			,fashion(l_fashion),mountwing_capacity(l_mountwing_capacity),mountwing(l_mountwing)
+			,storehouse(l_storehouse)
+		{
+		}
+
+		GPocketInfo(const GPocketInfo &rhs)
+			: money(rhs.money),equipment(rhs.equipment),role_pocket_capacity(rhs.role_pocket_capacity),
+			role_pocket(rhs.role_pocket),pet_pocket_capacity(rhs.pet_pocket_capacity),pet_pocket(rhs.pet_pocket),
+			fashion(rhs.fashion),mountwing_capacity(rhs.mountwing_capacity),mountwing(rhs.mountwing),
+			storehouse(rhs.storehouse) { }
+
+		Rpc::Data *Clone() const { return new GPocketInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GPocketInfo *r = dynamic_cast<const GPocketInfo *>(&rhs);
+			if (r && r != this)
+			{
+				money = r->money;
+				equipment = r->equipment;
+				role_pocket_capacity = r->role_pocket_capacity;
+				role_pocket = r->role_pocket;
+				pet_pocket_capacity = r->pet_pocket_capacity;
+				pet_pocket = r->pet_pocket;
+				fashion = r->fashion;
+				mountwing_capacity = r->mountwing_capacity;
+				mountwing = r->mountwing;
+				storehouse = r->storehouse;
+			}
+			return *this;
+		}
+
+		GPocketInfo& operator = (const GPocketInfo &rhs)
+		{
+			const GPocketInfo *r = &rhs;
+			if (r && r != this)
+			{
+				money = r->money;
+				equipment = r->equipment;
+				role_pocket_capacity = r->role_pocket_capacity;
+				role_pocket = r->role_pocket;
+				pet_pocket_capacity = r->pet_pocket_capacity;
+				pet_pocket = r->pet_pocket;
+				fashion = r->fashion;
+				mountwing_capacity = r->mountwing_capacity;
+				mountwing = r->mountwing;
+				storehouse = r->storehouse;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << money;
+			os << equipment;
+			os << role_pocket_capacity;
+			os << role_pocket;
+			os << pet_pocket_capacity;
+			os << pet_pocket;
+			os << fashion;
+			os << mountwing_capacity;
+			os << mountwing;
+			os << storehouse;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> money;
+			os >> equipment;
+			os >> role_pocket_capacity;
+			os >> role_pocket;
+			os >> pet_pocket_capacity;
+			os >> pet_pocket;
+			os >> fashion;
+			os >> mountwing_capacity;
+			os >> mountwing;
+			os >> storehouse;
+			return os;
+		}
+
+	};
+};
+#endif

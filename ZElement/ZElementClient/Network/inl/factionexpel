@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		unsigned int factionid;
+		int expellee;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONEXPEL };
+	public:
+		FactionExpel() { type = PROTOCOL_FACTIONEXPEL; }
+		FactionExpel(void*) : Protocol(PROTOCOL_FACTIONEXPEL) { }
+		FactionExpel (int l_roleid,unsigned int l_factionid,int l_expellee,
+			char l_scale = 0)
+			 : roleid(l_roleid),factionid(l_factionid),expellee(l_expellee)
+			,scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONEXPEL;
+		}
+
+		FactionExpel(const FactionExpel &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),factionid(rhs.factionid),expellee(rhs.expellee)
+			,scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionExpel(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << factionid;
+			os << expellee;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> factionid;
+			os >> expellee;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

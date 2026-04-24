@@ -1,0 +1,147 @@
+#ifndef __GNET_SNSMESSAGE_RPCDATA
+#define __GNET_SNSMESSAGE_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gapplycondition"
+#include "gleavemessage"
+#include "gapplyinfo"
+#include "gapplyinfo"
+#include "gapplyinfo"
+
+namespace GNET
+{
+	class SNSMessage : public GNET::Rpc::Data
+	{
+	public:
+		int message_id;
+		char message_type;
+		int roleid;
+		Octets rolename;
+		char gender;
+		int factionid;
+		int charm;
+		Octets message;
+		int press_time;
+		GApplyCondition condition;
+		GLeaveMessageVector leave_msgs;
+		GApplyInfoVector apply_list;
+		GApplyInfoVector agree_list;
+		GApplyInfoVector deny_list;
+		std::vector<int> accept_list;
+
+	public:
+		SNSMessage (int l_message_id = 0,char l_message_type = 0,int l_roleid = 0
+			,const Octets& l_rolename = Octets(),char l_gender = 0,int l_factionid = 0
+			,int l_charm = 0,const Octets& l_message = Octets(),int l_press_time = 0
+			,const GApplyCondition& l_condition = GApplyCondition(),const GLeaveMessageVector& l_leave_msgs = GLeaveMessageVector(),const GApplyInfoVector& l_apply_list = GApplyInfoVector()
+			,const GApplyInfoVector& l_agree_list = GApplyInfoVector(),const GApplyInfoVector& l_deny_list = GApplyInfoVector(),const std::vector<int>& l_accept_list = std::vector<int>())
+			: message_id(l_message_id),message_type(l_message_type),roleid(l_roleid)
+			,rolename(l_rolename),gender(l_gender),factionid(l_factionid)
+			,charm(l_charm),message(l_message),press_time(l_press_time)
+			,condition(l_condition),leave_msgs(l_leave_msgs),apply_list(l_apply_list)
+			,agree_list(l_agree_list),deny_list(l_deny_list),accept_list(l_accept_list)
+		{
+		}
+
+		SNSMessage(const SNSMessage &rhs)
+			: message_id(rhs.message_id),message_type(rhs.message_type),roleid(rhs.roleid),
+			rolename(rhs.rolename),gender(rhs.gender),factionid(rhs.factionid),
+			charm(rhs.charm),message(rhs.message),press_time(rhs.press_time),
+			condition(rhs.condition),leave_msgs(rhs.leave_msgs),apply_list(rhs.apply_list),
+			agree_list(rhs.agree_list),deny_list(rhs.deny_list),accept_list(rhs.accept_list) { }
+
+		Rpc::Data *Clone() const { return new SNSMessage(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SNSMessage *r = dynamic_cast<const SNSMessage *>(&rhs);
+			if (r && r != this)
+			{
+				message_id = r->message_id;
+				message_type = r->message_type;
+				roleid = r->roleid;
+				rolename = r->rolename;
+				gender = r->gender;
+				factionid = r->factionid;
+				charm = r->charm;
+				message = r->message;
+				press_time = r->press_time;
+				condition = r->condition;
+				leave_msgs = r->leave_msgs;
+				apply_list = r->apply_list;
+				agree_list = r->agree_list;
+				deny_list = r->deny_list;
+				accept_list = r->accept_list;
+			}
+			return *this;
+		}
+
+		SNSMessage& operator = (const SNSMessage &rhs)
+		{
+			const SNSMessage *r = &rhs;
+			if (r && r != this)
+			{
+				message_id = r->message_id;
+				message_type = r->message_type;
+				roleid = r->roleid;
+				rolename = r->rolename;
+				gender = r->gender;
+				factionid = r->factionid;
+				charm = r->charm;
+				message = r->message;
+				press_time = r->press_time;
+				condition = r->condition;
+				leave_msgs = r->leave_msgs;
+				apply_list = r->apply_list;
+				agree_list = r->agree_list;
+				deny_list = r->deny_list;
+				accept_list = r->accept_list;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << message_id;
+			os << message_type;
+			os << roleid;
+			os << rolename;
+			os << gender;
+			os << factionid;
+			os << charm;
+			os << message;
+			os << press_time;
+			os << condition;
+			os << leave_msgs;
+			os << apply_list;
+			os << agree_list;
+			os << deny_list;
+			os << accept_list;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> message_id;
+			os >> message_type;
+			os >> roleid;
+			os >> rolename;
+			os >> gender;
+			os >> factionid;
+			os >> charm;
+			os >> message;
+			os >> press_time;
+			os >> condition;
+			os >> leave_msgs;
+			os >> apply_list;
+			os >> agree_list;
+			os >> deny_list;
+			os >> accept_list;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<SNSMessage>	SNSMessageVector;
+};
+#endif

@@ -1,0 +1,85 @@
+#ifndef __GNET_GCONSIGNGSROLEINFO_RPCDATA
+#define __GNET_GCONSIGNGSROLEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gtitleinfo"
+#include "gdeityinfo"
+#include "grolebasicattribute"
+#include "gpetaddedinfo"
+#include "gskillinfo"
+
+namespace GNET
+{
+	class GConsignGsRoleInfo : public GNET::Rpc::Data
+	{
+	public:
+		GTitleInfo title;
+		GDeityInfo deityinfo;
+		GRoleBasicAttribute rolebasicinfo;
+		GPetAddedInfoVector	pet_addinfo;
+		GSkillInfo skillinfo;
+
+	public:
+		GConsignGsRoleInfo (const GSkillInfo& l_skillinfo = GSkillInfo())
+			: skillinfo(l_skillinfo)
+		{
+		}
+
+		GConsignGsRoleInfo(const GConsignGsRoleInfo &rhs)
+			: title(rhs.title),deityinfo(rhs.deityinfo),rolebasicinfo(rhs.rolebasicinfo),
+			pet_addinfo(rhs.pet_addinfo),skillinfo(rhs.skillinfo) { }
+
+		Rpc::Data *Clone() const { return new GConsignGsRoleInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GConsignGsRoleInfo *r = dynamic_cast<const GConsignGsRoleInfo *>(&rhs);
+			if (r && r != this)
+			{
+				title = r->title;
+				deityinfo = r->deityinfo;
+				rolebasicinfo = r->rolebasicinfo;
+				pet_addinfo = r->pet_addinfo;
+				skillinfo = r->skillinfo;
+			}
+			return *this;
+		}
+
+		GConsignGsRoleInfo& operator = (const GConsignGsRoleInfo &rhs)
+		{
+			const GConsignGsRoleInfo *r = &rhs;
+			if (r && r != this)
+			{
+				title = r->title;
+				deityinfo = r->deityinfo;
+				rolebasicinfo = r->rolebasicinfo;
+				pet_addinfo = r->pet_addinfo;
+				skillinfo = r->skillinfo;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << title;
+			os << deityinfo;
+			os << rolebasicinfo;
+			os << pet_addinfo;
+			os << skillinfo;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> title;
+			os >> deityinfo;
+			os >> rolebasicinfo;
+			os >> pet_addinfo;
+			os >> skillinfo;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,42 @@
+
+#ifndef __GNET_COMBATINVITE_HPP
+#define __GNET_COMBATINVITE_HPP
+
+#include "rpcdefs.h"
+#include "callid.hxx"
+#include "state.hxx"
+
+#include "combatinvitearg"
+#include "combatinviteres"
+
+namespace GNET
+{
+
+class CombatInvite : public Rpc
+{
+#define	RPC_BASECLASS	Rpc
+	#include "combatinvite"
+#undef	RPC_BASECLASS
+
+	void Server(Rpc::Data *argument, Rpc::Data *result, Manager *manager, Manager::Session::ID sid)
+	{
+		// CombatInviteArg *arg = (CombatInviteArg *)argument;
+		// CombatInviteRes *res = (CombatInviteRes *)result;
+	}
+
+	void Client(Rpc::Data *argument, Rpc::Data *result, Manager *manager, Manager::Session::ID sid)
+	{
+		// TODO
+		// CombatInviteArg *arg = (CombatInviteArg *)argument;
+		// CombatInviteRes *res = (CombatInviteRes *)result;
+	}
+
+	void OnTimeout()
+	{
+		// TODO Client Only
+	}
+
+};
+
+};
+#endif

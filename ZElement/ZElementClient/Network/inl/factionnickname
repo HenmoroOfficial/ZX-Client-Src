@@ -1,0 +1,47 @@
+	public:
+		unsigned int factionid;
+		unsigned int familyid;
+		int roleid;
+		int receiver;
+		Octets nickname;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONNICKNAME };
+	public:
+		FactionNickname() { type = PROTOCOL_FACTIONNICKNAME; }
+		FactionNickname(void*) : Protocol(PROTOCOL_FACTIONNICKNAME) { }
+		FactionNickname (unsigned int l_factionid,unsigned int l_familyid,int l_roleid,
+			int l_receiver,const Octets& l_nickname)
+			 : factionid(l_factionid),familyid(l_familyid),roleid(l_roleid)
+			,receiver(l_receiver),nickname(l_nickname)
+		{
+			type = PROTOCOL_FACTIONNICKNAME;
+		}
+
+		FactionNickname(const FactionNickname &rhs)
+			: Protocol(rhs),factionid(rhs.factionid),familyid(rhs.familyid),roleid(rhs.roleid)
+			,receiver(rhs.receiver),nickname(rhs.nickname) { }
+
+		GNET::Protocol *Clone() const { return new FactionNickname(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << factionid;
+			os << familyid;
+			os << roleid;
+			os << receiver;
+			os << nickname;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> factionid;
+			os >> familyid;
+			os >> roleid;
+			os >> receiver;
+			os >> nickname;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

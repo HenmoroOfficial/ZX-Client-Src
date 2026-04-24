@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		int target;
+		int raidroom_id;
+		int reason;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDKICK };
+	public:
+		RaidKick() { type = PROTOCOL_RAIDKICK; }
+		RaidKick(void*) : Protocol(PROTOCOL_RAIDKICK) { }
+		RaidKick (int l_roleid,int l_target = 0,int l_raidroom_id = 0,
+			int l_reason = 0,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),target(l_target),raidroom_id(l_raidroom_id)
+			,reason(l_reason),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDKICK;
+		}
+
+		RaidKick(const RaidKick &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),target(rhs.target),raidroom_id(rhs.raidroom_id)
+			,reason(rhs.reason),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidKick(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << target;
+			os << raidroom_id;
+			os << reason;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> target;
+			os >> raidroom_id;
+			os >> reason;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

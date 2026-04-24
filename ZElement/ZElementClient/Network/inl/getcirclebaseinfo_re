@@ -1,0 +1,35 @@
+	public:
+		unsigned int localsid;
+		std::vector<GCircleBaseInfo> circleinfolist;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETCIRCLEBASEINFO_RE };
+	public:
+		GetCircleBaseInfo_Re() { type = PROTOCOL_GETCIRCLEBASEINFO_RE; }
+		GetCircleBaseInfo_Re(void*) : Protocol(PROTOCOL_GETCIRCLEBASEINFO_RE) { }
+		GetCircleBaseInfo_Re (unsigned int l_localsid,std::vector<GCircleBaseInfo> l_circleinfolist)
+			 : localsid(l_localsid),circleinfolist(l_circleinfolist)
+		{
+			type = PROTOCOL_GETCIRCLEBASEINFO_RE;
+		}
+
+		GetCircleBaseInfo_Re(const GetCircleBaseInfo_Re &rhs)
+			: Protocol(rhs),localsid(rhs.localsid),circleinfolist(rhs.circleinfolist) { }
+
+		GNET::Protocol *Clone() const { return new GetCircleBaseInfo_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << localsid;
+			os << circleinfolist;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> localsid;
+			os >> circleinfolist;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

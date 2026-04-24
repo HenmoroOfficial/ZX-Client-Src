@@ -1,0 +1,49 @@
+# Visual Studio user and cache files
+*.suo
+*.user
+*.ncb
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+*.aps
+*.ipch
+*.vspscc
+*.vssscc
+*.scc
+
+# Build logs and intermediates
+*.log
+*.obj
+*.o
+*.pch
+*.pdb
+*.ilk
+*.idb
+*.tlog
+*.tmp
+*.cache
+
+# Build outputs
+*.exe
+*.dll
+*.lib
+*.a
+*.so
+*.dylib
+*.exp
+*.manifest
+
+# Common build directories
+[Dd]ebug/
+[Rr]elease/
+[Dd]bg[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Oo]utput/
+[Uu]nicode [Dd]ebug/
+
+# Editor and OS files
+.vs/
+.DS_Store
+Thumbs.db

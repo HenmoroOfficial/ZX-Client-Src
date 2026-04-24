@@ -1,0 +1,35 @@
+	public:
+		int retcode;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMBATTLEENTER_RE };
+	public:
+		KingdomBattleEnter_Re() { type = PROTOCOL_KINGDOMBATTLEENTER_RE; }
+		KingdomBattleEnter_Re(void*) : Protocol(PROTOCOL_KINGDOMBATTLEENTER_RE) { }
+		KingdomBattleEnter_Re (int l_retcode,int l_localsid = 0)
+			 : retcode(l_retcode),localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMBATTLEENTER_RE;
+		}
+
+		KingdomBattleEnter_Re(const KingdomBattleEnter_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomBattleEnter_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

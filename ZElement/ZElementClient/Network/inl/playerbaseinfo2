@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		int playerid;
+		int cloneid;
+		enum { PROTOCOL_TYPE = PROTOCOL_PLAYERBASEINFO2 };
+	public:
+		PlayerBaseInfo2() { type = PROTOCOL_PLAYERBASEINFO2; }
+		PlayerBaseInfo2(void*) : Protocol(PROTOCOL_PLAYERBASEINFO2) { }
+		PlayerBaseInfo2 (int l_roleid,unsigned int l_localsid,int l_playerid,
+			int l_cloneid)
+			 : roleid(l_roleid),localsid(l_localsid),playerid(l_playerid)
+			,cloneid(l_cloneid)
+		{
+			type = PROTOCOL_PLAYERBASEINFO2;
+		}
+
+		PlayerBaseInfo2(const PlayerBaseInfo2 &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),playerid(rhs.playerid)
+			,cloneid(rhs.cloneid) { }
+
+		GNET::Protocol *Clone() const { return new PlayerBaseInfo2(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << playerid;
+			os << cloneid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> playerid;
+			os >> cloneid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }

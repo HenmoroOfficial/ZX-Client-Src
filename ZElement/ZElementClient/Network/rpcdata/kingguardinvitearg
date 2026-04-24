@@ -1,0 +1,64 @@
+#ifndef __GNET_KINGGUARDINVITEARG_RPCDATA
+#define __GNET_KINGGUARDINVITEARG_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class KingGuardInviteArg : public GNET::Rpc::Data
+	{
+	public:
+		Octets kingname;
+		unsigned int localsid;
+
+	public:
+		KingGuardInviteArg (unsigned int l_localsid = 0)
+			: localsid(l_localsid)
+		{
+		}
+
+		KingGuardInviteArg(const KingGuardInviteArg &rhs)
+			: kingname(rhs.kingname),localsid(rhs.localsid) { }
+
+		Rpc::Data *Clone() const { return new KingGuardInviteArg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const KingGuardInviteArg *r = dynamic_cast<const KingGuardInviteArg *>(&rhs);
+			if (r && r != this)
+			{
+				kingname = r->kingname;
+				localsid = r->localsid;
+			}
+			return *this;
+		}
+
+		KingGuardInviteArg& operator = (const KingGuardInviteArg &rhs)
+		{
+			const KingGuardInviteArg *r = &rhs;
+			if (r && r != this)
+			{
+				kingname = r->kingname;
+				localsid = r->localsid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << kingname;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> kingname;
+			os >> localsid;
+			return os;
+		}
+
+	};
+};
+#endif

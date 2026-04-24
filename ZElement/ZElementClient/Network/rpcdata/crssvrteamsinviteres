@@ -1,0 +1,59 @@
+#ifndef __GNET_CRSSVRTEAMSINVITERES_RPCDATA
+#define __GNET_CRSSVRTEAMSINVITERES_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CrssvrTeamsInviteRes : public GNET::Rpc::Data
+	{
+	public:
+		int retcode;
+
+	public:
+		CrssvrTeamsInviteRes (int l_retcode = -1)
+			: retcode(l_retcode)
+		{
+		}
+
+		CrssvrTeamsInviteRes(const CrssvrTeamsInviteRes &rhs)
+			: retcode(rhs.retcode) { }
+
+		Rpc::Data *Clone() const { return new CrssvrTeamsInviteRes(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CrssvrTeamsInviteRes *r = dynamic_cast<const CrssvrTeamsInviteRes *>(&rhs);
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+			}
+			return *this;
+		}
+
+		CrssvrTeamsInviteRes& operator = (const CrssvrTeamsInviteRes &rhs)
+		{
+			const CrssvrTeamsInviteRes *r = &rhs;
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			return os;
+		}
+
+	};
+};
+#endif

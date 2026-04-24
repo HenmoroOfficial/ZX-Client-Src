@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int map_id;
+		int raidroom_id;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDENTER };
+	public:
+		RaidEnter() { type = PROTOCOL_RAIDENTER; }
+		RaidEnter(void*) : Protocol(PROTOCOL_RAIDENTER) { }
+		RaidEnter (int l_roleid,int l_map_id = 0,int l_raidroom_id = 0,
+			unsigned int l_localsid = 0)
+			 : roleid(l_roleid),map_id(l_map_id),raidroom_id(l_raidroom_id)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDENTER;
+		}
+
+		RaidEnter(const RaidEnter &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),map_id(rhs.map_id),raidroom_id(rhs.raidroom_id)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidEnter(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << map_id;
+			os << raidroom_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> map_id;
+			os >> raidroom_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

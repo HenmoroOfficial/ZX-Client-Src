@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		GGroupInfoVector groups;
+		GClientFriendInfoVector friends;
+		char reserved;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFRIENDS_RE };
+	public:
+		GetFriends_Re() { type = PROTOCOL_GETFRIENDS_RE; }
+		GetFriends_Re(void*) : Protocol(PROTOCOL_GETFRIENDS_RE) { }
+		GetFriends_Re (int l_roleid,GGroupInfoVector l_groups,GClientFriendInfoVector l_friends,
+			char l_reserved = 0,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),groups(l_groups),friends(l_friends)
+			,reserved(l_reserved),localsid(l_localsid)
+		{
+			type = PROTOCOL_GETFRIENDS_RE;
+		}
+
+		GetFriends_Re(const GetFriends_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),groups(rhs.groups),friends(rhs.friends)
+			,reserved(rhs.reserved),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GetFriends_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << groups;
+			os << friends;
+			os << reserved;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> groups;
+			os >> friends;
+			os >> reserved;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 4096; }

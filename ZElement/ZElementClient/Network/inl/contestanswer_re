@@ -1,0 +1,68 @@
+	public:
+		int roleid;
+		char questionid;
+		char result;
+		int score;
+		int sum;
+		char star_amount;
+		char right_amount;
+		char series_right;
+		unsigned char answer;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTANSWER_RE };
+	public:
+		ContestAnswer_Re() { type = PROTOCOL_CONTESTANSWER_RE; }
+		ContestAnswer_Re(void*) : Protocol(PROTOCOL_CONTESTANSWER_RE) { }
+		ContestAnswer_Re (int l_roleid,char l_questionid,char l_result,
+			int l_score,int l_sum,char l_star_amount,
+			char l_right_amount,char l_series_right,unsigned char l_answer,
+			unsigned int l_localsid)
+			 : roleid(l_roleid),questionid(l_questionid),result(l_result)
+			,score(l_score),sum(l_sum),star_amount(l_star_amount)
+			,right_amount(l_right_amount),series_right(l_series_right),answer(l_answer)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_CONTESTANSWER_RE;
+		}
+
+		ContestAnswer_Re(const ContestAnswer_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),questionid(rhs.questionid),result(rhs.result)
+			,score(rhs.score),sum(rhs.sum),star_amount(rhs.star_amount)
+			,right_amount(rhs.right_amount),series_right(rhs.series_right),answer(rhs.answer)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ContestAnswer_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << questionid;
+			os << result;
+			os << score;
+			os << sum;
+			os << star_amount;
+			os << right_amount;
+			os << series_right;
+			os << answer;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> questionid;
+			os >> result;
+			os >> score;
+			os >> sum;
+			os >> star_amount;
+			os >> right_amount;
+			os >> series_right;
+			os >> answer;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

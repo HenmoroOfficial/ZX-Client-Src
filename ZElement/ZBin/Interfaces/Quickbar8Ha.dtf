@@ -1,0 +1,23 @@
+DIALOG "Win_Quickbar8Ha" 0 0 295 41 0 1 10 "Window\对话框_标准边框.dds" "" "" 0 0 -1 -1 "" 0 0 96 96 96 255 1
+STILLIMAGEBUTTON "Btn_New" "new" "SFX\Interface\ClickB.wav" 6 16 9 9 0 0 0 0 2 15 255 0 255 255 "Button\快捷栏_选择1.bmp" "Button\快捷栏_选择2.bmp" 3 1
+STILLIMAGEBUTTON "Btn_Other" "openextra" "SFX\Interface\ClickB.wav" 6 4 9 12 0 0 0 0 4 15 255 0 255 255 "Button\按钮_a1.bmp" "Button\按钮_a2.bmp" 5 1
+IMAGEPICTURE "Item_1" "" "" 16 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_2" "" "" 49 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_3" "" "" 82 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_4" "" "" 115 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_5" "" "" 148 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_6" "" "" 181 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_7" "" "" 214 5 32 32 1 0 "Window\图标_物品栏.dds"
+IMAGEPICTURE "Item_8" "" "" 247 5 32 32 1 0 "Window\图标_物品栏.dds"
+LABEL "Control_698081802" "" "" 33 23 0 0 6 8 7 255 255 255 255
+LABEL "Control_630655460" "" "" 64 23 0 0 8 8 9 255 255 255 255
+LABEL "Control_40766550" "" "" 98 23 0 0 10 8 11 255 255 255 255
+LABEL "Control_178644466" "" "" 131 23 0 0 12 8 13 255 255 255 255
+LABEL "Control_74144360" "" "" 164 23 0 0 14 8 15 255 255 255 255
+LABEL "Control_512603718" "" "" 196 23 0 0 16 8 17 255 255 255 255
+LABEL "Control_9232920" "" "" 230 23 0 0 18 8 19 255 255 255 255
+LABEL "Control_367936386" "" "" 263 23 0 0 20 8 21 255 255 255 255
+STILLIMAGEBUTTON "Btn_Add" "add" "SFX\Interface\ClickB.wav" 280 7 9 9 0 0 0 0 22 15 255 0 255 255 "Button\按钮_u1.bmp" "Button\按钮_u2.bmp" 23 1
+STILLIMAGEBUTTON "Btn_Minus" "minus" "SFX\Interface\ClickB.wav" 280 28 9 9 0 0 0 0 24 15 255 0 255 255 "Button\按钮_D1.bmp" "Button\按钮_d2.bmp" 25 1
+STILLIMAGEBUTTON "Btn_Vertigo" "switch" "SFX\Interface\ClickB.wav" 281 16 9 12 0 0 0 0 26 15 255 255 255 255 "Button\按钮_水平1.bmp" "Button\按钮_水平2.bmp" 27 1
+IMAGEPICTURE "Control_554642718" "" "" 6 26 9 12 1 0 "Extra\复选框_快捷栏单.bmp"

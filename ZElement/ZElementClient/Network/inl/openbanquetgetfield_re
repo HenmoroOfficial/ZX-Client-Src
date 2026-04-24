@@ -1,0 +1,44 @@
+	public:
+		unsigned short retcode;
+		std::vector<GOpenBanquetRoleInfo> red_team;
+		std::vector<GOpenBanquetRoleInfo> blue_team;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_OPENBANQUETGETFIELD_RE };
+	public:
+		OpenBanquetGetField_Re() { type = PROTOCOL_OPENBANQUETGETFIELD_RE; }
+		OpenBanquetGetField_Re(void*) : Protocol(PROTOCOL_OPENBANQUETGETFIELD_RE) { }
+		OpenBanquetGetField_Re (unsigned short l_retcode,const std::vector<GOpenBanquetRoleInfo>& l_red_team = std::vector<GOpenBanquetRoleInfo>(),const std::vector<GOpenBanquetRoleInfo>& l_blue_team = std::vector<GOpenBanquetRoleInfo>(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),red_team(l_red_team),blue_team(l_blue_team)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_OPENBANQUETGETFIELD_RE;
+		}
+
+		OpenBanquetGetField_Re(const OpenBanquetGetField_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),red_team(rhs.red_team),blue_team(rhs.blue_team)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new OpenBanquetGetField_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << red_team;
+			os << blue_team;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> red_team;
+			os >> blue_team;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 20480; }

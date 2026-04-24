@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		unsigned int factionid;
+		int invitee;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONRECRUIT };
+	public:
+		FactionRecruit() { type = PROTOCOL_FACTIONRECRUIT; }
+		FactionRecruit(void*) : Protocol(PROTOCOL_FACTIONRECRUIT) { }
+		FactionRecruit (int l_roleid,unsigned int l_factionid,int l_invitee,
+			char l_scale = 0)
+			 : roleid(l_roleid),factionid(l_factionid),invitee(l_invitee)
+			,scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONRECRUIT;
+		}
+
+		FactionRecruit(const FactionRecruit &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),factionid(rhs.factionid),invitee(rhs.invitee)
+			,scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionRecruit(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << factionid;
+			os << invitee;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> factionid;
+			os >> invitee;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

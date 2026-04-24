@@ -1,0 +1,59 @@
+	public:
+		unsigned short retcode;
+		int roleid;
+		int starttime;
+		char battle_type;
+		std::vector<GBattleRole> red_team;
+		std::vector<GBattleRole> blue_team;
+		unsigned int localsid;
+		char iscross;
+		enum { PROTOCOL_TYPE = PROTOCOL_BATTLEGETFIELD_RE };
+	public:
+		BattleGetField_Re() { type = PROTOCOL_BATTLEGETFIELD_RE; }
+		BattleGetField_Re(void*) : Protocol(PROTOCOL_BATTLEGETFIELD_RE) { }
+		BattleGetField_Re (unsigned short l_retcode,int l_roleid,int l_starttime = 0,
+			char l_battle_type = 0,const std::vector<GBattleRole>& l_red_team = std::vector<GBattleRole>(),const std::vector<GBattleRole>& l_blue_team = std::vector<GBattleRole>(),
+			unsigned int l_localsid = 0,char l_iscross = 0)
+			 : retcode(l_retcode),roleid(l_roleid),starttime(l_starttime)
+			,battle_type(l_battle_type),red_team(l_red_team),blue_team(l_blue_team)
+			,localsid(l_localsid),iscross(l_iscross)
+		{
+			type = PROTOCOL_BATTLEGETFIELD_RE;
+		}
+
+		BattleGetField_Re(const BattleGetField_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),starttime(rhs.starttime)
+			,battle_type(rhs.battle_type),red_team(rhs.red_team),blue_team(rhs.blue_team)
+			,localsid(rhs.localsid),iscross(rhs.iscross) { }
+
+		GNET::Protocol *Clone() const { return new BattleGetField_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << starttime;
+			os << battle_type;
+			os << red_team;
+			os << blue_team;
+			os << localsid;
+			os << iscross;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> starttime;
+			os >> battle_type;
+			os >> red_team;
+			os >> blue_team;
+			os >> localsid;
+			os >> iscross;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 20480; }

@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		std::vector<int> fields;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGAVAILABLELIST_RE };
+	public:
+		InstancingAvailableList_Re() { type = PROTOCOL_INSTANCINGAVAILABLELIST_RE; }
+		InstancingAvailableList_Re(void*) : Protocol(PROTOCOL_INSTANCINGAVAILABLELIST_RE) { }
+		InstancingAvailableList_Re (int l_retcode,int l_roleid,const std::vector<int>& l_fields = std::vector<int>(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),fields(l_fields)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGAVAILABLELIST_RE;
+		}
+
+		InstancingAvailableList_Re(const InstancingAvailableList_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),fields(rhs.fields)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingAvailableList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << fields;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> fields;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 4096; }

@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int battle_id;
+		int factionid;
+		int day;
+		enum { PROTOCOL_TYPE = PROTOCOL_SIEGECHALLENGE };
+	public:
+		SiegeChallenge() { type = PROTOCOL_SIEGECHALLENGE; }
+		SiegeChallenge(void*) : Protocol(PROTOCOL_SIEGECHALLENGE) { }
+		SiegeChallenge (int l_roleid,int l_battle_id,int l_factionid,
+			int l_day)
+			 : roleid(l_roleid),battle_id(l_battle_id),factionid(l_factionid)
+			,day(l_day)
+		{
+			type = PROTOCOL_SIEGECHALLENGE;
+		}
+
+		SiegeChallenge(const SiegeChallenge &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),battle_id(rhs.battle_id),factionid(rhs.factionid)
+			,day(rhs.day) { }
+
+		GNET::Protocol *Clone() const { return new SiegeChallenge(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << battle_id;
+			os << factionid;
+			os << day;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> battle_id;
+			os >> factionid;
+			os >> day;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 131072; }

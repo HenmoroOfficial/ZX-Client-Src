@@ -1,0 +1,1514 @@
+/*
+ * FILE: EC_HostPlayer.h
+ *
+ * DESCRIPTION: 
+ *
+ * CREATED BY: Duyuxin, 2004/9/1
+ *
+ * HISTORY: 
+ *
+ * Copyright (c) 2004 Archosaur Studio, All Rights Reserved.
+ */
+
+#pragma once
+
+//#include "EC_Player.h"
+//#include "EC_CameraCtrl.h"
+//#include "EC_HostMove.h"
+#include "EC_IvtrTypes.h"
+#include "AArray.h"
+#include "EC_RoleTypes.h"
+#include "..\Network\EC_NetDef.h"
+
+///////////////////////////////////////////////////////////////////////////
+//	
+//	Define and Macro
+//	
+///////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////
+//	
+//	Types and Global variables
+//	
+///////////////////////////////////////////////////////////////////////////
+
+//class A3DGFXEx;
+//class A2DSprite;
+//class AMSoundBuffer;
+//class CECObjectWork;
+class CECInventory;
+class CECDealInventory;
+class CECNPCInventory;
+class CECIvtrItem;
+class CECIvtrEquip;
+//class CECShortcutSet;
+class CECSkill;
+//class CECTaskInterface;
+//class CECHPWorkMan;
+//class CECFriendMan;
+//class CECMatter;
+//class CECIvtrArrow;
+class CECPetCorral;
+//class CECComboSkill;
+//class CECLoginPlayer;
+//class CECCameraPath;
+//class CECCutscene;
+/*
+struct CDR_INFO;
+struct ON_AIR_CDR_INFO;
+
+namespace GNET
+{
+	class PlayerBriefInfo;
+	class Octets;
+	class GamedataSend;
+}
+*/
+namespace S2C
+{
+	struct cmd_self_info_1;
+	struct cmd_player_revive;
+	struct self_buff_notify;
+}
+
+struct PosPair	//	To deal with precision problem caused by coordinate transformation 
+{
+	bool                bRecorded;
+	A3DVECTOR3          vRelPos;
+	A3DVECTOR3          vAbsPos;
+    int                 iCarrierID;
+
+	PosPair::PosPair() : bRecorded(false), vRelPos(0.0f), vAbsPos(0.0f), iCarrierID(0) {}
+};
+
+
+///////////////////////////////////////////////////////////////////////////
+//	
+//	Declare of Global functions
+//	
+///////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////
+//	
+//	Class CECHostPlayer
+//	
+///////////////////////////////////////////////////////////////////////////
+//Added 2010-07-14
+/*struct ROLEBASICPROP
+{
+	int		iProfession;//	Profession
+	int 	iLevel;		//	Level
+	int		iPKLevel;	//	PK level
+	int		iCurHP;		//	Current HP
+	int		iCurMP;		//	Current MP
+	int		iTalismanStamina;
+	double	exp;		//	Experience
+	int		iStatusPt;	//	Status point
+};*/
+//Added end.
+
+class CECHostPlayer/* : public CECPlayer*/
+{
+public:		//	Types
+
+	//	Move relative direction
+/*	enum
+	{
+		MD_FORWARD	= 0x01,	
+		MD_RIGHT	= 0x02,
+		MD_BACK		= 0x04,
+		MD_LEFT		= 0x08,
+		MD_ABSUP	= 0x10,
+		MD_ABSDOWN	= 0x20,
+		MD_ALL		= 0x3f,
+	};
+
+	//	Turning camera flag
+	enum
+	{
+		TURN_LBUTTON = 0x01,
+		TURN_RBUTTON = 0x02,
+	};
+
+	//	Mask of some special extend states which will influence host game logic.
+	//	Logic Influence Extned states
+	enum
+	{
+		LIES_SLEEP		= 0x0001,
+		LIES_STUN		= 0x0002,
+		LIES_ROOT		= 0x0004,
+		LIES_NOFGIHT	= 0x0008,
+
+		LIES_DISABLEFIGHT	= 0x000B,
+	};
+
+	//	Behavior id used by CanDo()
+	enum
+	{
+		CANDO_SITDOWN = 0,
+		CANDO_MOVETO,
+		CANDO_MELEE,
+		CANDO_ASSISTSEL,
+		CANDO_FLY,
+		CANDO_PICKUP,
+		CANDO_TRADE,
+		CANDO_PLAYPOSE,
+		CANDO_SPELLMAGIC,
+		CANDO_USEITEM,
+		CANDO_JUMP,
+		CANDO_FOLLOW,
+		CANDO_AUTOMOVE,
+		CANDO_GATHER,
+		CANDO_BOOTH,
+		CANDO_FLASHMOVE,
+		CANDO_BINDBUDDY,
+		CANDO_DUEL,
+		CANDO_SUMMONPET,
+		CANDO_PRODUCE,
+		CANDO_BINDMULTIBUDDY,
+		CANDO_BODYCHANGE,
+	};
+
+	//	Move sound
+	enum
+	{
+		MOVESND_WALK = 0,
+		MOVESND_RUN,
+		MOVESND_SWIM,
+		MOVESND_FLOAT,
+		MOVESND_JUMP,
+		MOVESND_FALL,
+		MOVESND_QUIET,
+		MOVESND_TIGER_WALK,
+		MOVESND_TIGER_RUN,
+		MOVESND_PET_HORSE_WALK,
+		MOVESND_PET_HORSE_RUN,
+		MOVESND_PET_BEAR_WALK,
+		MOVESND_PET_BEAR_RUN,
+		MOVESND_PET_DINASAUR_WALK,
+		MOVESND_PET_DINASAUR_RUN,
+		MOVESND_PET_PUMA_WALK,
+		MOVESND_PET_PUMA_RUN,
+		MOVESND_PET_QILIN_WALK,
+		MOVESND_PET_QILIN_RUN,
+		NUM_MOVESND,
+	};
+	
+	enum
+	{
+		FASHION_HOTKEY_NUM = 8,
+	};
+	//	Current ground information
+	struct GNDINFO
+	{
+		float		fGndHei;		//	Ground height
+		float		fWaterHei;		//	Water height
+		A3DVECTOR3	vGndNormal;		//	Terrain normal
+		bool		bOnGround;		//	On ground flag
+	};
+
+	//	Breath data
+	struct BREATHDATA
+	{
+		bool		bDiving;		//	true, is diving
+		int			iCurBreath;
+		int			iMaxBreath;
+	};
+
+	//	Team invite info.
+	struct TEAMINV
+	{
+		int		idLeader;
+		int		seq;
+		WORD	wPickFlag;
+	};
+*/
+	//	Cool time
+	struct COOLTIME
+	{
+		int		iCurTime;
+		int		iMaxTime;
+	};
+
+	//	Battle info.
+/*	struct BATTLEINFO
+	{
+		int		idBattle;		//	Battle id
+		int		iResult;		//	Battle result
+		int		iResultCnt;		//	Result time counter
+		int		iMaxScore_I;	//	Maximum score of invader
+		int		iMaxScore_D;	//	Maximum score of defender
+		int		iScore_I;		//	Score of invader
+		int		iScore_D;		//	Score of defender
+		int		iFlagAttacker;
+		int		iFlagDefender;
+		int		iResAttacker;
+		int		iResDefender;
+		int		iEndTime;		//	Battle end time
+		int		iDefenderFaction;   // 守方帮派
+        int		iAttackerFaction;   // 攻方帮派
+	};
+
+	struct WAR_INFO
+	{
+		int		iBattleID;
+		int		iWarAttackFID;
+		int		iWarAssistFID;
+		int		iWarDefenceFID;
+		int		iEndTime;		//	Battle end time
+	};
+*/
+	struct REBORN_INFO
+	{
+		short prof;     //本次转生时的职业
+		short level;    //本次转生时的等级
+	};
+/*
+	//	Apoise skill info
+	struct APOISESKILL
+	{
+		int		idSkill;		//	Skill id
+		int		iSkillLvl;		//	Skill level
+//		int		iTargetClass;	//	Target class
+		int		iItemSlot;		//	Slot of item
+		int		tidItem;		//	Item id
+
+//		bool IsPosSkill();
+	};
+	
+	struct TRANSFIGUREPROP
+	{
+		bool    bShieldSkill;
+		bool	bCanFight;
+		bool	bCanRunHelper;
+		bool    bCanUseMedicine;
+		int		iMoveType;
+		int		level;
+		int		exp_level;
+	};
+	// transfigured shape move type 
+	enum
+	{
+		TRANSFIGURE_MOVE_FREE = 0,
+		TRANSFIGURE_MOVE_FORBID,
+		TRANSFIGURE_MOVE_RANDOM,
+	};
+	//	Target state
+	enum
+	{
+		TARGET_OK = 0,			//	Good target
+		TARGET_OKINTHEORY,		//	Good target in theory
+		TARGET_NOTOK,			//	Bad target in both theory and fact
+		TARGET_INVALID,			//	Totally invalid target
+	};
+	
+	struct FASHION_HOTKEY
+	{
+		int id_head;
+		int id_body;
+		int id_shoe;
+	};
+	struct SKILL_COOL_BACKUP
+	{
+		int skill_id;
+		int cool_time;
+	};
+*/
+	typedef abase::vector<REBORN_INFO> RebornInfoVec;
+
+/*	friend class CECHPWorkStand;
+	friend class CECHPWorkTrace;
+	friend class CECHPWorkUse;
+	friend class CECHPWorkDead;
+	friend class CECHPWorkMelee;
+	friend class CECHPWorkMove;
+	friend class CECHPWorkFollow;
+	friend class CECHPWorkAutoMove;
+	friend class CECHPWorkFly;
+	friend class CECHPWorkFall;
+	friend class CECHPWorkSit;
+	friend class CECHPWorkSpell;
+	friend class CECHPWorkPick;
+	friend class CECHPWorkGeneralOprt;
+	friend class CECHPWorkRevive;
+	friend class CECHPWorkFMove;
+	friend class CECHostInputFilter;
+
+	friend class CECHostMove;
+	friend class CECHPWorkMan;
+	friend class CECPlayer;
+*/
+public:		//	Constructor and Destructor
+
+	CECHostPlayer(/*CECPlayerMan* pPlayerMan*/);
+	virtual ~CECHostPlayer();
+
+public:		//	Attributes
+
+public:		//	Operations
+
+	//	Initlaize object
+	bool Init(const S2C::cmd_self_info_1& Info);
+/*	GNET::GamedataSend gen_self_info();
+	GNET::GamedataSend gen_self_info_00();
+	GNET::GamedataSend gen_cmd_own_ext_prop();
+	GNET::GamedataSend gen_cmd_get_own_money();
+	GNET::GamedataSend gen_player_cash();
+	GNET::GamedataSend gen_pk_value();
+	GNET::GamedataSend gen_mafia_contribution();
+	GNET::GamedataSend gen_region_reputation();
+	GNET::GamedataSend gen_task_data();
+	GNET::GamedataSend gen_skill_data();
+	GNET::GamedataSend gen_title_list();
+	GNET::GamedataSend gen_sel_target();
+	bool gen_record_msg(ECMSG& msg);
+	GNET::Octets gen_skill_addon_data();
+	void set_skill_addon(GNET::Octets& o);
+*/	//	Release object
+	virtual void Release();
+	// Release models
+/*	void ReleaseModels();
+	// Reload models
+	void ReloadModels();
+
+	//	When all initial data is ready, this function is called
+	void OnAllInitDataReady();
+
+	//	Tick routine
+	virtual bool Tick(DWORD dwDeltaTime);
+	//	Render routine
+	virtual bool Render(CECViewport* pViewport, int iRenderFlag=0);
+	//	Render when player is opening booth
+	virtual bool RenderForBooth(CECViewport* pViewport, int iRenderFlag=0);
+	//	Render for UI
+	virtual bool RenderForUI(CECViewport * pViewport);
+	
+	//	Update camera in following mode
+	void UpdateFollowCamera(bool bRunning, DWORD dwTime);
+
+	//	Process message
+	virtual bool ProcessMessage(const ECMSG& Msg);
+
+	//	Set absolute position
+	virtual void SetPos(const A3DVECTOR3& vPos);
+	//	Set absolute forward and up direction
+	virtual void SetDirAndUp(const A3DVECTOR3& vDir, const A3DVECTOR3& vUp);	
+	//	Player was killed
+	virtual void Killed(int idKiller);
+	//	Get off pet
+	virtual void GetOffPet();
+
+	//	Do an emote action
+	virtual bool DoEmote(int idEmote);
+	//	Start general operation
+	virtual void StartGeneralOprt(int op_id, int duration);
+	//	Stop general operation
+	virtual void StopGeneralOprt(int op_id);
+	//	Search the full suite
+	virtual int SearchFullSuite();
+*/	//	Get number of equipped items of specified suite
+	virtual int GetEquippedSuiteItem(int idSuite, int* aItems=NULL);
+
+/*	void SetMoveArrow(bool bFlag, const A3DVECTOR3& vecDir, const A3DVECTOR3& vecPos) { m_bShowMoveArrow = bFlag; m_vecMoveArrow = vecDir; m_vecMovePos = vecPos; }
+	void SetTempArrow(bool bFlag, const A3DVECTOR3& vecDir, const A3DVECTOR3& vecPos) { m_bShowTempArrow = bFlag; m_vecTempArrow = vecDir; m_vecTempPos = vecPos; }
+	void SetTeamArrow(bool bFlag, const A3DVECTOR3& vecDir, const A3DVECTOR3& vecPos) { m_bShowTeamArrow = bFlag; m_vecTeamArrow = vecDir; m_vecTeamPos = vecPos; }
+	void SetRequestArrow(bool bFlag, const A3DVECTOR3& vecDir, const A3DVECTOR3& vecPos) { m_bShowRequestArrow = bFlag; m_vecRequestArrow = vecDir; m_vecRequestPos = vecPos; }
+	void ClearTargetArrows() { m_vecTargetArrows.RemoveAll(false); m_vecTargetPos.RemoveAll(false); }
+	void AddTargetArrow(const A3DVECTOR3& vecDir, const A3DVECTOR3& vecPos) { m_vecTargetArrows.Add(vecDir); m_vecTargetPos.Add(vecPos); }
+	CECModel * GetModelTray() { return m_pModelTray; }
+	CECModel * GetModelMoveArrow() { return m_pModelMoveArrow; }
+	CECModel * GetModelTempArrow() { return m_pModelTempArrow; }
+	CECModel * GetModelTeamArrow() { return m_pModelTeamArrow; }
+	CECModel * GetModelRequestArrow() { return m_pModelTeamArrow; }
+	CECModel * GetModelTargetArrow() { return m_pModelTargetArrow; }
+	
+	//	Get camera coordinates
+	A3DCoordinate* GetCameraCoord() { return &m_CameraCoord; }
+	//	Get cameractrl
+	CECCamera* GetCameraCtrl() { return &m_CameraCtrl; }
+	//	Save configs data (shortcut, etc.) to specified buffer
+	bool SaveConfigData(void* pDataBuf, int* piSize);
+	//	Load configs data (shortcut, etc.) from specified buffer
+	bool LoadConfigData(const void* pDataBuf);
+
+	//	Revive
+	void Revive(const S2C::cmd_player_revive* pCmd);
+	//	Begin following the selected target
+	void BeginFollow(int idTarget);
+	
+	void BeginAutoMove();
+	bool EndAutoMove();
+
+
+	//	Level up
+	void LevelUp();
+	//	Task finish
+	void OnTaskFinished();
+	//	Hatch pet
+	bool HatchPet(int iIvtrIdx);
+	//	Restore pet
+	bool RestorePet(int iPetIdx);
+	//	Summon pet
+	bool SummonPet(int iPetIdx);
+	//	Recall pet
+	bool RecallPet();
+	//	Banish pet
+	bool BanishPet(int iPetIdx);
+	//	Get battle pet index
+	int GetBattlePetIndex();
+	//	Is host operating pet ?
+	int IsOperatingPet();
+	//	Get pet operation time counter
+	CECCounter& GetPetOptTime() { return m_PetOptCnt; }
+	//	Producing
+	bool IsProducing() const { return m_bProducing; }
+	void SetProducing(bool b) { m_bProducing = b; }
+
+	//	Prepare to begin NPC service
+	void PrepareNPCService(int idSev);
+	//	End NPC service
+	void EndNPCService();
+	//	Buy items from NPC
+	void BuyItemsFromNPC();
+	//	Sell items to NPC
+	void SellItemsToNPC();
+	//	Buy items from else player's booth
+	void BuyItemsFromBooth();
+	//	Sell items to else player's booth
+	void SellItemsToBooth();
+	//	When the booth we are visiting closed
+	void OnOtherBoothClosed();
+	//	Open booth
+	void OpenBooth(const ACHAR* szName);
+	//	Team invite
+	void TeamInvite(const GNET::PlayerBriefInfo& Info);
+
+	//	Commands ...
+	bool CmdSitDown(bool bSitDown);		//	Normal commands...
+	bool CmdWalkRun(bool bRun);
+	bool CmdNormalAttack(bool bMoreClose=false, bool bCombo=false, int idTarget=0, int iForceAtk=-1);
+	bool CmdFindTarget();
+	bool CmdAssistAttack();
+	bool CmdFly();
+	bool CmdPickup();
+	bool CmdGather();
+	bool CmdRushFly();
+	bool CmdBindBuddy(int idTarget);
+	bool CmdViewOtherEquips(int idTarget);
+	bool CmdAskDuel(int idTarget);
+	bool CmdInviteToTeam();				//	Team commands...
+	bool CmdLeaveTeam();
+	bool CmdKickTeamMember();
+	bool CmdFindTeam();
+	bool CmdStartTrade();				//	Trade commands...
+	bool CmdSellBooth();
+	bool CmdBuyBooth();
+	bool CmdStartPose(int iPose);		//	Pose commands...
+	bool CmdInviteToFaction();			//	Faction commands...
+	bool CmdPetCall();
+	bool CmdPetCombine1();
+	bool CmdPetCombine2();
+	bool CmdBindMultiBuddy(int idTarget);
+	bool CmdMultiBindKick(int idTarget);
+	bool CmdSetHideEquipMask(int mask);
+	bool CmdGetBattleInfo();
+
+
+*/	//	Get inventories interface
+	CECInventory* GetPack(int iPack);
+	CECInventory* GetPack() { return m_pPack; }
+	CECInventory* GetEquipment() { return m_pEquipPack; }
+/*	CECInventory* GetTrashBox() { return m_pTrashBoxPack; }
+	CECInventory* GetFactionTrashBox() { return m_pFactionTrashBoxPack; }
+	CECInventory* GetTaskPack() { return m_pTaskPack; }
+	CECInventory* GetPetPack() { return m_pPetPack; }
+	CECInventory* GetPetEquipPack() { return m_pPetEquipPack; }
+	CECDealInventory* GetDealPack() { return m_pDealPack; }
+	CECDealInventory* GetEPDealPack() { return m_pEPDealPack; }
+	CECDealInventory* GetBuyPack() { return m_pBuyPack; }
+	CECDealInventory* GetSellPack() { return m_pSellPack; }
+	CECNPCInventory* GetNPCSevPack(int n) { ASSERT(n >= 0 && n < NUM_NPCIVTR); return m_aNPCPacks[n]; }
+	CECDealInventory* GetBoothSellPack() { return m_pBoothSPack; }
+	CECDealInventory* GetBoothBuyPack() { return m_pBoothBPack; }
+	CECDealInventory* GetEPBoothSellPack() { return m_pEPBoothSPack; }
+	CECDealInventory* GetEPBoothBuyPack() { return m_pEPBoothBPack; }
+	CECInventory* GetEPEquipPack() { return m_pEPEquipPack; }
+	CECInventory* GetEPPetPack() { return m_pEPPetPack; }
+	CECInventory* GetEPPetEquipPack() { return m_pEPPetEquipPack; }
+	CECInventory* GetPocketPack() { return m_pPocketPack; }
+	CECInventory* GetFashionPack(){ return m_pFashionPack; }
+	CECInventory* GetHTFarmPack() { return m_pHTFarmPack; }
+
+	int GetTrashBoxMoneyCnt() const { return m_iTrashBoxMoneyCnt; }
+	//	Get detail data of host's specified item
+	void GetIvtrItemDetailData(int iPack, int iSlot);
+	//	Check whether player can use specified equipment
+	bool CanUseEquipment(CECIvtrEquip* pEquip);
+	//	Use specified inventory item in pack
+	bool UseItemInPack(int iPack, int iSlot);
+	//	Freeze / Unfreeze specified item
+	bool FreezeItem(int iIvtr, int iIndex, bool bFreeze, bool bFreezeByNet);
+	//	Check whether player can take specified matter
+	bool CanTakeItem(int idItem, int iAmount);
+
+	//	Carrier about
+	PosPair GetStartPosPair() const { return m_StartPosPair; } 
+	PosPair GetEndPosPair() const { return m_EndPosPair; } 
+    void SetStartPosPair(const PosPair& pairpos) { m_StartPosPair = pairpos; }
+    void SetEndPosPair(const PosPair& pairpos) { m_EndPosPair = pairpos; }
+		
+	//	Get shortsets
+	CECShortcutSet* GetShortcutSet1(int n) { ASSERT(n >= 0 && n < NUM_HOSTSCSETS1); return m_aSCSets1[n]; }
+	CECShortcutSet* GetShortcutSet2(int n) { ASSERT(n >= 0 && n < NUM_HOSTSCSETS2); return m_aSCSets2[n]; }
+	//	Apply shortcut of specified inventory item
+	bool ApplyItemShortcut(int iPack, int iSlot) { return UseItemInPack(iPack, iSlot); }
+	//	Apply shortcut of specified skill
+	bool ApplySkillShortcut(int idSkill, bool bCombo=false, int idSelTarget=0, int iForceAtk=-1);
+	//	Apply shortcut key up of specified skill 
+	bool ApplySkillShortcutUp(int idSkill, bool bCombo = false, int idSelTarget = 0, int iFroceAtk =-1);
+	//  蓄力技能记录对应的键码
+	void SetCurSkillKeyCode(unsigned int keycode) { m_iCurSkillKeyCode = keycode; }
+	unsigned int GetCurSkillKeyCode() const { return m_iCurSkillKeyCode; } 
+	//	Return to a target town through skill
+	bool ReturnToTargetTown(int idTarget);
+	//	Can do produce
+	bool CanDoProduce() { return CanDo(CANDO_PRODUCE); }
+
+	//	Get positive skill number
+	int GetPositiveSkillNum() { return m_aPtSkills.GetSize(); }
+	//	Get positive skill by index
+	CECSkill* GetPositiveSkillByIndex(int n) { return m_aPtSkills[n]; }
+	//	Get positive skill by id
+	CECSkill* GetPositiveSkillByID(int id, bool bSenior=false);
+	//	Get passive skill number
+	int GetPassiveSkillNum() { return m_aPsSkills.GetSize(); }
+	//	Get passive skill by index
+	CECSkill* GetPassiveSkillByIndex(int n) { return m_aPsSkills[n]; }
+	//	Get passive skill by id
+	CECSkill* GetPassiveSkillByID(int id, bool bSenior=false);
+	//  Get transfigure skill number
+	int GetTransfigureSkillNum() { return m_aTsSkills.GetSize(); }
+	//  Get transfigure skill by index
+	CECSkill* GetTransfigureSkillByIndex(int n) { return m_aTsSkills[n]; }
+	//  Get transfigure skill by id
+	CECSkill* GetTransfigureSkillByID(int id, bool bSenior = false);
+
+	//  Get transfigure skill number
+	int GetItemSkillNum() { return m_aImSkills.GetSize(); }
+	//  Get transfigure skill by index
+	CECSkill* GetItemSkillByIndex(int n) { return m_aImSkills[n]; }
+*/	//  Get transfigure skill by id
+	CECSkill* GetItemSkillByID(int id, bool bSenior = false);
+
+	//	Get skill by id
+/*	CECSkill* GetSkill(int id, bool bSenior=false);
+	//	Get else player's skill number
+	int GetElsePlayerSkillNum() { return m_aEPSkills.GetSize(); }
+	//	Get else player's skill by index
+	CECSkill* GetElsePlayerSkillByIndex(int n) { return m_aEPSkills[n]; }
+	//	Get else player's skill by id
+	CECSkill* GetElsePlayerSkillByID(int id, bool bSenior=false);
+	//	Check whether host can learn specified skill
+	int CheckSkillLearnCondition(int idSkill, bool bCheckBook);
+	//	Check whether host can cast specified skill
+	int CheckSkillCastCondition(CECSkill* pSkill);
+	//  Check whether specified item existed for skill to cost
+	//  检查释放该技能需要的物品是否存在
+	int CheckSkillCostItemCondition(CECSkill* pSkill);
+	//  向技能里面设置玩家属性
+	void SetPlayerProps(CECSkill* pSkill);
+	//	Get prepare skill
+	CECSkill* GetPrepSkill() { return m_pPrepSkill; }
+	//	Get skill ability
+	int GetSkillAbility(int idSkill);
+	//	Get skill ability percent
+	int GetSkillAbilityPercent(int idSkill);
+	//	Remove skill
+	void RemoveSkill(int idSkill);
+	//	Apply combo skill
+	bool ApplyComboSkill(int iGroup);
+	//	Clear combo skill
+	void ClearComboSkill();
+	//	Replace specified skill with it's senior skill
+	void ReplaceJuniorSkill(int idJuniorSkill, CECSkill* pSeniorSkill);
+	//	Get all skill level up
+	int GetAllSkillLevelUp() { return m_iAllSkillLvlUp; }
+	//	Insert addon skill
+	CECSkill* InsertAddonSkill(int idSkill, int lev);
+
+	//	Is host player trading ?
+	bool IsTrading() { return m_idTradePlayer ? true : false; }
+	//	Is host player open trash box ?
+	bool IsUsingTrashBox() const { return m_bUsingTrashBox; }
+	//	Is host in root state
+	bool IsRooting() { return (m_dwLIES & (LIES_ROOT | LIES_SLEEP | LIES_STUN)) ? true : false; }
+	//	Can player attack ?
+	bool CannotAttack() { return (m_dwLIES & LIES_DISABLEFIGHT) ? true : false; }
+	//	Is host in melee state ?
+	bool IsMeleeing() { return m_bMelee; }
+	//	Is host player talking with NPC ?
+	bool IsTalkingWithNPC() { return m_bTalkWithNPC; }
+	//	Is spelling magic
+	bool IsSpellingMagic();
+	//	Is spelling durative skill ?
+	bool IsSpellingDurativeSkill() { return IsSpellingMagic() && m_bSpellDSkill; }
+	//	Is flash moving ?
+	bool IsFlashMoving();
+	//	Is taking off ?
+	bool IsTakingOff();
+	//	Is jumping
+	bool IsJumping() const { return m_iJumpCount > 0; }
+	bool IsJumpInWater() const { return m_bJumpInWater; }
+	bool IsJumpByQingGong() const { return m_bJumpByQingGong; }
+
+	void SetJumpInWater(bool b) { m_bJumpInWater = b; }
+	void SetJumpByQingGong(bool b) { m_bJumpByQingGong = b; }
+	void ResetJump() { m_iJumpCount = 0; m_bJumpInWater = false; m_bJumpByQingGong = false; }
+	//	Is free falling
+	bool IsFalling() { return (m_iMoveEnv == MOVEENV_GROUND && !m_GndInfo.bOnGround); }
+	//	Is moving
+	bool IsMoving() { return m_iMoveMode != MOVE_STAND ? true : false; }
+	//	Is picking up something
+	bool IsPicking();
+	//	Is gathering resources
+	bool IsGathering();
+	//	Is operating
+	bool IsOperating();
+	//	Is reviving
+	bool IsReviving();
+	//	Is using item ?
+	bool IsUsingItem();
+	//	Is changing face ?
+	bool IsChangingFace() { return m_bChangingFace; }
+	//	Is doing session pose ?
+	bool DoingSessionPose();
+	//	Is adjust orient
+	bool IsAdjustOrient() { return m_bAdjustOrient; }
+	void SetAdjustOrient(bool bAdjust) { m_bAdjustOrient = bAdjust; }
+	//	Can left button turn camera
+	bool LeftButtonTurnCamera();
+	//	Does trash box have password ?
+	bool TrashBoxHasPsw() { return m_bTrashPsw; }
+	//	Decide target name color basing on target level
+	DWORD DecideTargetNameCol(int iTargetLevel);
+	//	Is all initial data ready ?
+	bool HostIsReady() { return m_bEnterGame; }
+	//	Is player moving
+	virtual bool IsPlayerMoving();
+	//	Is under water
+	bool IsUnderWater() { return m_iMoveEnv == MOVEENV_WATER ? true : false; }
+	//	Can jump or take off in water ?
+	bool CanTakeOffWater();
+	//	Get breath data
+	const BREATHDATA& GetBreathData() { return m_BreathData; }
+	//	Get the exp will lost if revived by other player
+	float GetReviveLostExp() { return m_fReviveExp; }
+	//	Get deadly strike rate
+	int GetDeadlyStrikeRate();
+	//	Is host in sliding state (in the state, host is sliding on slope) ?
+	bool InSlidingState();
+	//	Get left pariah time
+	DWORD GetPariahTime() { return m_dwPariahTime; }
+	//	Get battle info.
+	BATTLEINFO& GetBattleInfo() { return m_BattleInfo; }
+
+	bool IsInWar() const { return m_bInWar; }
+	void SetIsInWar(bool b) { m_bInWar = b; }
+	const WAR_INFO& GetWarInfo() const { return m_WarInfo; }
+	void SetWarInfo(const WAR_INFO& info) { m_WarInfo = info; }
+*/
+	RebornInfoVec& GetRebornInfo() { return m_RebornInfo; }
+/*
+	bool IsSafeLock() const { return m_bSafeLock; }
+	void SetSafeLock(bool b) { m_bSafeLock = b; }
+
+	//	On start binding buddy
+	virtual void OnStartBinding(int idMule, int idRider);
+*/
+	//	Get cool time
+	int GetCoolTime(int iIndex, int* piMax=NULL);
+	//Added 2010-07-14.
+	//	Get reborn count, just for compile.
+	int GetRebornCount() const { return 0; }
+	//	Get basic properties
+	ROLEBASICPROP& GetBasicProps() { return m_BasicProps; }
+	//	Is player in battle
+	bool IsInBattle() { return false; }
+	//	Get spouse
+	int GetSpouse() { return 0; }
+	//  Get race
+	int GetRace() { return 0; }
+	//	Get gender
+	int GetGender() { return 0; }
+	//	Get profession
+	int GetProfession() { return /*m_BasicProps.iProfession*/0; }
+	//	Is host a GM
+	bool IsGM() { return false; }
+	//	Get faction ID
+	int GetFactionID() { return 0; }
+	//
+	int GetCultivation() const { return 0; }
+	//
+	int GetRegionReputation(int iIndex) const { return 0; }
+	//	Get money amount
+	int GetMoneyAmount() { return 0; }
+	//Added end.
+	//	Get produce cool time
+/*	int GetProduceCoolTime(int iIndex, int* piMax=NULL);
+	//  Get SKill edit cool time
+	int GetSkillEditCoolTime(int iIndex, int* piMax=NULL);
+	//	Get gather counter
+	CECCounter& GetGatherCnt() { return m_GatherCnt; }
+	//	Get ext instance left time
+	int GetTimeToExitInstance()	{ return m_nTimeToExitInstance; }
+	//	Get bind command cool time counter
+	CECCounter& GetBindCmdCoolCnt() { return m_BindCmdCoolCnt; }
+	//	Get time counter of using item in pack
+	bool GetUsingItemTimeCnt(DWORD& dwCurTime, DWORD& dwMaxTime, int* piItem=NULL);
+
+	//	Get selected target
+	int GetSelectedTarget() { return m_idSelTarget; }
+	//	Get right button clicked player
+	int	GetClickedMan() { return m_idClickedMan; }
+	//	Get current service NPC
+	int GetCurServiceNPC() { return m_idSevNPC; }
+	//	Get object under cursor
+	int GetCursorHoverObject() { return m_idCurHover; }
+
+	//	Get active waypoint number
+	int GetWayPointNum() { return m_aWayPoints.GetSize(); }
+	//	Get way point
+	WORD GetWayPoint(int n) { return m_aWayPoints[n]; } 
+	//	Does host player have specified way point ?
+	bool HasWayPoint(WORD wID);
+
+	//	Get task interface
+	CECTaskInterface* GetTaskInterface() { return m_pTaskInterface; }
+	//	Get Portrait
+	A2DSprite* GetPortraitSprite() { return m_pSpritePortrait; }
+	//	Get friend manager
+	CECFriendMan* GetFriendMan() { return m_pFriendMan; }
+	//	Get move control
+	CECHostMove& GetMoveControl() { return m_MoveCtrl; }
+	//	Set player manager
+	void SetPlayerMan(CECPlayerMan* pPlayerMan) { m_pPlayerMan = pPlayerMan; }
+*/	//	Get pet corral object
+	CECPetCorral* GetPetCorral() { return m_pPetCorral; }
+	//  Get current pet id
+/*	int GetCurPetId() { return m_nCurPetId; }
+	//  Get current pet index
+	int GetCurPetIndex() { return m_nCurPetIndex; }
+	//  Get current pet maxhp
+	int GetCurPetMaxHp() { return m_nCurPetMaxHp; }
+	//  Get current pet maxvp
+	int GetCurPetMaxVp() { return m_nCurPetMaxVp; }
+	int GetPetCombinedType() { return m_nPetCombinedType; }
+	//  Get current pet index
+	void SetPetCivilization(int nCivilization) { m_nPetCivilization = nCivilization; }
+	int GetPetCivilization() { return m_nPetCivilization; }
+	void SetPetConstruction(int nConstruction) { m_nPetConstruction = nConstruction; }
+	int GetPetConstruction() { return m_nPetConstruction; }
+
+	// Host faction info
+	int GetLoyalty() const { return m_iLoyalty; } 	//	Get loyalty
+	void SetLoyalty(int l) { m_iLoyalty = l; }		//	Set loyalty
+	const ACHAR* GetNickname() const { return m_strNickname; } 	//	Get nickname
+	void SetNickname(const void* p, int len); 		//	Set nickname
+
+	// Recipe data info
+	void AddOneRecipe(unsigned short recipe_id) { m_RecipeData.push_back(recipe_id); }
+	int GetRecipeCount() const { return (int)m_RecipeData.size(); }
+	unsigned short GetRecipeID(int index) const { return m_RecipeData[index]; }
+*/	bool HasRecipe(unsigned short id) const
+	{
+		for (size_t i = 0; i < m_RecipeData.size(); i++)
+			if (m_RecipeData[i] == id)
+				return true;
+
+		return false;
+	}
+	void ClearRecipeData() { m_RecipeData.clear(); }
+	int GetProduceSkillLevel() const { return m_nProduceSkillLevel; }
+	void SetProduceSkillLevel(int nLev) { m_nProduceSkillLevel = nLev; }
+	int GetProduceSkillExp() const { return m_nProduceSkillExp; }
+	void SetProduceSkillExp(int nExp) { m_nProduceSkillExp = nExp; }
+/*
+	int GetPKValue() const { return m_nPKValue; }
+	void SetPKValue(int nValue) { m_nPKValue = nValue; }
+
+	int GetBattleScore() const { return m_nBattleScore; }
+	void SetBattleScore(int nScore) { m_nBattleScore = nScore; }
+	
+	int GetSJBattleScore() const { return m_nSJBattleScore; }
+	
+	int GetTalismanValue() const { return m_nTalismanValue; }
+	void SetTalismanValue(int nValue) { m_nTalismanValue = nValue; }
+
+	int GetTalentValue() const { return m_nTalentValue; }
+	void SetTalentValue(int nValue) { m_nTalentValue = nValue; }
+
+	int GetCombatFaction() const { return m_nCombatFaction; }
+	void SetCombatFaction(int id) { m_nCombatFaction = id; }
+	void ResetFactionCombatCounts();
+	void ResetGuildWarStartCounts();
+	void ResetGuildWarWinCounts();
+	void ResetGuildWarLostCounts();
+
+	void SyncDemonstrationPlayer(CECLoginPlayer* pPlayer);
+
+	int GetCash() const { return m_nCash; }
+	void SetCash(int nCash) { m_nCash = nCash; }
+	int GetCashConsumed() const { return m_nCashConsumed; }
+	void SetCashConsumed(int n) { m_nCashConsumed = n; }
+	int GetAgentTime() const { return m_AgentTime; }
+	void SetAgentTime(int n) { m_AgentTime = n; }
+	int GetCurEmotionSet() const { return m_nCurEmotionSet; }
+
+	int GetContribution() const { return m_nContribution; }
+	void SetContribution(int iVal) { m_nContribution = iVal; }
+	int GetFamilyContrib() const { return m_nFamilyContrb; }
+	void SetFamilyContrib(int iVal) { m_nFamilyContrb = iVal; }
+
+	int GetTitleCount() const { return m_vecTitles.size(); }
+	short GetOneTitle(int nIndex) const { return m_vecTitles[nIndex]; }
+	void AddOneTitle(short title) { m_vecTitles.push_back(title); SortTitle(); }
+	void DelOneTitle(short title)
+	{
+		for (size_t i = 0; i < m_vecTitles.size(); i++)
+		{
+			if (m_vecTitles[i] == title)
+			{
+				m_vecTitles.erase(m_vecTitles.begin() + i);
+				break;
+			}
+		}
+
+		SortTitle();
+	}
+	void RemoveAllTitles() { m_vecTitles.clear(); }
+*/	bool HasTitle(short title)
+	{
+		for (size_t i = 0; i < m_vecTitles.size(); i++)
+		{
+			if (m_vecTitles[i] == title)
+				return true;
+		}
+
+		return false;
+	}
+
+	//	Get region reputation count
+/*	int GetRegionReputationCount() const { return m_vecRegionRepu.size(); }
+	int GetRegionReputation(int iIndex) const { return m_vecRegionRepu[iIndex]; }
+	//	Add region reputation
+	void AddRegionReputations(int count, int* repu)
+	{
+		m_vecRegionRepu.clear();
+
+		for (int i = 0; i < count; i++)
+			m_vecRegionRepu.push_back(repu[i]);
+	}
+	//	Update region reputation
+	void UpdateRegionReputation(int iIndex, int iRepu)
+	{
+		int diff = iRepu - m_vecRegionRepu[iIndex];
+		m_vecRegionRepu[iIndex] = iRepu;
+		BubbleText(BUBBLE_REGION_REPU, diff, 0, iIndex);
+	}
+
+	//	Check whether host can do a behavior
+	bool CanDo(int iThing);
+	//	Get force attack flag
+	bool GetForceAttackFlag(const DWORD* pdwParam);
+	//	Attackable judge
+	int AttackableJudge(int idTarget, bool bForceAttack);
+	//	Build PVP mask
+	BYTE BuildPVPMask(bool bForceAttack);
+	//	Get hpwork man
+	CECHPWorkMan * GetHPWorkMan()const{ return m_pWorkMan;}
+
+	//	Set state of under other player's attack
+	//	bIgnoreNormalAtk == true will ignore the attacks from ElsePlayers in Duel / Battle / Combat faction
+	void SetUnderAtk(bool bIgnoreNormalAtk = true);
+	//	Is Attacking another player, time elapsed since last attack another play is below 10000ms 
+	bool IsAttackingOtherPlayer() { return !m_ReAtkCnt.IsFull(); }
+	//	Under Wicked Attack (Host is white name and Host is not attacking any other player)
+	//	Only when the host player is in white name and not in battle / duel / combat faction
+	bool IsUnderWickedAtk();
+	
+	void SetBuffState(const S2C::self_buff_notify* cmd);
+	
+	FASHION_HOTKEY& GetFashionHotkey(int iIndex){ ASSERT(iIndex>=0 && iIndex<FASHION_HOTKEY_NUM); return m_aFashionHotKey[iIndex];}
+	void SetFashionHotkey(int iIndex, int id_head, int id_body, int id_shoe);
+	
+	void MoveItemPack2Pocket();
+	// 获取自身的推广码
+	const ACHAR* GetSelfReferenceCode() const;
+
+	void SetSelfReferenceCode(const void* p, int len); 	
+	// 获取自己上线的推广码
+	const ACHAR* GetReferralCode() const { return m_strReferralCode; }
+	void SetReferralCode(const void* p, int len);
+	
+	// 获取向服务器发送载体协议是否在冷却中
+	const bool GetCarrierCooling() const { return m_bCarrierCooling; }
+	void SetCarrierCooling(bool bCooling) { m_bCarrierCooling = bCooling; }
+
+	void SetBonus(int amount, int used){ m_iBonusAmount = amount; m_iBonusUsed = used; }
+	const int GetBonusAmount() const { return m_iBonusAmount;}
+	const int GetBonusUsed() const{ return m_iBonusUsed; }
+	
+	void ReceiveBonusExp(double exp);
+
+	void SetTransfigureProp(int id, int level, int exp_level);
+	
+	const TRANSFIGUREPROP& GetTransfigureProp() { return m_TransfigureProp; }
+
+	void ClearTransfigureProp();
+	
+	bool IsAutoTeam(int id, int iFactionId, int iFamilyId, ACHAR *strName = NULL);
+		//	Update equipment skins
+	bool UpdateEquipSkins(bool bAtOnce = false);
+	
+	int  GetRefineItemNum(int id, int level, int con);
+	//  is script trigger finish task
+	bool IsScriptFinishTask(int idTask);
+	//  is the new task will be finished by trigger script 
+	void AddScriptFinishTask(int idTask); 
+	void EraseScriptFinishTask(int idTask) { m_ScriptFinishTaskMap.erase(idTask); }
+
+	CECCameraPath*	GetCameraPath() { return m_pCameraPath; }
+	CECCutscene*	GetCutscene() { return m_pCutscene; }
+
+	//	start camera path
+	void StartCameraPath(DWORD idPath);
+
+	//	start cutscene
+	void StartCutscene(DWORD idCutscene, bool bNeedCheck = true);
+	
+	int GetFriendNum(); 
+	int GetTerritoryBattleInfo() {  return m_nTerritoryBattle; }
+	void SetTerritoryBattleInfo(int info) { m_nTerritoryBattle = info;}
+	void SetLastLogoutTime(int time) { m_iLastLogoutTime = time; }
+	int  GetLastLogoutTime() { return m_iLastLogoutTime; } 
+	int  GetTerritoryScore();
+	int  GetCircleScore();
+	
+	bool IsInSociety(int id, ACHAR* name = NULL);
+	unsigned short* GetCombineSkillElems(int skill_id, int& num);
+	void UpdateCombineSkillElems(int skill_id, int* data, int num);
+	
+	void Stand();
+*/
+	
+	int  GetSrcServerID() { return 0; }		// 跨服后，玩家来自哪个服务器的id 
+	//-------------------------------------------------------------------------
+	//Added 2012-09-12.
+	int  GetAstrologyEnergy() const { return 0; }
+	//-------------------------------------------------------------------------
+
+protected:	//	Attributes
+	ROLEBASICPROP	m_BasicProps;		//	Basic properties
+/*	float			m_fCameraPitch;		//	Camera pitch
+	float			m_fCameraYaw;		//	Camera yaw
+	A3DCoordinate	m_CameraCoord;		//	Camera coordinates
+	CECCamera		m_CameraCtrl;		//	Camera control
+	CECHostMove		m_MoveCtrl;			//	Move control
+	int				m_iTurnCammera;		//	0x01: left button turning camera's direction; 0x02 right button
+	DWORD			m_dwMoveRelDir;		//	Move relative direction flags
+	DWORD			m_dwOldDir;
+	float			m_fFlyHeight;		//	Fly height
+	bool			m_bBeRoot;			//	Host is in root state
+	bool			m_bMelee;			//	Host is in melee state
+	bool			m_bTrashPsw;		//	true, trash box has password
+	DWORD			m_dwLIES;			//	Logic-influence extend states
+	float			m_fTransparent;		//	Transparent of host model
+	bool			m_bEnterGame;		//	true, all data ready, can play game now
+	float			m_fReviveExp;		//	The exp will lost if revived by other player. < 0: invalid exp
+	int				m_nPKValue;			//	PK value
+	bool			m_bProducing;		//	Is Producing
+	int				m_nTalismanValue;
+	int				m_nTalentValue;
+	int				m_nBattleScore;
+	int				m_nSJBattleScore;	//  宋金战场的积分
+	int				m_iReviveCountDown; //  复活倒计时（目前用在宋金战场中）
+
+	bool			m_bUnderEPAtk;		//	Player under attack from another player
+
+	CECCounter		m_TaskCounter;		//	Task time counter
+	CECCounter		m_TrickCnt;			//	Trick action time counter
+	CECCounter		m_TransCnt;			//	Transparent counter
+
+	CECCounter		m_GatherCnt;		//	Gather counter
+	CECCounter		m_TLPosCnt;			//	Team leader position counter
+	CECCounter		m_TMPosCnt;			//	Team member position counter
+	CECCounter		m_UnderAtkCnt;		//	Time elapsed since last under attack time
+	CECCounter		m_ReAtkCnt;			//	Time elapsed since last attacking another player
+	CECCounter		m_RandomMoveCnt;	//  Counter for random move for transfigured mode
+	CECCounter		m_RandomStopCnt;	//  Counter for random stop for transfigured mode 
+	int				m_iRandomMoveDir;	//  direction for random move for transfigured mode
+*/	
+	COOLTIME		m_aCoolTimes[GP_CT_MAX];	//	Cool times
+/*	COOLTIME		m_aProduceCoolTimes[GP_CT_PRODUCE_END - GP_CT_PRODUCE_START];	//	Produce Cool times
+	COOLTIME		m_aSkillEditCoolTimes[GP_CT_COMBINE_EDIT_END - GP_CT_COMBINE_EDIT_START];
+	int				m_nTimeToExitInstance;		//	Exit current instance time left
+	CECCounter		m_BindCmdCoolCnt;	//	Bind command cool time counter
+	int				m_iGetFriendCnt;	//	Time counter used to get friend list
+	DWORD			m_dwPariahTime;		//	Left pariah time
+	CECCounter		m_PetOptCnt;		//	Pet operation time counter
+
+	int				m_idSelTarget;		//	Selected object's ID
+	int				m_idUCSelTarget;	//	Uncertificatedly selected object's ID
+	int				m_idPickMatter;		//	ID of matter will be picked
+	int				m_idClickedMan;		//	ID of the right button clicked player
+	int				m_idSevNPC;			//	Current service NPC
+	int				m_idTradePlayer;	//	ID of player who is trading with us
+	int				m_idCurHover;		//	ID of object under cursor
+	bool			m_bUsingTrashBox;	//	Whether being using trash box
+	bool			m_bTalkWithNPC;		//	true, is talking with NPC
+	bool			m_bChangingFace;	//	true, host is changing face
+	bool			m_bSpellDSkill;		//	true, is spelling durative skill
+
+	A3DVECTOR3		m_vVelocity;			//	Velocity
+	A3DVECTOR3		m_vAccel;				//	Accelerate
+	GNDINFO			m_GndInfo;
+	int				m_iOldWalkMode;			//	Copy of work mode
+	CDR_INFO*		m_pCDRInfo;
+	ON_AIR_CDR_INFO*m_pAirCDRInfo;
+	int				m_iJumpCount;
+	bool			m_bJumpInWater;
+	bool			m_bJumpByQingGong;		
+	float			m_fVertSpeed;
+	BREATHDATA		m_BreathData;			//	Breath data
+	BATTLEINFO		m_BattleInfo;
+
+	int				m_iTrashBoxMoneyCnt;
+	bool			m_bFirstTBOpen;			//	true, it's the first time trash box is opened
+	bool			m_bFirstFTBOpen;
+	int				m_idBoothTrade;			//	Booth trade id
+
+	bool			m_bAboutToFight;		//	true means the following start attack, cast skill or atkresult is valid
+*/
+	CECInventory*		m_pPack;			//	Normal package
+	CECInventory*		m_pEquipPack;		//	Equipment package
+	CECInventory*		m_pTaskPack;		//	Task package
+	CECInventory*		m_pPetPack;
+	CECInventory*		m_pPetEquipPack;
+	CECDealInventory*	m_pDealPack;		//	Deal package
+	CECDealInventory*	m_pEPDealPack;		//	Else player deal package
+	CECDealInventory*	m_pBuyPack;			//	Buy pack 
+	CECDealInventory*	m_pSellPack;		//	Sell pack
+	CECNPCInventory*	m_aNPCPacks[NUM_NPCIVTR];		//	NPC packages
+	CECInventory*		m_pTrashBoxPack;
+	CECInventory*		m_pFactionTrashBoxPack;
+	CECDealInventory*	m_pBoothSPack;		//	Booth pack for selling
+	CECDealInventory*	m_pBoothBPack;		//	Booth pack for buying
+	CECDealInventory*	m_pEPBoothSPack;	//	Else player's booth pack for selling
+	CECDealInventory*	m_pEPBoothBPack;	//	Else player's booth pack for buying
+	CECInventory*		m_pEPEquipPack;		//	Else player's equipment package
+	CECInventory*		m_pEPPetPack;		//	Else player's pet package
+	CECInventory*		m_pEPPetEquipPack;	//	Else player's pet equipment package
+	CECInventory*       m_pPocketPack;		//  新增随身包裹，存放宠物生产材料
+	CECInventory*		m_pFashionPack;		//	新增时装包裹，专门存放时装
+	CECInventory*		m_pHTFarmPack;		//  庄园农场包裹
+/*
+	bool				m_bCarrierCooling;	//	控制向服务器发送载体相关协议频度的参数
+	PosPair				m_StartPosPair;		//	carrier载体局部坐标变换相关辅助参数
+	PosPair				m_EndPosPair;
+
+	CECShortcutSet*		m_aSCSets1[NUM_HOSTSCSETS1];	//	Shortcut sets 1
+	CECShortcutSet*		m_aSCSets2[NUM_HOSTSCSETS2];	//	Shortcut sets 2
+
+	CECHPWorkMan*		m_pWorkMan;			//	Host work manager
+	int					m_iDelayWork;		//	Delayed work
+	CECTaskInterface*	m_pTaskInterface;	//	Task interface
+	CECSkill*			m_pPrepSkill;		//	The skill prepare to be spelled
+	CECFriendMan*		m_pFriendMan;		//	Friend manager
+*/	CECPetCorral*		m_pPetCorral;		//	Pet corral
+/*	CECComboSkill*		m_pComboSkill;		//	Combo skill
+	int					m_iAllSkillLvlUp;	//	All skill's level up
+
+	APtrArray<CECSkill*>		m_aPtSkills;	//	Positive skill array
+	APtrArray<CECSkill*>		m_aPsSkills;	//	Passive skill array
+	APtrArray<CECSkill*>		m_aTsSkills;	//	Transfigured skill array
+*/	APtrArray<CECSkill*>		m_aImSkills;	//  Item skill array
+/*	APtrArray<CECSkill*>		m_aEPSkills;	//	Else player's skill array
+	AArray<WORD, WORD>			m_aWayPoints;	//	Active way points
+	AArray<TEAMINV, TEAMINV&>	m_aTeamInvs;	//	Team invitations
+
+	A3DGFXEx*		m_pMoveTargetGFX;
+	A3DGFXEx*		m_pSelectedGFX;
+	A3DGFXEx*		m_pHoverGFX;
+	A3DGFXEx*		m_pFloatDust;
+	A2DSprite*		m_pSpritePortrait;			//	The portrait sprite
+
+	A2DSprite*		m_pDuelCountDown[3];		//	Duel count down sprites.
+	A2DSprite*		m_pDuelStates[3];			//	Duel state, 0 - start, 1 - victory, 2 - lost
+
+	A2DSprite*		m_pFactionCombatSprite;		//	Faction combat sprite;
+	int				m_nFactionCombatCounts;		//	Ticks for show faction combat sprite;
+
+	// guild war sprites.
+	A2DSprite*		m_pGuildWarStartSprite;		//	Faction combat sprite;
+	int				m_nGuildWarStartCounts;		//	Ticks for show guild war sprite
+	A2DSprite*		m_pGuildWarWinSprite;		//	Faction combat sprite;
+	int				m_nGuildWarWinCounts;		//	Ticks for show guild war sprite
+	A2DSprite*		m_pGuildWarLostSprite;		//	Faction combat sprite;
+	int				m_nGuildWarLostCounts;		//	Ticks for show guild war sprite
+	
+	AMSoundBuffer*	m_aMoveSnds[NUM_MOVESND];	//	Move sounds
+	AMSoundBuffer*	m_pCurMoveSnd;				//	Current move sound
+
+	// Direction Indicator
+	CECModel *		m_pModelTray;				//	Direction indicator -- tray
+	CECModel *		m_pModelMoveArrow;			//	Direction indicator -- move arrow
+	CECModel *		m_pModelTempArrow;			//	Direction indicator -- temp target arrow
+	CECModel *		m_pModelTargetArrow;		//	Direction indicator -- target arrow
+	CECModel *		m_pModelTeamArrow;			//	Direction indicator -- team arrow
+	CECModel *		m_pModelRequestArrow;		//	Direction indicator -- npc request arrow
+	CECModel *		m_pModelMoveCursor;			//	Position indicator -- move cursor
+	CECModel *		m_pModelTempCursor;			//	Position indicator -- temp target cursor
+	CECModel *		m_pModelTargetCursor;		//	Position indicator -- target cursor
+	CECModel *		m_pModelTeamCursor;			//	Position indicator -- team cursor
+	CECModel *		m_pModelRequestCursor;		//	Position indicator -- npc request cursor
+
+	bool			m_bShowMoveArrow;			//	Flag indicate whether or not show move arrow indicator
+	bool			m_bShowTempArrow;			//	Flag indicate whether or not show temp target arrow indicator
+	bool			m_bShowTeamArrow;			//	Flag indicate whether or not show team arrow indicator
+	bool			m_bShowRequestArrow;		//	Flag indicate whether or not show npc request arrow indicator
+	A3DVECTOR3		m_vecMoveArrow;				//	Direction of move arrow indicator
+	A3DVECTOR3		m_vecTempArrow;				//	Direction of temp target arrow indicator
+	A3DVECTOR3		m_vecTeamArrow;				//	Direction of team arrow indicator
+	A3DVECTOR3		m_vecRequestArrow;			//	Direction of npc request arrow indicator
+	AArray<A3DVECTOR3, const A3DVECTOR3&> m_vecTargetArrows;//  Directions of target arrow indicator
+	A3DVECTOR3		m_vecMovePos;				//	Position of move arrow indicator
+	A3DVECTOR3		m_vecTempPos;				//	Position of temp target arrow indicator
+	A3DVECTOR3		m_vecTeamPos;				//	Position of team arrow indicator
+	A3DVECTOR3		m_vecRequestPos;			//	Position of npc request arrow indicator
+	AArray<A3DVECTOR3, const A3DVECTOR3&> m_vecTargetPos;//  Positions of target arrow indicator
+
+	CECCameraPath*	m_pCameraPath;
+	CECCutscene*	m_pCutscene;
+
+	// Host faction info
+	int				m_iLoyalty;					//	Loyalty
+	ACString		m_strNickname;				//	Nick name
+
+	// Host skill data has been inited
+	bool			m_bSkillDataInited;			//	flag indicates skill data has been set
+	bool			m_bTransfigureSkillDataInited; // flag indicates transfigure skill data has been set
+	bool			m_bCombineSkillDataInited;
+*/	// Host recipe info
+	abase::vector<unsigned short> m_RecipeData;
+	int m_nProduceSkillLevel;
+	int m_nProduceSkillExp;
+/*
+	int m_nCash;
+	int m_nCashConsumed;
+	int m_AgentTime;
+	// Current emotion set
+	int				m_nCurEmotionSet;
+*/	abase::vector<short> m_vecTitles;
+/*	abase::vector<int> m_vecRegionRepu;	//	RegionReputation
+	int m_nContribution;
+	int m_nFamilyContrb;
+
+	// Combat faction
+	int m_nCombatFaction;
+
+	bool			m_bInWar;
+	WAR_INFO		m_WarInfo;
+*/
+	RebornInfoVec	m_RebornInfo;
+/*
+	// Host pet info
+	int m_nCurPetId;
+	int m_nCurPetIndex;
+	int m_nCurPetMaxHp;
+	int m_nCurPetMaxVp;
+	int m_nPetCivilization;
+	int m_nPetConstruction;
+	int m_nPetCombinedType;
+	
+	bool m_bSafeLock;
+
+	APOISESKILL m_ApoiseSkill;
+	FASHION_HOTKEY m_aFashionHotKey[FASHION_HOTKEY_NUM];
+	
+	ACString	m_strSelfReferenceCode;
+	ACString	m_strReferralCode;
+
+	int m_iBonusAmount;
+	int m_iBonusUsed;
+	unsigned int m_iCurSkillKeyCode;
+	TRANSFIGUREPROP m_TransfigureProp;
+	abase::hash_map<int,int> m_TsSkillCoolDown;
+	bool		m_bFlyingOff;		// 正在起飞
+	CECCounter	m_FlyingOffCnt;		// 起飞动作计时器
+	abase::hash_map<unsigned short,bool> m_ScriptFinishTaskMap;
+	CECCounter  m_SkillCoolCnt;		// 技能冷却提示的计时器
+	int			m_nTerritoryBattle;	// 是否在领土战战场中
+	int			m_iLastLogoutTime;
+	A3DVECTOR3  m_vCachePos;
+	bool		m_bHasCachePos;
+//	DWORD m_dwHideEquipMaskBackUp;
+//	int m_aBackUpEquips[SIZE_EQUIPIVTR];
+*/	
+protected:	//	Operations
+
+	//	Load host resources
+//	bool LoadResources();
+	//	When all resources are ready, this function is called
+//	virtual void OnAllResourceReady();
+//	virtual bool SetPetLoadResult(CECModel* pPetModel);
+	//	When weapon has been changed, this function will be called
+//	virtual void OnWeaponChanged();
+
+	//	Create inventories
+	bool CreateInventories();
+	//	Create shortcut sets
+/*	bool CreateShortcutSets();
+	//	Update item shortcut when item position changed
+	void UpdateMovedItemSC(int tidItem, int iSrcIvtr, int iSrcSlot, int iDstIvtr, int iDstSlot);
+	//	Update item shortcut when item removed
+	void UpdateRemovedItemSC(int tidItem, int iIvtr, int iSlot, int* aExcSlots=NULL, int iNumExcSlot=0);
+	//	Update item shortcut when two items exchanged
+	void UpdateExchangedItemSC(int tidItem1, int iIvtr1, int iSlot1, int tidItem2, int iIvtr2, int iSlot2);
+	//	Update shortcuts
+	void UpdateShortcuts(DWORD dwDeltaTime);
+	//	Release skills
+	void ReleaseSkills();
+	//	Load sounds
+	bool LoadSounds();
+	//	Release sounds
+	void ReleaseSounds();
+	//	Load duel images
+	bool LoadDuelImages();
+	//	Release duel images
+	void ReleaseDuelImages();
+	//	Load dir indicators
+	bool LoadDirIndicators();
+	//	Release dir indicators
+	bool ReleaseDirIndicators();
+
+	//	Cast skill
+	bool CastSkill(int idTarget, bool bForceAttack, CECObject* pTarget=NULL);
+	//	Estimate mouse cursor
+	void EstimateCursor();
+	//	Update time counters
+	void UpdateTimers(DWORD dwDeltaTime);
+	//	Update GFXs
+	void UpdateGFXs(DWORD dwDeltaTime);
+	//	Attack an object
+	void NormalAttackObject(int idTarget, bool bForceAttack, bool bMoreClose=false);
+	//	Pickup an dobject
+	void PickupObject(int idTarget, bool bGather);
+	//	Check whether host can gather specified matter
+	bool CanGatherMatter(CECMatter* pMatter);
+
+	void ClearApoiseSkill();
+*/
+public:
+	
+	//	Message handler
+/*	void OnMsgGstMove(const ECMSG& Msg);
+	void OnMsgGstPitch(const ECMSG& Msg);
+	void OnMsgGstYaw(const ECMSG& Msg);
+	void OnMsgGstMoveAbsUp(const ECMSG& Msg);
+	void OnMsgHstPushMove(const ECMSG& Msg);
+	void OnMsgHstPitch(const ECMSG& Msg);
+	void OnMsgHstYaw(const ECMSG& Msg);
+	void OnMsgLBtnClick(const ECMSG& Msg);
+	void OnMsgRBtnClick(const ECMSG& Msg);
+	void OnMsgHstWheelCam(const ECMSG& Msg);
+	void OnMsgHstCamDefault(const ECMSG& Msg);
+	void OnMsgHstCamPreset(const ECMSG& Msg);
+	void OnMsgHstCamUserGet(const ECMSG& Msg);
+	void OnMsgHstCamUserSet(const ECMSG& Msg);
+	void OnMsgHstAttackResult(const ECMSG& Msg);
+	void OnMsgHstAttacked(const ECMSG& Msg);
+	void OnMsgHstDied(const ECMSG& Msg);
+	void OnMsgHstPickupMoney(const ECMSG& Msg);
+	void OnMsgHstPickupItem(const ECMSG& Msg);
+	void OnMsgHstReceiveExp(const ECMSG& Msg);
+	void OnMsgHstInfo00(const ECMSG& Msg);
+	void OnMsgHstGoto(const ECMSG& Msg);
+	void OnMsgHstOwnItemInfo(const ECMSG& Msg);
+	void OnMsgHstSelTarget(const ECMSG& Msg);
+	void OnMsgHstFixCamera(const ECMSG& Msg);
+	void OnMsgHstExtProp(const ECMSG& Msg);
+	void OnMsgHstAddStatusPt(const ECMSG& Msg);
+	void OnMsgHstJoinTeam(const ECMSG& Msg);
+	void OnMsgHstLeaveTeam(const ECMSG& Msg);
+	void OnMsgHstNewTeamMem(const ECMSG& Msg);
+	void OnMsgHstItemOperation(const ECMSG& Msg);
+	void OnMsgHstTrashBoxOperation(const ECMSG& Msg);
+	void OnMsgHstPocketOperation(const ECMSG& Msg);     //新增随身包裹
+	void OnMsgHstFashionPackOpt(const ECMSG& Msg);
+	void OnMsgHstTeamInvite(const ECMSG& Msg);
+	void OnMsgHstTeamReject(const ECMSG& Msg);
+	void OnMsgHstTeamMemPos(const ECMSG& Msg);
+	void OnMsgHstEquipDamaged(const ECMSG& Msg);
+	void OnMsgHstTeamMemPickup(const ECMSG& Msg);
+	void OnMsgHstNPCGreeting(const ECMSG& Msg);
+	void OnMsgHstTradeStart(const ECMSG& Msg);
+	void OnMsgHstTradeRequest(const ECMSG& Msg);
+	void OnMsgHstTradeMoveItem(const ECMSG& Msg);
+	void OnMsgHstTradeCancel(const ECMSG& Msg);
+	void OnMsgHstTradeSubmit(const ECMSG& Msg);
+	void OnMsgHstTradeConfirm(const ECMSG& Msg);
+	void OnMsgHstTradeEnd(const ECMSG& Msg);
+	void OnMsgHstTradeAddGoods(const ECMSG& Msg);
+	void OnMsgHstTradeRemGoods(const ECMSG& Msg);
+	void OnMsgHstIvtrInfo(const ECMSG& Msg);
+	void OnMsgHstStartAttack(const ECMSG& Msg);
+	void OnMsgHstGainItem(const ECMSG& Msg);
+	void OnMsgHstPurchaseItems(const ECMSG& Msg);
+	void OnMsgHstSpendMoney(const ECMSG& Msg);
+	void OnMsgHstItemToMoney(const ECMSG& Msg);
+	void OnMsgHstRepair(const ECMSG& Msg);
+	void OnMsgHstUseItem(const ECMSG& Msg);
+	void OnMsgHstUseItemWithData(const ECMSG& Msg);
+	void OnMsgHstSkillData(const ECMSG& Msg);
+	void OnMsgHstEmbedItem(const ECMSG& Msg);
+	void OnMsgHstClearTessera(const ECMSG& Msg);
+	void OnMsgHstCostSkillPt(const ECMSG& Msg);
+	void OnMsgHstLearnSkill(const ECMSG& Msg);
+	void OnMsgHstFlySwordTime(const ECMSG& Msg);
+	void OnMsgHstProduceItem(const ECMSG& Msg);
+	void OnMsgHstBreakItem(const ECMSG& Msg);
+	void OnMsgHstTaskData(const ECMSG& Msg);
+	void OnMsgHstTargetIsFar(const ECMSG& Msg);
+	void OnMsgHstCameraMode(const ECMSG& Msg);
+	void OnMsgHstPressCancel(const ECMSG& Msg);
+	void OnMsgHstRootNotify(const ECMSG& Msg);
+	void OnMsgHstStopAttack(const ECMSG& Msg);
+	void OnMsgHstJump(const ECMSG& Msg);
+	void OnMsgHstHurtResult(const ECMSG& Msg);
+	void OnMsgHstAttackOnce(const ECMSG& Msg);
+	void OnMsgHstPlayTrick(const ECMSG& Msg);
+	void OnMsgHstSkillResult(const ECMSG& Msg);
+	void OnMsgHstSkillAttacked(const ECMSG& Msg);
+	void OnMsgHstAskToJoinTeam(const ECMSG& Msg);
+	void OnMsgHstFaction(const ECMSG& Msg);
+	void OnMsgHstSect(const ECMSG& Msg);
+	void OnMsgHstTaskDeliver(const ECMSG& Msg);
+	void OnMsgHstItemIdentify(const ECMSG& Msg);
+	void OnMsgHstSanctuary(const ECMSG& Msg);
+	void OnMsgHstCorrectPos(const ECMSG& Msg);
+	void OnMsgHstFriendOpt(const ECMSG& Msg);
+	void OnMsgHstWayPoint(const ECMSG& Msg);
+	void OnMsgHstBreathData(const ECMSG& Msg);
+	void OnMsgHstSkillAbility(const ECMSG& Msg);
+	void OnMsgHstCoolTimeData(const ECMSG& Msg);
+	void OnMsgHstRevivalInquire(const ECMSG& Msg);
+	void OnMsgHstSetCoolTime(const ECMSG& Msg);
+	void OnMsgHstChangeTeamLeader(const ECMSG& Msg);
+	void OnMsgHstExitInstance(const ECMSG& Msg);
+	void OnMsgHstChangeFace(const ECMSG& Msg);
+	void OnMsgHstTeamMemberData(const ECMSG& Msg);
+	void OnMsgHstSetMoveStamp(const ECMSG& Msg);
+	void OnMsgHstChatroomOpt(const ECMSG& Msg);
+	void OnMsgHstMailOpt(const ECMSG& Msg);
+	void OnMsgHstVendueOpt(const ECMSG& Msg);
+	void OnMsgHstViewOtherEquips(const ECMSG& Msg);
+	void OnMsgHstPariahTime(const ECMSG& Msg);
+	void OnMsgHstPetOpt(const ECMSG& Msg);
+	void OnMsgHstBattleOpt(const ECMSG& Msg); 
+	void OnMsgHstInstancingOpt(const ECMSG& Msg);    //新增场景战场
+	void OnMsgHstAccountPoint(const ECMSG& Msg);
+	void OnMsgHstGMOpt(const ECMSG& Msg);
+	void OnMsgHstAutoSelect(const ECMSG& Msg);
+	void OnMsgPlayerBaseInfo(const ECMSG& Msg);
+	void OnMsgPlayerCustomData(const ECMSG& Msg);
+	void OnMsgPlayerFly(const ECMSG& Msg);
+	void OnMsgPlayerSitDown(const ECMSG& Msg);
+	void OnMsgPlayerStartAtk(const ECMSG& Msg);
+	void OnMsgPlayerAtkResult(const ECMSG& Msg);
+	void OnMsgPlayerCastSkill(const ECMSG& Msg);
+	void OnMsgPlayerGather(const ECMSG& Msg);
+	void OnMsgPlayerDoEmote(const ECMSG& Msg);
+	void OnMsgDoConEmote(const ECMSG& Msg);
+	void OnMsgPickupMatter(const ECMSG& Msg);
+	void OnMsgPlayerChangeShape(const ECMSG& Msg);
+	void OnMsgBoothOperation(const ECMSG& Msg);
+	void OnMsgPlayerTravel(const ECMSG& Msg);
+	virtual void OnMsgPlayerPVP(const ECMSG& Msg);
+	void OnMsgPlayerUseItem(const ECMSG& Msg);
+	void OnMsgPlayerChangeFace(const ECMSG& Msg);
+	void OnMsgPlayerBindOpt(const ECMSG& Msg);
+	void OnMsgPlayerMultiBindOpt(const ECMSG& Msg);
+	void OnMsgPlayerCarrierOpt(const ECMSG& Msg);	// 新增载体（电梯）相关
+	void OnMsgPlayerDuelOpt(const ECMSG& Msg);
+	virtual void OnMsgPlayerLevel2(const ECMSG& Msg);
+	void OnMsgPlayerSkillResult(const ECMSG& Msg);
+	void OnMsgPlayerAchievement(const ECMSG& Msg);
+	void OnMsgTransfigureSkillData(const ECMSG& Msg);
+	void OnMsgHstTerritoryOpt(const ECMSG& Msg);
+	void OnMsgHstCombineSkillData(const ECMSG& Msg);
+	void OnMsgHstCircleOpt(const ECMSG& Msg);
+
+	void OnMsgHstRandomMove(const ECMSG& Msg);
+	void OnMsgMoveRecord(const ECMSG& Msg);
+	void OnMsgTraceRecord(const ECMSG& Msg);
+	void OnMsgFollowRecord(const ECMSG& Msg);
+	void OnMsgWalkRecord(const ECMSG& Msg);
+	void OnMsgPushRecord(const ECMSG& Msg);
+	void OnMsgCheckRecord(const ECMSG& Msg);
+*/
+protected:
+
+	//	Camera pitch
+/*	void CameraPitch(float fDelta);
+	//	Camera yaw
+	void CameraYaw(float fDelta);
+	//	Get push direction
+	bool GetPushDir(A3DVECTOR3& vPushDir, DWORD dwMask, float fDeltaTime = 0);
+	//	Can host touch target ?
+	bool CanTouchTarget(const A3DAABB& aabbTarget);
+	//	Can host touch target ?
+	bool CanTouchTarget(const A3DVECTOR3& vTargetPos, float fTargetRad, int iReason, float fMaxCut=1.0f);
+	//	Calculate distance between host and specified object
+	bool CalcDist(int idObject, float* pfDist, CECObject** ppObject=NULL);
+	//	Update selected target
+	void UpdateSelectedTarget();
+	//	Update pet skill cooldown
+	void UpdatePetSkillCoolDown(DWORD dwTick);
+	//	Estimate move environment
+	void EstimateMoveEnv(const A3DVECTOR3& vPos);
+
+	//	Fill NPC packs
+	void FillNPCPack(int iIndex, const ACHAR* szName, int* aItems, float fPriceScale, bool bRecipe);
+	//	Find mine tool in packages
+	bool FindMineTool(int tidMine, int* piPack, int* piIndex, int* pidTool);
+	//	When host is going to move, this function will be called
+	void GoingMove();
+	//	Play move sound
+	void PlayMoveSound(int iIndex);
+	//	Update move sound
+	void UpdateMoveSound();
+	//	Adjust host's transparence
+	void AdjustTransparence(float fDistToCam, const A3DVECTOR3& vDir, DWORD dwTime);
+	//	Update team member's position
+	void UpdateTeamMemberPos(DWORD dwDeltaTime);
+	//	Rearrange booth packages
+	void RearrangeBoothPacks();
+	//	Stop host moving naturally
+	bool NaturallyStopMoving();
+	//	Reset cdr info
+	void ResetCDRInfo();
+	//	Sort title
+	void SortTitle();
+	//  Only For Lua Trigger Task process 
+	void ProcessChildTask(int idTask);
+*/
+};
+
+///////////////////////////////////////////////////////////////////////////
+//	
+//	Inline functions
+//	
+///////////////////////////////////////////////////////////////////////////
+

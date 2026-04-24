@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		Octets announce;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMANNOUNCE_RE };
+	public:
+		KingdomAnnounce_Re() { type = PROTOCOL_KINGDOMANNOUNCE_RE; }
+		KingdomAnnounce_Re(void*) : Protocol(PROTOCOL_KINGDOMANNOUNCE_RE) { }
+		KingdomAnnounce_Re (int l_retcode,int l_roleid,const Octets& l_announce,
+			int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),announce(l_announce)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMANNOUNCE_RE;
+		}
+
+		KingdomAnnounce_Re(const KingdomAnnounce_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),announce(rhs.announce)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomAnnounce_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << announce;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> announce;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 256; }

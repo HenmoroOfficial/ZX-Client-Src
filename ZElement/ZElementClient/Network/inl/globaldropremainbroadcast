@@ -1,0 +1,35 @@
+	public:
+		int itemid;
+		int remainnumber;
+		enum { PROTOCOL_TYPE = PROTOCOL_GLOBALDROPREMAINBROADCAST };
+	public:
+		GlobalDropRemainBroadCast() { type = PROTOCOL_GLOBALDROPREMAINBROADCAST; }
+		GlobalDropRemainBroadCast(void*) : Protocol(PROTOCOL_GLOBALDROPREMAINBROADCAST) { }
+		GlobalDropRemainBroadCast (int l_itemid,int l_remainnumber)
+			 : itemid(l_itemid),remainnumber(l_remainnumber)
+		{
+			type = PROTOCOL_GLOBALDROPREMAINBROADCAST;
+		}
+
+		GlobalDropRemainBroadCast(const GlobalDropRemainBroadCast &rhs)
+			: Protocol(rhs),itemid(rhs.itemid),remainnumber(rhs.remainnumber) { }
+
+		GNET::Protocol *Clone() const { return new GlobalDropRemainBroadCast(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << itemid;
+			os << remainnumber;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> itemid;
+			os >> remainnumber;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		char star_amount;
+		char right_amount;
+		int score;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTBEGIN };
+	public:
+		ContestBegin() { type = PROTOCOL_CONTESTBEGIN; }
+		ContestBegin(void*) : Protocol(PROTOCOL_CONTESTBEGIN) { }
+		ContestBegin (int l_roleid,char l_star_amount,char l_right_amount,
+			int l_score,unsigned int l_localsid)
+			 : roleid(l_roleid),star_amount(l_star_amount),right_amount(l_right_amount)
+			,score(l_score),localsid(l_localsid)
+		{
+			type = PROTOCOL_CONTESTBEGIN;
+		}
+
+		ContestBegin(const ContestBegin &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),star_amount(rhs.star_amount),right_amount(rhs.right_amount)
+			,score(rhs.score),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ContestBegin(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << star_amount;
+			os << right_amount;
+			os << score;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> star_amount;
+			os >> right_amount;
+			os >> score;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

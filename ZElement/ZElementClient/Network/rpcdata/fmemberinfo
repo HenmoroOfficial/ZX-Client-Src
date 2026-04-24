@@ -1,0 +1,101 @@
+#ifndef __GNET_FMEMBERINFO_RPCDATA
+#define __GNET_FMEMBERINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class FMemberInfo : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		unsigned char level;
+		unsigned char occupation;
+		unsigned char froleid;
+		short loyalty;
+		unsigned char online_status;
+		Octets name;
+		Octets nickname;
+
+	public:
+		FMemberInfo (int l_roleid = 0,unsigned char l_level = 0,unsigned char l_occupation = 0
+			,unsigned char l_froleid = 0,short l_loyalty = 0,unsigned char l_online_status = 0
+			,Octets l_name = Octets(),Octets l_nickname = Octets())
+			: roleid(l_roleid),level(l_level),occupation(l_occupation)
+			,froleid(l_froleid),loyalty(l_loyalty),online_status(l_online_status)
+			,name(l_name),nickname(l_nickname)
+		{
+		}
+
+		FMemberInfo(const FMemberInfo &rhs)
+			: roleid(rhs.roleid),level(rhs.level),occupation(rhs.occupation),
+			froleid(rhs.froleid),loyalty(rhs.loyalty),online_status(rhs.online_status),
+			name(rhs.name),nickname(rhs.nickname) { }
+
+		Rpc::Data *Clone() const { return new FMemberInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const FMemberInfo *r = dynamic_cast<const FMemberInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				level = r->level;
+				occupation = r->occupation;
+				froleid = r->froleid;
+				loyalty = r->loyalty;
+				online_status = r->online_status;
+				name = r->name;
+				nickname = r->nickname;
+			}
+			return *this;
+		}
+
+		FMemberInfo& operator = (const FMemberInfo &rhs)
+		{
+			const FMemberInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				level = r->level;
+				occupation = r->occupation;
+				froleid = r->froleid;
+				loyalty = r->loyalty;
+				online_status = r->online_status;
+				name = r->name;
+				nickname = r->nickname;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << level;
+			os << occupation;
+			os << froleid;
+			os << loyalty;
+			os << online_status;
+			os << name;
+			os << nickname;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> level;
+			os >> occupation;
+			os >> froleid;
+			os >> loyalty;
+			os >> online_status;
+			os >> name;
+			os >> nickname;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<FMemberInfo>	FMemberInfoVector;
+};
+#endif

@@ -1,0 +1,75 @@
+#ifndef __GNET_DISCOUNTGRADE_RPCDATA
+#define __GNET_DISCOUNTGRADE_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class DiscountGrade : public GNET::Rpc::Data
+	{
+	public:
+		int amount_begin;
+		int discount;
+		int reserved1;
+		Octets reserved2;
+
+	public:
+		DiscountGrade ()
+		{
+		}
+
+		DiscountGrade(const DiscountGrade &rhs)
+			: amount_begin(rhs.amount_begin),discount(rhs.discount),reserved1(rhs.reserved1),
+			reserved2(rhs.reserved2) { }
+
+		Rpc::Data *Clone() const { return new DiscountGrade(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const DiscountGrade *r = dynamic_cast<const DiscountGrade *>(&rhs);
+			if (r && r != this)
+			{
+				amount_begin = r->amount_begin;
+				discount = r->discount;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+			}
+			return *this;
+		}
+
+		DiscountGrade& operator = (const DiscountGrade &rhs)
+		{
+			const DiscountGrade *r = &rhs;
+			if (r && r != this)
+			{
+				amount_begin = r->amount_begin;
+				discount = r->discount;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << amount_begin;
+			os << discount;
+			os << reserved1;
+			os << reserved2;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> amount_begin;
+			os >> discount;
+			os >> reserved1;
+			os >> reserved2;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<DiscountGrade>	DiscountGradeVector;
+};
+#endif

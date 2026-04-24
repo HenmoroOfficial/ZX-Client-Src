@@ -1,0 +1,38 @@
+	public:
+		int teamid;
+		int roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSLEAVE };
+	public:
+		CrssvrTeamsLeave() { type = PROTOCOL_CRSSVRTEAMSLEAVE; }
+		CrssvrTeamsLeave(void*) : Protocol(PROTOCOL_CRSSVRTEAMSLEAVE) { }
+		CrssvrTeamsLeave (int l_teamid,int l_roleid,unsigned int l_localsid = 0)
+			 : teamid(l_teamid),roleid(l_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSLEAVE;
+		}
+
+		CrssvrTeamsLeave(const CrssvrTeamsLeave &rhs)
+			: Protocol(rhs),teamid(rhs.teamid),roleid(rhs.roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsLeave(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << teamid;
+			os << roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> teamid;
+			os >> roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

@@ -1,0 +1,38 @@
+	public:
+		int retcode;
+		int voted_roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDOPENVOTE_RE };
+	public:
+		RaidOpenVote_Re() { type = PROTOCOL_RAIDOPENVOTE_RE; }
+		RaidOpenVote_Re(void*) : Protocol(PROTOCOL_RAIDOPENVOTE_RE) { }
+		RaidOpenVote_Re (int l_retcode,int l_voted_roleid = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),voted_roleid(l_voted_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDOPENVOTE_RE;
+		}
+
+		RaidOpenVote_Re(const RaidOpenVote_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),voted_roleid(rhs.voted_roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidOpenVote_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << voted_roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> voted_roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

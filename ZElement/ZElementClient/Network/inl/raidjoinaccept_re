@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		unsigned short accept;
+		int requester;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDJOINACCEPT_RE };
+	public:
+		RaidJoinAccept_Re() { type = PROTOCOL_RAIDJOINACCEPT_RE; }
+		RaidJoinAccept_Re(void*) : Protocol(PROTOCOL_RAIDJOINACCEPT_RE) { }
+		RaidJoinAccept_Re (int l_retcode,unsigned short l_accept,int l_requester = 0,
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),accept(l_accept),requester(l_requester)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDJOINACCEPT_RE;
+		}
+
+		RaidJoinAccept_Re(const RaidJoinAccept_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),accept(rhs.accept),requester(rhs.requester)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidJoinAccept_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << accept;
+			os << requester;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> accept;
+			os >> requester;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

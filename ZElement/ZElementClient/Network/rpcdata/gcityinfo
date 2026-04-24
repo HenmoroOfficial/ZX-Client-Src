@@ -1,0 +1,70 @@
+#ifndef __GNET_GCITYINFO_RPCDATA
+#define __GNET_GCITYINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gfactionmaster"
+
+namespace GNET
+{
+	class GCityInfo : public GNET::Rpc::Data
+	{
+	public:
+		int battle_id;
+		GFactionMaster owner;
+		int occupy_time;
+
+	public:
+		GCityInfo (int l_battle_id = 0,const GFactionMaster& l_owner = GFactionMaster(),int l_occupy_time = 0)
+			: battle_id(l_battle_id),owner(l_owner),occupy_time(l_occupy_time)
+		{
+		}
+
+		GCityInfo(const GCityInfo &rhs)
+			: battle_id(rhs.battle_id),owner(rhs.owner),occupy_time(rhs.occupy_time) { }
+
+		Rpc::Data *Clone() const { return new GCityInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCityInfo *r = dynamic_cast<const GCityInfo *>(&rhs);
+			if (r && r != this)
+			{
+				battle_id = r->battle_id;
+				owner = r->owner;
+				occupy_time = r->occupy_time;
+			}
+			return *this;
+		}
+
+		GCityInfo& operator = (const GCityInfo &rhs)
+		{
+			const GCityInfo *r = &rhs;
+			if (r && r != this)
+			{
+				battle_id = r->battle_id;
+				owner = r->owner;
+				occupy_time = r->occupy_time;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << battle_id;
+			os << owner;
+			os << occupy_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> battle_id;
+			os >> owner;
+			os >> occupy_time;
+			return os;
+		}
+
+	};
+};
+#endif

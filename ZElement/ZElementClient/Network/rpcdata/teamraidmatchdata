@@ -1,0 +1,60 @@
+#ifndef __GNET_TEAMRAIDMATCHDATA_RPCDATA
+#define __GNET_TEAMRAIDMATCHDATA_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "teamraidroledata"
+
+namespace GNET
+{
+	class TeamRaidMatchData : public GNET::Rpc::Data
+	{
+	public:
+		std::vector<TeamRaidRoleData> roles;
+
+	public:
+		TeamRaidMatchData (const std::vector<TeamRaidRoleData>& l_roles = std::vector<TeamRaidRoleData>())
+			: roles(l_roles)
+		{
+		}
+
+		TeamRaidMatchData(const TeamRaidMatchData &rhs)
+			: roles(rhs.roles) { }
+
+		Rpc::Data *Clone() const { return new TeamRaidMatchData(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const TeamRaidMatchData *r = dynamic_cast<const TeamRaidMatchData *>(&rhs);
+			if (r && r != this)
+			{
+				roles = r->roles;
+			}
+			return *this;
+		}
+
+		TeamRaidMatchData& operator = (const TeamRaidMatchData &rhs)
+		{
+			const TeamRaidMatchData *r = &rhs;
+			if (r && r != this)
+			{
+				roles = r->roles;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roles;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roles;
+			return os;
+		}
+
+	};
+};
+#endif

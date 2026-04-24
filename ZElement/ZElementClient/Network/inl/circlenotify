@@ -1,0 +1,47 @@
+	public:
+		unsigned int msgtype;
+		unsigned int roleid;
+		unsigned int circleid;
+		unsigned int name;
+		unsigned char grade;
+		enum { PROTOCOL_TYPE = PROTOCOL_CIRCLENOTIFY };
+	public:
+		CircleNotify() { type = PROTOCOL_CIRCLENOTIFY; }
+		CircleNotify(void*) : Protocol(PROTOCOL_CIRCLENOTIFY) { }
+		CircleNotify (unsigned int l_msgtype,unsigned int l_roleid,unsigned int l_circleid,
+			unsigned int l_name = 0,unsigned char l_grade = 0)
+			 : msgtype(l_msgtype),roleid(l_roleid),circleid(l_circleid)
+			,name(l_name),grade(l_grade)
+		{
+			type = PROTOCOL_CIRCLENOTIFY;
+		}
+
+		CircleNotify(const CircleNotify &rhs)
+			: Protocol(rhs),msgtype(rhs.msgtype),roleid(rhs.roleid),circleid(rhs.circleid)
+			,name(rhs.name),grade(rhs.grade) { }
+
+		GNET::Protocol *Clone() const { return new CircleNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << msgtype;
+			os << roleid;
+			os << circleid;
+			os << name;
+			os << grade;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> msgtype;
+			os >> roleid;
+			os >> circleid;
+			os >> name;
+			os >> grade;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

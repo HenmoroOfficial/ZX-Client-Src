@@ -1,0 +1,47 @@
+	public:
+		unsigned short retcode;
+		int battle_tid;
+		std::vector<GInstancingFieldInfo> fields;
+		int enter_count;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGGETLIST_RE };
+	public:
+		InstancingGetList_Re() { type = PROTOCOL_INSTANCINGGETLIST_RE; }
+		InstancingGetList_Re(void*) : Protocol(PROTOCOL_INSTANCINGGETLIST_RE) { }
+		InstancingGetList_Re (unsigned short l_retcode,int l_battle_tid,std::vector<GInstancingFieldInfo> l_fields = std::vector<GInstancingFieldInfo>(),
+			int l_enter_count = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),battle_tid(l_battle_tid),fields(l_fields)
+			,enter_count(l_enter_count),localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGGETLIST_RE;
+		}
+
+		InstancingGetList_Re(const InstancingGetList_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),battle_tid(rhs.battle_tid),fields(rhs.fields)
+			,enter_count(rhs.enter_count),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingGetList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << battle_tid;
+			os << fields;
+			os << enter_count;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> battle_tid;
+			os >> fields;
+			os >> enter_count;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 10240; }

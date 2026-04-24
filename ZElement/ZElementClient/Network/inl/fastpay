@@ -1,0 +1,42 @@
+	public:
+		int userid;
+		int cash;
+		int cash_after_discount;
+		int merchant_id;
+		enum { PROTOCOL_TYPE = PROTOCOL_FASTPAY };
+	public:
+		FastPay() { type = PROTOCOL_FASTPAY; }
+		FastPay(void*) : Protocol(PROTOCOL_FASTPAY) { }
+		FastPay (int l_userid,int l_cash = 0,int l_cash_after_discount = 0,
+			int l_merchant_id = -1)
+			 : userid(l_userid),cash(l_cash),cash_after_discount(l_cash_after_discount)
+			,merchant_id(l_merchant_id)
+		{
+			type = PROTOCOL_FASTPAY;
+		}
+
+		FastPay(const FastPay &rhs)
+			: Protocol(rhs),userid(rhs.userid),cash(rhs.cash),cash_after_discount(rhs.cash_after_discount)
+			,merchant_id(rhs.merchant_id) { }
+
+		GNET::Protocol *Clone() const { return new FastPay(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << userid;
+			os << cash;
+			os << cash_after_discount;
+			os << merchant_id;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> userid;
+			os >> cash;
+			os >> cash_after_discount;
+			os >> merchant_id;
+			return os;
+		}
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

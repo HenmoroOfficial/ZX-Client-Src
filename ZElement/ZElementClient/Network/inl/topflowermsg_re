@@ -1,0 +1,59 @@
+	public:
+		int district_id;
+		int zoneid;
+		int myself_roleid;
+		Octets send_rolename;
+		Octets recv_rolename;
+		int count;
+		Octets msg;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TOPFLOWERMSG_RE };
+	public:
+		TopFlowerMsg_Re() { type = PROTOCOL_TOPFLOWERMSG_RE; }
+		TopFlowerMsg_Re(void*) : Protocol(PROTOCOL_TOPFLOWERMSG_RE) { }
+		TopFlowerMsg_Re (int l_district_id,int l_zoneid,int l_myself_roleid,
+			const Octets& l_send_rolename = Octets(),const Octets& l_recv_rolename = Octets(),int l_count = 0,
+			const Octets& l_msg = Octets(),unsigned int l_localsid = 0)
+			 : district_id(l_district_id),zoneid(l_zoneid),myself_roleid(l_myself_roleid)
+			,send_rolename(l_send_rolename),recv_rolename(l_recv_rolename),count(l_count)
+			,msg(l_msg),localsid(l_localsid)
+		{
+			type = PROTOCOL_TOPFLOWERMSG_RE;
+		}
+
+		TopFlowerMsg_Re(const TopFlowerMsg_Re &rhs)
+			: Protocol(rhs),district_id(rhs.district_id),zoneid(rhs.zoneid),myself_roleid(rhs.myself_roleid)
+			,send_rolename(rhs.send_rolename),recv_rolename(rhs.recv_rolename),count(rhs.count)
+			,msg(rhs.msg),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TopFlowerMsg_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << district_id;
+			os << zoneid;
+			os << myself_roleid;
+			os << send_rolename;
+			os << recv_rolename;
+			os << count;
+			os << msg;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> district_id;
+			os >> zoneid;
+			os >> myself_roleid;
+			os >> send_rolename;
+			os >> recv_rolename;
+			os >> count;
+			os >> msg;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 280; }

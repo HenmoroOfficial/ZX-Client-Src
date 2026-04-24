@@ -1,0 +1,38 @@
+	public:
+		unsigned int roleid;
+		unsigned int circleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CIRCLELIST };
+	public:
+		CircleList() { type = PROTOCOL_CIRCLELIST; }
+		CircleList(void*) : Protocol(PROTOCOL_CIRCLELIST) { }
+		CircleList (unsigned int l_roleid,unsigned int l_circleid,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),circleid(l_circleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_CIRCLELIST;
+		}
+
+		CircleList(const CircleList &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),circleid(rhs.circleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CircleList(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << circleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> circleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

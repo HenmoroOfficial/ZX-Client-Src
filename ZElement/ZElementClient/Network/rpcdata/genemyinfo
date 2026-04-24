@@ -1,0 +1,83 @@
+#ifndef __GNET_GENEMYINFO_RPCDATA
+#define __GNET_GENEMYINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GEnemyInfo : public GNET::Rpc::Data
+	{
+	public:
+		int rid;
+		char lineid;
+		char status;
+		int pktime;
+		Octets name;
+
+	public:
+		GEnemyInfo (int l_rid = 0,char l_lineid = 0,char l_status = 0
+			,int l_pktime = 0,const Octets& l_name = Octets(0))
+			: rid(l_rid),lineid(l_lineid),status(l_status)
+			,pktime(l_pktime),name(l_name)
+		{
+		}
+
+		GEnemyInfo(const GEnemyInfo &rhs)
+			: rid(rhs.rid),lineid(rhs.lineid),status(rhs.status),
+			pktime(rhs.pktime),name(rhs.name) { }
+
+		Rpc::Data *Clone() const { return new GEnemyInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GEnemyInfo *r = dynamic_cast<const GEnemyInfo *>(&rhs);
+			if (r && r != this)
+			{
+				rid = r->rid;
+				lineid = r->lineid;
+				status = r->status;
+				pktime = r->pktime;
+				name = r->name;
+			}
+			return *this;
+		}
+
+		GEnemyInfo& operator = (const GEnemyInfo &rhs)
+		{
+			const GEnemyInfo *r = &rhs;
+			if (r && r != this)
+			{
+				rid = r->rid;
+				lineid = r->lineid;
+				status = r->status;
+				pktime = r->pktime;
+				name = r->name;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << rid;
+			os << lineid;
+			os << status;
+			os << pktime;
+			os << name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> rid;
+			os >> lineid;
+			os >> status;
+			os >> pktime;
+			os >> name;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GEnemyInfo>	GEnemyInfoVector;
+};
+#endif

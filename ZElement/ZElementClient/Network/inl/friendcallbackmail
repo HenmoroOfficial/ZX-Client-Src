@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		int receiver_roleid;
+		unsigned char template_id;
+		enum { PROTOCOL_TYPE = PROTOCOL_FRIENDCALLBACKMAIL };
+	public:
+		FriendCallbackMail() { type = PROTOCOL_FRIENDCALLBACKMAIL; }
+		FriendCallbackMail(void*) : Protocol(PROTOCOL_FRIENDCALLBACKMAIL) { }
+		FriendCallbackMail (int l_roleid,unsigned int l_localsid,int l_receiver_roleid,
+			unsigned char l_template_id)
+			 : roleid(l_roleid),localsid(l_localsid),receiver_roleid(l_receiver_roleid)
+			,template_id(l_template_id)
+		{
+			type = PROTOCOL_FRIENDCALLBACKMAIL;
+		}
+
+		FriendCallbackMail(const FriendCallbackMail &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),receiver_roleid(rhs.receiver_roleid)
+			,template_id(rhs.template_id) { }
+
+		GNET::Protocol *Clone() const { return new FriendCallbackMail(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << receiver_roleid;
+			os << template_id;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> receiver_roleid;
+			os >> template_id;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

@@ -1,0 +1,56 @@
+	public:
+		char isRecv;
+		int page;
+		std::vector<GTopFlowerData> data;
+		int my_pos;
+		int my_count;
+		int all_count;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TOPFLOWER_RE };
+	public:
+		TopFlower_Re() { type = PROTOCOL_TOPFLOWER_RE; }
+		TopFlower_Re(void*) : Protocol(PROTOCOL_TOPFLOWER_RE) { }
+		TopFlower_Re (char l_isRecv,int l_page,const std::vector<GTopFlowerData>& l_data,
+			int l_my_pos = 0,int l_my_count = 0,int l_all_count = 0,
+			unsigned int l_localsid = 0)
+			 : isRecv(l_isRecv),page(l_page),data(l_data)
+			,my_pos(l_my_pos),my_count(l_my_count),all_count(l_all_count)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_TOPFLOWER_RE;
+		}
+
+		TopFlower_Re(const TopFlower_Re &rhs)
+			: Protocol(rhs),isRecv(rhs.isRecv),page(rhs.page),data(rhs.data)
+			,my_pos(rhs.my_pos),my_count(rhs.my_count),all_count(rhs.all_count)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TopFlower_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << isRecv;
+			os << page;
+			os << data;
+			os << my_pos;
+			os << my_count;
+			os << all_count;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> isRecv;
+			os >> page;
+			os >> data;
+			os >> my_pos;
+			os >> my_count;
+			os >> all_count;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 10240; }

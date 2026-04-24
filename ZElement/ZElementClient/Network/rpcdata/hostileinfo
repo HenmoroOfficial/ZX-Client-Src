@@ -1,0 +1,89 @@
+#ifndef __GNET_HOSTILEINFO_RPCDATA
+#define __GNET_HOSTILEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "hostilefaction"
+
+namespace GNET
+{
+	class HostileInfo : public GNET::Rpc::Data
+	{
+	public:
+		int updatetime;
+		unsigned short actionpoint;
+		int protecttime;
+		unsigned char status;
+		std::vector<HostileFaction> hostiles;
+		int reserved1;
+
+	public:
+		HostileInfo (int l_updatetime = 0,unsigned short l_actionpoint = 0,int l_protecttime = 0
+			,unsigned char l_status = 0,const std::vector<HostileFaction>& l_hostiles = std::vector<HostileFaction>(),int l_reserved1 = 0)
+			: updatetime(l_updatetime),actionpoint(l_actionpoint),protecttime(l_protecttime)
+			,status(l_status),hostiles(l_hostiles),reserved1(l_reserved1)
+		{
+		}
+
+		HostileInfo(const HostileInfo &rhs)
+			: updatetime(rhs.updatetime),actionpoint(rhs.actionpoint),protecttime(rhs.protecttime),
+			status(rhs.status),hostiles(rhs.hostiles),reserved1(rhs.reserved1) { }
+
+		Rpc::Data *Clone() const { return new HostileInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const HostileInfo *r = dynamic_cast<const HostileInfo *>(&rhs);
+			if (r && r != this)
+			{
+				updatetime = r->updatetime;
+				actionpoint = r->actionpoint;
+				protecttime = r->protecttime;
+				status = r->status;
+				hostiles = r->hostiles;
+				reserved1 = r->reserved1;
+			}
+			return *this;
+		}
+
+		HostileInfo& operator = (const HostileInfo &rhs)
+		{
+			const HostileInfo *r = &rhs;
+			if (r && r != this)
+			{
+				updatetime = r->updatetime;
+				actionpoint = r->actionpoint;
+				protecttime = r->protecttime;
+				status = r->status;
+				hostiles = r->hostiles;
+				reserved1 = r->reserved1;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << updatetime;
+			os << actionpoint;
+			os << protecttime;
+			os << status;
+			os << hostiles;
+			os << reserved1;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> updatetime;
+			os >> actionpoint;
+			os >> protecttime;
+			os >> status;
+			os >> hostiles;
+			os >> reserved1;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<HostileInfo>	HostileInfoVector;
+};
+#endif

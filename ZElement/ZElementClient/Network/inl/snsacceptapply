@@ -1,0 +1,50 @@
+	public:
+		int roleid;
+		int apply_roleid;
+		char message_type;
+		int message_id;
+		char oper;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSACCEPTAPPLY };
+	public:
+		SNSAcceptApply() { type = PROTOCOL_SNSACCEPTAPPLY; }
+		SNSAcceptApply(void*) : Protocol(PROTOCOL_SNSACCEPTAPPLY) { }
+		SNSAcceptApply (int l_roleid,int l_apply_roleid = 0,char l_message_type = 0,
+			int l_message_id = 0,char l_oper = 0,int l_localsid = 0)
+			 : roleid(l_roleid),apply_roleid(l_apply_roleid),message_type(l_message_type)
+			,message_id(l_message_id),oper(l_oper),localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSACCEPTAPPLY;
+		}
+
+		SNSAcceptApply(const SNSAcceptApply &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),apply_roleid(rhs.apply_roleid),message_type(rhs.message_type)
+			,message_id(rhs.message_id),oper(rhs.oper),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSAcceptApply(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << apply_roleid;
+			os << message_type;
+			os << message_id;
+			os << oper;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> apply_roleid;
+			os >> message_type;
+			os >> message_id;
+			os >> oper;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

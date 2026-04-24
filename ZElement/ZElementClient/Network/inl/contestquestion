@@ -1,0 +1,44 @@
+	public:
+		char questionid;
+		Octets question;
+		std::vector<Octets> answerlist;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTQUESTION };
+	public:
+		ContestQuestion() { type = PROTOCOL_CONTESTQUESTION; }
+		ContestQuestion(void*) : Protocol(PROTOCOL_CONTESTQUESTION) { }
+		ContestQuestion (char l_questionid,const Octets& l_question,const std::vector<Octets>& l_answerlist,
+			unsigned int l_localsid)
+			 : questionid(l_questionid),question(l_question),answerlist(l_answerlist)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_CONTESTQUESTION;
+		}
+
+		ContestQuestion(const ContestQuestion &rhs)
+			: Protocol(rhs),questionid(rhs.questionid),question(rhs.question),answerlist(rhs.answerlist)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ContestQuestion(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << questionid;
+			os << question;
+			os << answerlist;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> questionid;
+			os >> question;
+			os >> answerlist;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

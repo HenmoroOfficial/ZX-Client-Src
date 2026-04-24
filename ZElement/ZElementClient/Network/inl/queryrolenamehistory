@@ -1,0 +1,35 @@
+	public:
+		Octets name;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_QUERYROLENAMEHISTORY };
+	public:
+		QueryRolenameHistory() { type = PROTOCOL_QUERYROLENAMEHISTORY; }
+		QueryRolenameHistory(void*) : Protocol(PROTOCOL_QUERYROLENAMEHISTORY) { }
+		QueryRolenameHistory (const Octets& l_name,unsigned int l_localsid)
+			 : name(l_name),localsid(l_localsid)
+		{
+			type = PROTOCOL_QUERYROLENAMEHISTORY;
+		}
+
+		QueryRolenameHistory(const QueryRolenameHistory &rhs)
+			: Protocol(rhs),name(rhs.name),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new QueryRolenameHistory(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << name;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> name;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

@@ -1,0 +1,38 @@
+	public:
+		int retcode;
+		unsigned int dst_factionid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPKRAIDCHALLENGECANCEL_RE };
+	public:
+		FactionPkRaidChallengeCancel_Re() { type = PROTOCOL_FACTIONPKRAIDCHALLENGECANCEL_RE; }
+		FactionPkRaidChallengeCancel_Re(void*) : Protocol(PROTOCOL_FACTIONPKRAIDCHALLENGECANCEL_RE) { }
+		FactionPkRaidChallengeCancel_Re (int l_retcode,unsigned int l_dst_factionid = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),dst_factionid(l_dst_factionid),localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONPKRAIDCHALLENGECANCEL_RE;
+		}
+
+		FactionPkRaidChallengeCancel_Re(const FactionPkRaidChallengeCancel_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),dst_factionid(rhs.dst_factionid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionPkRaidChallengeCancel_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << dst_factionid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> dst_factionid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

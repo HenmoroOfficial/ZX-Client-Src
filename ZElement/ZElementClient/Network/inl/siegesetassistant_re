@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int battle_id;
+		int assistant;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SIEGESETASSISTANT_RE };
+	public:
+		SiegeSetAssistant_Re() { type = PROTOCOL_SIEGESETASSISTANT_RE; }
+		SiegeSetAssistant_Re(void*) : Protocol(PROTOCOL_SIEGESETASSISTANT_RE) { }
+		SiegeSetAssistant_Re (int l_retcode,int l_battle_id = 0,int l_assistant = 0,
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),battle_id(l_battle_id),assistant(l_assistant)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_SIEGESETASSISTANT_RE;
+		}
+
+		SiegeSetAssistant_Re(const SiegeSetAssistant_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),battle_id(rhs.battle_id),assistant(rhs.assistant)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SiegeSetAssistant_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << battle_id;
+			os << assistant;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> battle_id;
+			os >> assistant;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

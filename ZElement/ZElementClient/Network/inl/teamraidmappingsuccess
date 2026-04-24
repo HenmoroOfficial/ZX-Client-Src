@@ -1,0 +1,68 @@
+	public:
+		int raidroom_id;
+		unsigned int localsid;
+		char iscross;
+		int roleid;
+		GCrssvrTeamsData teamdata_a;
+		std::vector<TeamRaidRoleBrief> teamdata_a_detail;
+		int a_ranking;
+		GCrssvrTeamsData teamdata_b;
+		std::vector<TeamRaidRoleBrief> teamdata_b_detail;
+		int b_ranking;
+		enum { PROTOCOL_TYPE = PROTOCOL_TEAMRAIDMAPPINGSUCCESS };
+	public:
+		TeamRaidMappingSuccess() { type = PROTOCOL_TEAMRAIDMAPPINGSUCCESS; }
+		TeamRaidMappingSuccess(void*) : Protocol(PROTOCOL_TEAMRAIDMAPPINGSUCCESS) { }
+		TeamRaidMappingSuccess (int l_raidroom_id,unsigned int l_localsid = 0,char l_iscross = 0,
+			int l_roleid = 0,const GCrssvrTeamsData& l_teamdata_a = GCrssvrTeamsData(),const std::vector<TeamRaidRoleBrief>& l_teamdata_a_detail = std::vector<TeamRaidRoleBrief>(),
+			int l_a_ranking = 0,const GCrssvrTeamsData& l_teamdata_b = GCrssvrTeamsData(),const std::vector<TeamRaidRoleBrief>& l_teamdata_b_detail = std::vector<TeamRaidRoleBrief>(),
+			int l_b_ranking = 0)
+			 : raidroom_id(l_raidroom_id),localsid(l_localsid),iscross(l_iscross)
+			,roleid(l_roleid),teamdata_a(l_teamdata_a),teamdata_a_detail(l_teamdata_a_detail)
+			,a_ranking(l_a_ranking),teamdata_b(l_teamdata_b),teamdata_b_detail(l_teamdata_b_detail)
+			,b_ranking(l_b_ranking)
+		{
+			type = PROTOCOL_TEAMRAIDMAPPINGSUCCESS;
+		}
+
+		TeamRaidMappingSuccess(const TeamRaidMappingSuccess &rhs)
+			: Protocol(rhs),raidroom_id(rhs.raidroom_id),localsid(rhs.localsid),iscross(rhs.iscross)
+			,roleid(rhs.roleid),teamdata_a(rhs.teamdata_a),teamdata_a_detail(rhs.teamdata_a_detail)
+			,a_ranking(rhs.a_ranking),teamdata_b(rhs.teamdata_b),teamdata_b_detail(rhs.teamdata_b_detail)
+			,b_ranking(rhs.b_ranking) { }
+
+		GNET::Protocol *Clone() const { return new TeamRaidMappingSuccess(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << raidroom_id;
+			os << localsid;
+			os << iscross;
+			os << roleid;
+			os << teamdata_a;
+			os << teamdata_a_detail;
+			os << a_ranking;
+			os << teamdata_b;
+			os << teamdata_b_detail;
+			os << b_ranking;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> raidroom_id;
+			os >> localsid;
+			os >> iscross;
+			os >> roleid;
+			os >> teamdata_a;
+			os >> teamdata_a_detail;
+			os >> a_ranking;
+			os >> teamdata_b;
+			os >> teamdata_b_detail;
+			os >> b_ranking;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }

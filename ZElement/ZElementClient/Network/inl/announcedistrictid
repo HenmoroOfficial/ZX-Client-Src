@@ -1,0 +1,32 @@
+	public:
+		int district_id;
+		enum { PROTOCOL_TYPE = PROTOCOL_ANNOUNCEDISTRICTID };
+	public:
+		AnnounceDistrictId() { type = PROTOCOL_ANNOUNCEDISTRICTID; }
+		AnnounceDistrictId(void*) : Protocol(PROTOCOL_ANNOUNCEDISTRICTID) { }
+		AnnounceDistrictId (int l_district_id)
+			 : district_id(l_district_id)
+		{
+			type = PROTOCOL_ANNOUNCEDISTRICTID;
+		}
+
+		AnnounceDistrictId(const AnnounceDistrictId &rhs)
+			: Protocol(rhs),district_id(rhs.district_id) { }
+
+		GNET::Protocol *Clone() const { return new AnnounceDistrictId(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << district_id;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> district_id;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

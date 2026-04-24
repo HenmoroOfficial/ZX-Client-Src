@@ -1,0 +1,118 @@
+#ifndef __GNET_SNSROLEINFO_RPCDATA
+#define __GNET_SNSROLEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class SNSRoleInfo : public GNET::Rpc::Data
+	{
+	public:
+		int level;
+		int sub_level;
+		char gender;
+		unsigned char occupation;
+		int spouse;
+		Octets rolename;
+		Octets sectname;
+		Octets familyname;
+		char factiontitle;
+		Octets factionname;
+		int faction_level;
+
+	public:
+		SNSRoleInfo (int l_level = 0,int l_sub_level = 0,char l_gender = 0
+			,unsigned char l_occupation = 0,int l_spouse = 0,const Octets& l_rolename = Octets()
+			,const Octets& l_sectname = Octets(),const Octets& l_familyname = Octets(),char l_factiontitle = 0
+			,const Octets& l_factionname = Octets(),int l_faction_level = 0)
+			: level(l_level),sub_level(l_sub_level),gender(l_gender)
+			,occupation(l_occupation),spouse(l_spouse),rolename(l_rolename)
+			,sectname(l_sectname),familyname(l_familyname),factiontitle(l_factiontitle)
+			,factionname(l_factionname),faction_level(l_faction_level)
+		{
+		}
+
+		SNSRoleInfo(const SNSRoleInfo &rhs)
+			: level(rhs.level),sub_level(rhs.sub_level),gender(rhs.gender),
+			occupation(rhs.occupation),spouse(rhs.spouse),rolename(rhs.rolename),
+			sectname(rhs.sectname),familyname(rhs.familyname),factiontitle(rhs.factiontitle),
+			factionname(rhs.factionname),faction_level(rhs.faction_level) { }
+
+		Rpc::Data *Clone() const { return new SNSRoleInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SNSRoleInfo *r = dynamic_cast<const SNSRoleInfo *>(&rhs);
+			if (r && r != this)
+			{
+				level = r->level;
+				sub_level = r->sub_level;
+				gender = r->gender;
+				occupation = r->occupation;
+				spouse = r->spouse;
+				rolename = r->rolename;
+				sectname = r->sectname;
+				familyname = r->familyname;
+				factiontitle = r->factiontitle;
+				factionname = r->factionname;
+				faction_level = r->faction_level;
+			}
+			return *this;
+		}
+
+		SNSRoleInfo& operator = (const SNSRoleInfo &rhs)
+		{
+			const SNSRoleInfo *r = &rhs;
+			if (r && r != this)
+			{
+				level = r->level;
+				sub_level = r->sub_level;
+				gender = r->gender;
+				occupation = r->occupation;
+				spouse = r->spouse;
+				rolename = r->rolename;
+				sectname = r->sectname;
+				familyname = r->familyname;
+				factiontitle = r->factiontitle;
+				factionname = r->factionname;
+				faction_level = r->faction_level;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << level;
+			os << sub_level;
+			os << gender;
+			os << occupation;
+			os << spouse;
+			os << rolename;
+			os << sectname;
+			os << familyname;
+			os << factiontitle;
+			os << factionname;
+			os << faction_level;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> level;
+			os >> sub_level;
+			os >> gender;
+			os >> occupation;
+			os >> spouse;
+			os >> rolename;
+			os >> sectname;
+			os >> familyname;
+			os >> factiontitle;
+			os >> factionname;
+			os >> faction_level;
+			return os;
+		}
+
+	};
+};
+#endif

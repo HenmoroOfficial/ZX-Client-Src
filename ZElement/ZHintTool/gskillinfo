@@ -1,0 +1,59 @@
+#ifndef __GNET_GSKILLINFO_RPCDATA
+#define __GNET_GSKILLINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GSkillInfo : public GNET::Rpc::Data
+	{
+	public:
+		 Octets  skills;
+
+	public:
+		GSkillInfo (const  Octets & l_skills =  Octets (0))
+			: skills(l_skills)
+		{
+		}
+
+		GSkillInfo(const GSkillInfo &rhs)
+			: skills(rhs.skills) { }
+
+		Rpc::Data *Clone() const { return new GSkillInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GSkillInfo *r = dynamic_cast<const GSkillInfo *>(&rhs);
+			if (r && r != this)
+			{
+				skills = r->skills;
+			}
+			return *this;
+		}
+
+		GSkillInfo& operator = (const GSkillInfo &rhs)
+		{
+			const GSkillInfo *r = &rhs;
+			if (r && r != this)
+			{
+				skills = r->skills;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << skills;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> skills;
+			return os;
+		}
+
+	};
+};
+#endif

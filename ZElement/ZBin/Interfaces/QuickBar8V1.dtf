@@ -1,0 +1,22 @@
+DIALOG "Win_QuickBar8V_1" 0 0 40 338 0 1 10 "" "" "" 0 0 -1 -1 "" 0 0 255 255 255 255 1 0
+IMAGEPICTURE "Item_1" "" "" 0 12 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_2" "" "" 0 51 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_3" "" "" 0 90 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_4" "" "" 0 129 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_5" "" "" 0 168 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_6" "" "" 0 207 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_7" "" "" 0 246 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_8" "" "" 0 285 40 40 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Pic_QBVUp" "" "" 2 5 36 9 1 0 "Icon\QBVUp.tga"
+IMAGEPICTURE "Pic_QBVDown" "" "" 2 324 36 9 1 0 "Icon\QBVDown.tga"
+STILLIMAGEBUTTON "Btn_QBVAdd" "add" "" 7 0 14 14 0 0 0 0 2 10 255 255 255 255 "Button\QBVExc.tga" "Button\QBVExcDown.tga" "" 3 1 1
+STILLIMAGEBUTTON "Btn_QBVExtra" "extra" "" 20 0 14 14 0 0 0 0 4 10 255 255 255 255 "Button\QBVExp.tga" "Button\QBVExpDown.tga" "" 5 1 1
+STILLIMAGEBUTTON "Btn_QBSwitch" "switch" "" 13 324 14 14 0 0 0 0 6 10 255 255 255 255 "Button\QBTrun.tga" "Button\QBTrunDown.tga" "" 7 1 1
+LABEL "Lab_1" "" "" 25 36 0 0 8 8 9 255 255 255 255
+LABEL "Lab_2" "" "" 24 75 0 0 10 8 11 255 255 255 255
+LABEL "Lab_3" "" "" 24 114 0 0 12 8 13 255 255 255 255
+LABEL "Lab_4" "" "" 24 153 0 0 14 8 15 255 255 255 255
+LABEL "Lab_5" "" "" 24 193 0 0 16 8 17 255 255 255 255
+LABEL "Lab_6" "" "" 24 232 0 0 18 8 19 255 255 255 255
+LABEL "Lab_7" "" "" 24 271 0 0 20 8 21 255 255 255 255
+LABEL "Lab_8" "" "" 24 310 0 0 22 8 23 255 255 255 255

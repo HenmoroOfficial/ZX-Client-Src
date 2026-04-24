@@ -1,0 +1,133 @@
+#ifndef __GNET_KINGDOMCLIENTINFO_RPCDATA
+#define __GNET_KINGDOMCLIENTINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "kingdomfunctionary"
+#include "kingdomfunctionary"
+
+namespace GNET
+{
+	class KingdomClientInfo : public GNET::Rpc::Data
+	{
+	public:
+		char self_title;
+		unsigned int privileges_mask;
+		KingdomFunctionary king;
+		KingdomFunctionary queen;
+		Octets kingdomname;
+		int king_faction;
+		Octets kingfacname;
+		Octets announce;
+		int points;
+		int win_times;
+		int reward_mask;
+		std::vector<KingdomFunctionary> functionaries;
+		char kinggender;
+
+	public:
+		KingdomClientInfo (char l_self_title = 0,unsigned int l_privileges_mask = 0,const KingdomFunctionary& l_king = KingdomFunctionary()
+			,const KingdomFunctionary& l_queen = KingdomFunctionary(),Octets l_kingdomname = Octets(),int l_king_faction = 0
+			,Octets l_kingfacname = Octets(),Octets l_announce = Octets(),int l_points = 0
+			,int l_win_times = 0,int l_reward_mask = 0,const std::vector<KingdomFunctionary>& l_functionaries = std::vector<KingdomFunctionary>()
+			,char l_kinggender = 0)
+			: self_title(l_self_title),privileges_mask(l_privileges_mask),king(l_king)
+			,queen(l_queen),kingdomname(l_kingdomname),king_faction(l_king_faction)
+			,kingfacname(l_kingfacname),announce(l_announce),points(l_points)
+			,win_times(l_win_times),reward_mask(l_reward_mask),functionaries(l_functionaries)
+			,kinggender(l_kinggender)
+		{
+		}
+
+		KingdomClientInfo(const KingdomClientInfo &rhs)
+			: self_title(rhs.self_title),privileges_mask(rhs.privileges_mask),king(rhs.king),
+			queen(rhs.queen),kingdomname(rhs.kingdomname),king_faction(rhs.king_faction),
+			kingfacname(rhs.kingfacname),announce(rhs.announce),points(rhs.points),
+			win_times(rhs.win_times),reward_mask(rhs.reward_mask),functionaries(rhs.functionaries),
+			kinggender(rhs.kinggender) { }
+
+		Rpc::Data *Clone() const { return new KingdomClientInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const KingdomClientInfo *r = dynamic_cast<const KingdomClientInfo *>(&rhs);
+			if (r && r != this)
+			{
+				self_title = r->self_title;
+				privileges_mask = r->privileges_mask;
+				king = r->king;
+				queen = r->queen;
+				kingdomname = r->kingdomname;
+				king_faction = r->king_faction;
+				kingfacname = r->kingfacname;
+				announce = r->announce;
+				points = r->points;
+				win_times = r->win_times;
+				reward_mask = r->reward_mask;
+				functionaries = r->functionaries;
+				kinggender = r->kinggender;
+			}
+			return *this;
+		}
+
+		KingdomClientInfo& operator = (const KingdomClientInfo &rhs)
+		{
+			const KingdomClientInfo *r = &rhs;
+			if (r && r != this)
+			{
+				self_title = r->self_title;
+				privileges_mask = r->privileges_mask;
+				king = r->king;
+				queen = r->queen;
+				kingdomname = r->kingdomname;
+				king_faction = r->king_faction;
+				kingfacname = r->kingfacname;
+				announce = r->announce;
+				points = r->points;
+				win_times = r->win_times;
+				reward_mask = r->reward_mask;
+				functionaries = r->functionaries;
+				kinggender = r->kinggender;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << self_title;
+			os << privileges_mask;
+			os << king;
+			os << queen;
+			os << kingdomname;
+			os << king_faction;
+			os << kingfacname;
+			os << announce;
+			os << points;
+			os << win_times;
+			os << reward_mask;
+			os << functionaries;
+			os << kinggender;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> self_title;
+			os >> privileges_mask;
+			os >> king;
+			os >> queen;
+			os >> kingdomname;
+			os >> king_faction;
+			os >> kingfacname;
+			os >> announce;
+			os >> points;
+			os >> win_times;
+			os >> reward_mask;
+			os >> functionaries;
+			os >> kinggender;
+			return os;
+		}
+
+	};
+};
+#endif

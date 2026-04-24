@@ -1,0 +1,59 @@
+#ifndef __GNET_SECTINVITERES_RPCDATA
+#define __GNET_SECTINVITERES_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class SectInviteRes : public GNET::Rpc::Data
+	{
+	public:
+		int retcode;
+
+	public:
+		SectInviteRes (int l_retcode = -1)
+			: retcode(l_retcode)
+		{
+		}
+
+		SectInviteRes(const SectInviteRes &rhs)
+			: retcode(rhs.retcode) { }
+
+		Rpc::Data *Clone() const { return new SectInviteRes(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SectInviteRes *r = dynamic_cast<const SectInviteRes *>(&rhs);
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+			}
+			return *this;
+		}
+
+		SectInviteRes& operator = (const SectInviteRes &rhs)
+		{
+			const SectInviteRes *r = &rhs;
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			return os;
+		}
+
+	};
+};
+#endif

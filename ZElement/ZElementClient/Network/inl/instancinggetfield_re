@@ -1,0 +1,59 @@
+	public:
+		unsigned short retcode;
+		std::vector<GBattleRole> attacker;
+		std::vector<GBattleRole> req_attacker;
+		std::vector<GBattleRole> defender;
+		std::vector<GBattleRole> req_defender;
+		unsigned int looker;
+		int time_left;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGGETFIELD_RE };
+	public:
+		InstancingGetField_Re() { type = PROTOCOL_INSTANCINGGETFIELD_RE; }
+		InstancingGetField_Re(void*) : Protocol(PROTOCOL_INSTANCINGGETFIELD_RE) { }
+		InstancingGetField_Re (unsigned short l_retcode,const std::vector<GBattleRole>& l_attacker = std::vector<GBattleRole>(),const std::vector<GBattleRole>& l_req_attacker = std::vector<GBattleRole>(),
+			const std::vector<GBattleRole>& l_defender = std::vector<GBattleRole>(),const std::vector<GBattleRole>& l_req_defender = std::vector<GBattleRole>(),unsigned int l_looker = 0,
+			int l_time_left = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),attacker(l_attacker),req_attacker(l_req_attacker)
+			,defender(l_defender),req_defender(l_req_defender),looker(l_looker)
+			,time_left(l_time_left),localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGGETFIELD_RE;
+		}
+
+		InstancingGetField_Re(const InstancingGetField_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),attacker(rhs.attacker),req_attacker(rhs.req_attacker)
+			,defender(rhs.defender),req_defender(rhs.req_defender),looker(rhs.looker)
+			,time_left(rhs.time_left),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingGetField_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << attacker;
+			os << req_attacker;
+			os << defender;
+			os << req_defender;
+			os << looker;
+			os << time_left;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> attacker;
+			os >> req_attacker;
+			os >> defender;
+			os >> req_defender;
+			os >> looker;
+			os >> time_left;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 8192; }

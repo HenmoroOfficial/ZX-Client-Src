@@ -1,0 +1,56 @@
+	public:
+		unsigned int src;
+		unsigned int circleid;
+		unsigned char channel;
+		unsigned char emotion;
+		Octets msg;
+		Octets data;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GCIRCLECHAT };
+	public:
+		GCircleChat() { type = PROTOCOL_GCIRCLECHAT; }
+		GCircleChat(void*) : Protocol(PROTOCOL_GCIRCLECHAT) { }
+		GCircleChat (unsigned int l_src,unsigned int l_circleid,unsigned char l_channel = 0,
+			unsigned char l_emotion = 0,const Octets& l_msg = Octets(),const Octets& l_data = Octets(),
+			unsigned int l_localsid = 0)
+			 : src(l_src),circleid(l_circleid),channel(l_channel)
+			,emotion(l_emotion),msg(l_msg),data(l_data)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_GCIRCLECHAT;
+		}
+
+		GCircleChat(const GCircleChat &rhs)
+			: Protocol(rhs),src(rhs.src),circleid(rhs.circleid),channel(rhs.channel)
+			,emotion(rhs.emotion),msg(rhs.msg),data(rhs.data)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GCircleChat(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << src;
+			os << circleid;
+			os << channel;
+			os << emotion;
+			os << msg;
+			os << data;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> src;
+			os >> circleid;
+			os >> channel;
+			os >> emotion;
+			os >> msg;
+			os >> data;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

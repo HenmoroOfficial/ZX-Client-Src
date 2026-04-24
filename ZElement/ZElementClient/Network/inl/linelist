@@ -1,0 +1,35 @@
+	public:
+		LineInfoVector linelist;
+		int algorithm;
+		enum { PROTOCOL_TYPE = PROTOCOL_LINELIST };
+	public:
+		LineList() { type = PROTOCOL_LINELIST; }
+		LineList(void*) : Protocol(PROTOCOL_LINELIST) { }
+		LineList (LineInfoVector l_linelist,int l_algorithm = 0)
+			 : linelist(l_linelist),algorithm(l_algorithm)
+		{
+			type = PROTOCOL_LINELIST;
+		}
+
+		LineList(const LineList &rhs)
+			: Protocol(rhs),linelist(rhs.linelist),algorithm(rhs.algorithm) { }
+
+		GNET::Protocol *Clone() const { return new LineList(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << linelist;
+			os << algorithm;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> linelist;
+			os >> algorithm;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 8192; }

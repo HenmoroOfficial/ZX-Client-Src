@@ -1,0 +1,125 @@
+#ifndef __GNET_SNSMESSAGEBRIEF_RPCDATA
+#define __GNET_SNSMESSAGEBRIEF_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gapplycondition"
+
+namespace GNET
+{
+	class SNSMessageBrief : public GNET::Rpc::Data
+	{
+	public:
+		int message_id;
+		int roleid;
+		char gender;
+		Octets rolename;
+		int charm;
+		int charmstar_player;
+		int attention;
+		int apply_count;
+		int press_time;
+		Octets message;
+		GApplyCondition condition;
+		std::vector<int> accept_list;
+
+	public:
+		SNSMessageBrief (int l_message_id = 0,int l_roleid = 0,char l_gender = 0
+			,const Octets& l_rolename = Octets(),int l_charm = 0,int l_charmstar_player = 0
+			,int l_attention = 0,int l_apply_count = 0,int l_press_time = 0
+			,const Octets& l_message = Octets(),GApplyCondition l_condition = GApplyCondition(),const std::vector<int>& l_accept_list = std::vector<int>())
+			: message_id(l_message_id),roleid(l_roleid),gender(l_gender)
+			,rolename(l_rolename),charm(l_charm),charmstar_player(l_charmstar_player)
+			,attention(l_attention),apply_count(l_apply_count),press_time(l_press_time)
+			,message(l_message),condition(l_condition),accept_list(l_accept_list)
+		{
+		}
+
+		SNSMessageBrief(const SNSMessageBrief &rhs)
+			: message_id(rhs.message_id),roleid(rhs.roleid),gender(rhs.gender),
+			rolename(rhs.rolename),charm(rhs.charm),charmstar_player(rhs.charmstar_player),
+			attention(rhs.attention),apply_count(rhs.apply_count),press_time(rhs.press_time),
+			message(rhs.message),condition(rhs.condition),accept_list(rhs.accept_list) { }
+
+		Rpc::Data *Clone() const { return new SNSMessageBrief(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SNSMessageBrief *r = dynamic_cast<const SNSMessageBrief *>(&rhs);
+			if (r && r != this)
+			{
+				message_id = r->message_id;
+				roleid = r->roleid;
+				gender = r->gender;
+				rolename = r->rolename;
+				charm = r->charm;
+				charmstar_player = r->charmstar_player;
+				attention = r->attention;
+				apply_count = r->apply_count;
+				press_time = r->press_time;
+				message = r->message;
+				condition = r->condition;
+				accept_list = r->accept_list;
+			}
+			return *this;
+		}
+
+		SNSMessageBrief& operator = (const SNSMessageBrief &rhs)
+		{
+			const SNSMessageBrief *r = &rhs;
+			if (r && r != this)
+			{
+				message_id = r->message_id;
+				roleid = r->roleid;
+				gender = r->gender;
+				rolename = r->rolename;
+				charm = r->charm;
+				charmstar_player = r->charmstar_player;
+				attention = r->attention;
+				apply_count = r->apply_count;
+				press_time = r->press_time;
+				message = r->message;
+				condition = r->condition;
+				accept_list = r->accept_list;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << message_id;
+			os << roleid;
+			os << gender;
+			os << rolename;
+			os << charm;
+			os << charmstar_player;
+			os << attention;
+			os << apply_count;
+			os << press_time;
+			os << message;
+			os << condition;
+			os << accept_list;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> message_id;
+			os >> roleid;
+			os >> gender;
+			os >> rolename;
+			os >> charm;
+			os >> charmstar_player;
+			os >> attention;
+			os >> apply_count;
+			os >> press_time;
+			os >> message;
+			os >> condition;
+			os >> accept_list;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<SNSMessageBrief>	SNSMessageBriefVector;
+};
+#endif

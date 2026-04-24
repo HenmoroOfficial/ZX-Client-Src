@@ -1,0 +1,80 @@
+	public:
+		int retcode;
+		int mapid;
+		int raidroom_id;
+		int attacker;
+		int defender;
+		std::vector<GFactionPkRaidRecord> attack_score;
+		std::vector<GFactionPkRaidRecord> defender_score;
+		int remain_time;
+		short attacker_num;
+		short defender_num;
+		short watcher_num;
+		int bonus;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPKRAIDGETSCORE_RE };
+	public:
+		FactionPkRaidGetScore_Re() { type = PROTOCOL_FACTIONPKRAIDGETSCORE_RE; }
+		FactionPkRaidGetScore_Re(void*) : Protocol(PROTOCOL_FACTIONPKRAIDGETSCORE_RE) { }
+		FactionPkRaidGetScore_Re (int l_retcode,int l_mapid,int l_raidroom_id,
+			int l_attacker,int l_defender,const std::vector<GFactionPkRaidRecord>& l_attack_score,
+			const std::vector<GFactionPkRaidRecord>& l_defender_score,int l_remain_time = 0,short l_attacker_num = 0,
+			short l_defender_num = 0,short l_watcher_num = 0,int l_bonus = 0,
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),mapid(l_mapid),raidroom_id(l_raidroom_id)
+			,attacker(l_attacker),defender(l_defender),attack_score(l_attack_score)
+			,defender_score(l_defender_score),remain_time(l_remain_time),attacker_num(l_attacker_num)
+			,defender_num(l_defender_num),watcher_num(l_watcher_num),bonus(l_bonus)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONPKRAIDGETSCORE_RE;
+		}
+
+		FactionPkRaidGetScore_Re(const FactionPkRaidGetScore_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),mapid(rhs.mapid),raidroom_id(rhs.raidroom_id)
+			,attacker(rhs.attacker),defender(rhs.defender),attack_score(rhs.attack_score)
+			,defender_score(rhs.defender_score),remain_time(rhs.remain_time),attacker_num(rhs.attacker_num)
+			,defender_num(rhs.defender_num),watcher_num(rhs.watcher_num),bonus(rhs.bonus)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionPkRaidGetScore_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << mapid;
+			os << raidroom_id;
+			os << attacker;
+			os << defender;
+			os << attack_score;
+			os << defender_score;
+			os << remain_time;
+			os << attacker_num;
+			os << defender_num;
+			os << watcher_num;
+			os << bonus;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> mapid;
+			os >> raidroom_id;
+			os >> attacker;
+			os >> defender;
+			os >> attack_score;
+			os >> defender_score;
+			os >> remain_time;
+			os >> attacker_num;
+			os >> defender_num;
+			os >> watcher_num;
+			os >> bonus;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

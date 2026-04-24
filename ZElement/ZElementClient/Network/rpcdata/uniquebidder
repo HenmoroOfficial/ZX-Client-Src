@@ -1,0 +1,69 @@
+#ifndef __GNET_UNIQUEBIDDER_RPCDATA
+#define __GNET_UNIQUEBIDDER_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class UniqueBidder : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets rolename;
+		int bidtime;
+
+	public:
+		UniqueBidder (int l_roleid = 0,const Octets& l_rolename = Octets(0),int l_bidtime = 0)
+			: roleid(l_roleid),rolename(l_rolename),bidtime(l_bidtime)
+		{
+		}
+
+		UniqueBidder(const UniqueBidder &rhs)
+			: roleid(rhs.roleid),rolename(rhs.rolename),bidtime(rhs.bidtime) { }
+
+		Rpc::Data *Clone() const { return new UniqueBidder(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const UniqueBidder *r = dynamic_cast<const UniqueBidder *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				bidtime = r->bidtime;
+			}
+			return *this;
+		}
+
+		UniqueBidder& operator = (const UniqueBidder &rhs)
+		{
+			const UniqueBidder *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				bidtime = r->bidtime;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << rolename;
+			os << bidtime;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> rolename;
+			os >> bidtime;
+			return os;
+		}
+
+	};
+};
+#endif

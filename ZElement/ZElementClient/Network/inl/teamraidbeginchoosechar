@@ -1,0 +1,44 @@
+	public:
+		int raidroom_id;
+		int map_id;
+		TeamRaidMatchData roles;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TEAMRAIDBEGINCHOOSECHAR };
+	public:
+		TeamRaidBeginChooseChar() { type = PROTOCOL_TEAMRAIDBEGINCHOOSECHAR; }
+		TeamRaidBeginChooseChar(void*) : Protocol(PROTOCOL_TEAMRAIDBEGINCHOOSECHAR) { }
+		TeamRaidBeginChooseChar (int l_raidroom_id,int l_map_id = 0,const TeamRaidMatchData& l_roles = TeamRaidMatchData(),
+			unsigned int l_localsid = 0)
+			 : raidroom_id(l_raidroom_id),map_id(l_map_id),roles(l_roles)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_TEAMRAIDBEGINCHOOSECHAR;
+		}
+
+		TeamRaidBeginChooseChar(const TeamRaidBeginChooseChar &rhs)
+			: Protocol(rhs),raidroom_id(rhs.raidroom_id),map_id(rhs.map_id),roles(rhs.roles)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TeamRaidBeginChooseChar(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << raidroom_id;
+			os << map_id;
+			os << roles;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> raidroom_id;
+			os >> map_id;
+			os >> roles;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }

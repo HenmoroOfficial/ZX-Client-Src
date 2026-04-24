@@ -1,0 +1,35 @@
+	public:
+		int voted_roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDBEGINVOTES };
+	public:
+		RaidBeginVotes() { type = PROTOCOL_RAIDBEGINVOTES; }
+		RaidBeginVotes(void*) : Protocol(PROTOCOL_RAIDBEGINVOTES) { }
+		RaidBeginVotes (int l_voted_roleid,unsigned int l_localsid = 0)
+			 : voted_roleid(l_voted_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDBEGINVOTES;
+		}
+
+		RaidBeginVotes(const RaidBeginVotes &rhs)
+			: Protocol(rhs),voted_roleid(rhs.voted_roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidBeginVotes(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << voted_roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> voted_roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

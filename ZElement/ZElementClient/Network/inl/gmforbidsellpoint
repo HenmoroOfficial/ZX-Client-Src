@@ -1,0 +1,44 @@
+	public:
+		int gmroleid;
+		unsigned int localsid;
+		int forbid_time;
+		char blOn;
+		enum { PROTOCOL_TYPE = PROTOCOL_GMFORBIDSELLPOINT };
+	public:
+		GMForbidSellPoint() { type = PROTOCOL_GMFORBIDSELLPOINT; }
+		GMForbidSellPoint(void*) : Protocol(PROTOCOL_GMFORBIDSELLPOINT) { }
+		GMForbidSellPoint (int l_gmroleid,unsigned int l_localsid,int l_forbid_time,
+			char l_blOn = 0)
+			 : gmroleid(l_gmroleid),localsid(l_localsid),forbid_time(l_forbid_time)
+			,blOn(l_blOn)
+		{
+			type = PROTOCOL_GMFORBIDSELLPOINT;
+		}
+
+		GMForbidSellPoint(const GMForbidSellPoint &rhs)
+			: Protocol(rhs),gmroleid(rhs.gmroleid),localsid(rhs.localsid),forbid_time(rhs.forbid_time)
+			,blOn(rhs.blOn) { }
+
+		GNET::Protocol *Clone() const { return new GMForbidSellPoint(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << gmroleid;
+			os << localsid;
+			os << forbid_time;
+			os << blOn;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> gmroleid;
+			os >> localsid;
+			os >> forbid_time;
+			os >> blOn;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

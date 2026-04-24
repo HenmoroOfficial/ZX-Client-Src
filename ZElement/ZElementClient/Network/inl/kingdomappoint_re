@@ -1,0 +1,56 @@
+	public:
+		int retcode;
+		int roleid;
+		int candidate;
+		char title;
+		unsigned int localsid;
+		Octets candidate_name;
+		unsigned char online;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMAPPOINT_RE };
+	public:
+		KingdomAppoint_Re() { type = PROTOCOL_KINGDOMAPPOINT_RE; }
+		KingdomAppoint_Re(void*) : Protocol(PROTOCOL_KINGDOMAPPOINT_RE) { }
+		KingdomAppoint_Re (int l_retcode,int l_roleid,int l_candidate,
+			char l_title,unsigned int l_localsid,Octets l_candidate_name,
+			unsigned char l_online = 0)
+			 : retcode(l_retcode),roleid(l_roleid),candidate(l_candidate)
+			,title(l_title),localsid(l_localsid),candidate_name(l_candidate_name)
+			,online(l_online)
+		{
+			type = PROTOCOL_KINGDOMAPPOINT_RE;
+		}
+
+		KingdomAppoint_Re(const KingdomAppoint_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),candidate(rhs.candidate)
+			,title(rhs.title),localsid(rhs.localsid),candidate_name(rhs.candidate_name)
+			,online(rhs.online) { }
+
+		GNET::Protocol *Clone() const { return new KingdomAppoint_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << candidate;
+			os << title;
+			os << localsid;
+			os << candidate_name;
+			os << online;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> candidate;
+			os >> title;
+			os >> localsid;
+			os >> candidate_name;
+			os >> online;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

@@ -1,0 +1,78 @@
+#ifndef __GNET_LINEINFO_RPCDATA
+#define __GNET_LINEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class LineInfo : public GNET::Rpc::Data
+	{
+	public:
+		int id;
+		Octets name;
+		Octets attribute;
+		char ishide;
+
+	public:
+		LineInfo (int l_id = 0,Octets l_name = Octets(0),Octets l_attribute = Octets(0)
+			,char l_ishide = 0)
+			: id(l_id),name(l_name),attribute(l_attribute)
+			,ishide(l_ishide)
+		{
+		}
+
+		LineInfo(const LineInfo &rhs)
+			: id(rhs.id),name(rhs.name),attribute(rhs.attribute),
+			ishide(rhs.ishide) { }
+
+		Rpc::Data *Clone() const { return new LineInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const LineInfo *r = dynamic_cast<const LineInfo *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				name = r->name;
+				attribute = r->attribute;
+				ishide = r->ishide;
+			}
+			return *this;
+		}
+
+		LineInfo& operator = (const LineInfo &rhs)
+		{
+			const LineInfo *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				name = r->name;
+				attribute = r->attribute;
+				ishide = r->ishide;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << name;
+			os << attribute;
+			os << ishide;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> name;
+			os >> attribute;
+			os >> ishide;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<LineInfo>	LineInfoVector;
+};
+#endif

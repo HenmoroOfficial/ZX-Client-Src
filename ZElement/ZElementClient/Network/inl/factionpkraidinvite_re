@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		int map_id;
+		char result;
+		unsigned int inviter_factionid;
+		unsigned int dst_factionid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPKRAIDINVITE_RE };
+	public:
+		FactionPkRaidInvite_Re() { type = PROTOCOL_FACTIONPKRAIDINVITE_RE; }
+		FactionPkRaidInvite_Re(void*) : Protocol(PROTOCOL_FACTIONPKRAIDINVITE_RE) { }
+		FactionPkRaidInvite_Re (int l_roleid,int l_map_id,char l_result = 0,
+			unsigned int l_inviter_factionid = 0,unsigned int l_dst_factionid = 0)
+			 : roleid(l_roleid),map_id(l_map_id),result(l_result)
+			,inviter_factionid(l_inviter_factionid),dst_factionid(l_dst_factionid)
+		{
+			type = PROTOCOL_FACTIONPKRAIDINVITE_RE;
+		}
+
+		FactionPkRaidInvite_Re(const FactionPkRaidInvite_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),map_id(rhs.map_id),result(rhs.result)
+			,inviter_factionid(rhs.inviter_factionid),dst_factionid(rhs.dst_factionid) { }
+
+		GNET::Protocol *Clone() const { return new FactionPkRaidInvite_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << map_id;
+			os << result;
+			os << inviter_factionid;
+			os << dst_factionid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> map_id;
+			os >> result;
+			os >> inviter_factionid;
+			os >> dst_factionid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

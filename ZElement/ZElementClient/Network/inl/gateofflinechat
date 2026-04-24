@@ -1,0 +1,44 @@
+	public:
+		int dstroleid;
+		unsigned char channel;
+		std::vector<GGTOfflineMsg> messages;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GATEOFFLINECHAT };
+	public:
+		GateOfflineChat() { type = PROTOCOL_GATEOFFLINECHAT; }
+		GateOfflineChat(void*) : Protocol(PROTOCOL_GATEOFFLINECHAT) { }
+		GateOfflineChat (int l_dstroleid,unsigned char l_channel,const std::vector<GGTOfflineMsg>& l_messages,
+			unsigned int l_localsid)
+			 : dstroleid(l_dstroleid),channel(l_channel),messages(l_messages)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_GATEOFFLINECHAT;
+		}
+
+		GateOfflineChat(const GateOfflineChat &rhs)
+			: Protocol(rhs),dstroleid(rhs.dstroleid),channel(rhs.channel),messages(rhs.messages)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GateOfflineChat(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << dstroleid;
+			os << channel;
+			os << messages;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> dstroleid;
+			os >> channel;
+			os >> messages;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1048576; }

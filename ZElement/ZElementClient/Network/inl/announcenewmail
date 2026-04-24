@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		int remain_time;
+		enum { PROTOCOL_TYPE = PROTOCOL_ANNOUNCENEWMAIL };
+	public:
+		AnnounceNewMail() { type = PROTOCOL_ANNOUNCENEWMAIL; }
+		AnnounceNewMail(void*) : Protocol(PROTOCOL_ANNOUNCENEWMAIL) { }
+		AnnounceNewMail (int l_roleid,unsigned int l_localsid,int l_remain_time)
+			 : roleid(l_roleid),localsid(l_localsid),remain_time(l_remain_time)
+		{
+			type = PROTOCOL_ANNOUNCENEWMAIL;
+		}
+
+		AnnounceNewMail(const AnnounceNewMail &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),remain_time(rhs.remain_time) { }
+
+		GNET::Protocol *Clone() const { return new AnnounceNewMail(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << remain_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> remain_time;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

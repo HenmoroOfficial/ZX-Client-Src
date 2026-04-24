@@ -1,0 +1,77 @@
+#ifndef __GNET_GCRSSVRTEAMSSCORE_RPCDATA
+#define __GNET_GCRSSVRTEAMSSCORE_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCrssvrTeamsScore : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int ct_max_score;
+		int ct_last_max_score;
+		int ct_max_score_updatetime;
+
+	public:
+		GCrssvrTeamsScore (int l_roleid = 0,int l_ct_max_score = 0,int l_ct_last_max_score = 0
+			,int l_ct_max_score_updatetime = 0)
+			: roleid(l_roleid),ct_max_score(l_ct_max_score),ct_last_max_score(l_ct_last_max_score)
+			,ct_max_score_updatetime(l_ct_max_score_updatetime)
+		{
+		}
+
+		GCrssvrTeamsScore(const GCrssvrTeamsScore &rhs)
+			: roleid(rhs.roleid),ct_max_score(rhs.ct_max_score),ct_last_max_score(rhs.ct_last_max_score),
+			ct_max_score_updatetime(rhs.ct_max_score_updatetime) { }
+
+		Rpc::Data *Clone() const { return new GCrssvrTeamsScore(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCrssvrTeamsScore *r = dynamic_cast<const GCrssvrTeamsScore *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				ct_max_score = r->ct_max_score;
+				ct_last_max_score = r->ct_last_max_score;
+				ct_max_score_updatetime = r->ct_max_score_updatetime;
+			}
+			return *this;
+		}
+
+		GCrssvrTeamsScore& operator = (const GCrssvrTeamsScore &rhs)
+		{
+			const GCrssvrTeamsScore *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				ct_max_score = r->ct_max_score;
+				ct_last_max_score = r->ct_last_max_score;
+				ct_max_score_updatetime = r->ct_max_score_updatetime;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << ct_max_score;
+			os << ct_last_max_score;
+			os << ct_max_score_updatetime;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> ct_max_score;
+			os >> ct_last_max_score;
+			os >> ct_max_score_updatetime;
+			return os;
+		}
+
+	};
+};
+#endif

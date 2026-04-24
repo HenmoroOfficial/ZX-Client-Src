@@ -1,0 +1,71 @@
+	public:
+		int roleid;
+		int is_private;
+		Octets nickname;
+		short age;
+		int birthday;
+		int province;
+		int city;
+		Octets career;
+		Octets address;
+		Octets introduce;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSSETPLAYERINFO };
+	public:
+		SNSSetPlayerInfo() { type = PROTOCOL_SNSSETPLAYERINFO; }
+		SNSSetPlayerInfo(void*) : Protocol(PROTOCOL_SNSSETPLAYERINFO) { }
+		SNSSetPlayerInfo (int l_roleid,int l_is_private = 0,const Octets& l_nickname = Octets(),
+			short l_age = 0,int l_birthday = 0,int l_province = 0,
+			int l_city = 0,const Octets& l_career = Octets(),const Octets& l_address = Octets(),
+			const Octets& l_introduce = Octets(),int l_localsid = 0)
+			 : roleid(l_roleid),is_private(l_is_private),nickname(l_nickname)
+			,age(l_age),birthday(l_birthday),province(l_province)
+			,city(l_city),career(l_career),address(l_address)
+			,introduce(l_introduce),localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSSETPLAYERINFO;
+		}
+
+		SNSSetPlayerInfo(const SNSSetPlayerInfo &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),is_private(rhs.is_private),nickname(rhs.nickname)
+			,age(rhs.age),birthday(rhs.birthday),province(rhs.province)
+			,city(rhs.city),career(rhs.career),address(rhs.address)
+			,introduce(rhs.introduce),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSSetPlayerInfo(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << is_private;
+			os << nickname;
+			os << age;
+			os << birthday;
+			os << province;
+			os << city;
+			os << career;
+			os << address;
+			os << introduce;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> is_private;
+			os >> nickname;
+			os >> age;
+			os >> birthday;
+			os >> province;
+			os >> city;
+			os >> career;
+			os >> address;
+			os >> introduce;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

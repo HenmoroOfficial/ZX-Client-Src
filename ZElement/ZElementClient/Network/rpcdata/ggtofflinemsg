@@ -1,0 +1,82 @@
+#ifndef __GNET_GGTOFFLINEMSG_RPCDATA
+#define __GNET_GGTOFFLINEMSG_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GGTOfflineMsg : public GNET::Rpc::Data
+	{
+	public:
+		int srcroleid;
+		int64_t time;
+		unsigned char emotion;
+		Octets src_name;
+		Octets msg;
+
+	public:
+		GGTOfflineMsg (int l_srcroleid = 0,int64_t l_time = 0,unsigned char l_emotion = 0
+			,const Octets& l_src_name = Octets(),const Octets& l_msg = Octets())
+			: srcroleid(l_srcroleid),time(l_time),emotion(l_emotion)
+			,src_name(l_src_name),msg(l_msg)
+		{
+		}
+
+		GGTOfflineMsg(const GGTOfflineMsg &rhs)
+			: srcroleid(rhs.srcroleid),time(rhs.time),emotion(rhs.emotion),
+			src_name(rhs.src_name),msg(rhs.msg) { }
+
+		Rpc::Data *Clone() const { return new GGTOfflineMsg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GGTOfflineMsg *r = dynamic_cast<const GGTOfflineMsg *>(&rhs);
+			if (r && r != this)
+			{
+				srcroleid = r->srcroleid;
+				time = r->time;
+				emotion = r->emotion;
+				src_name = r->src_name;
+				msg = r->msg;
+			}
+			return *this;
+		}
+
+		GGTOfflineMsg& operator = (const GGTOfflineMsg &rhs)
+		{
+			const GGTOfflineMsg *r = &rhs;
+			if (r && r != this)
+			{
+				srcroleid = r->srcroleid;
+				time = r->time;
+				emotion = r->emotion;
+				src_name = r->src_name;
+				msg = r->msg;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << srcroleid;
+			os << time;
+			os << emotion;
+			os << src_name;
+			os << msg;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> srcroleid;
+			os >> time;
+			os >> emotion;
+			os >> src_name;
+			os >> msg;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,50 @@
+	public:
+		int send_roleid;
+		int dest_roleid;
+		Octets rolename;
+		Octets msg;
+		int count;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SENDFLOWERREQ };
+	public:
+		SendFlowerReq() { type = PROTOCOL_SENDFLOWERREQ; }
+		SendFlowerReq(void*) : Protocol(PROTOCOL_SENDFLOWERREQ) { }
+		SendFlowerReq (int l_send_roleid = 0,int l_dest_roleid = 0,const Octets& l_rolename = Octets(),
+			const Octets& l_msg = Octets(),int l_count = 0,unsigned int l_localsid = 0)
+			 : send_roleid(l_send_roleid),dest_roleid(l_dest_roleid),rolename(l_rolename)
+			,msg(l_msg),count(l_count),localsid(l_localsid)
+		{
+			type = PROTOCOL_SENDFLOWERREQ;
+		}
+
+		SendFlowerReq(const SendFlowerReq &rhs)
+			: Protocol(rhs),send_roleid(rhs.send_roleid),dest_roleid(rhs.dest_roleid),rolename(rhs.rolename)
+			,msg(rhs.msg),count(rhs.count),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SendFlowerReq(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << send_roleid;
+			os << dest_roleid;
+			os << rolename;
+			os << msg;
+			os << count;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> send_roleid;
+			os >> dest_roleid;
+			os >> rolename;
+			os >> msg;
+			os >> count;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

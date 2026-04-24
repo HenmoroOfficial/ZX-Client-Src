@@ -1,0 +1,76 @@
+#ifndef __GNET_MERCHANTDISCOUNT_RPCDATA
+#define __GNET_MERCHANTDISCOUNT_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "discountgrade"
+
+namespace GNET
+{
+	class MerchantDiscount : public GNET::Rpc::Data
+	{
+	public:
+		int id;
+		Octets name;
+		int reserved;
+		DiscountGradeVector discount;
+
+	public:
+		MerchantDiscount ()
+		{
+		}
+
+		MerchantDiscount(const MerchantDiscount &rhs)
+			: id(rhs.id),name(rhs.name),reserved(rhs.reserved),
+			discount(rhs.discount) { }
+
+		Rpc::Data *Clone() const { return new MerchantDiscount(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const MerchantDiscount *r = dynamic_cast<const MerchantDiscount *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				name = r->name;
+				reserved = r->reserved;
+				discount = r->discount;
+			}
+			return *this;
+		}
+
+		MerchantDiscount& operator = (const MerchantDiscount &rhs)
+		{
+			const MerchantDiscount *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				name = r->name;
+				reserved = r->reserved;
+				discount = r->discount;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << name;
+			os << reserved;
+			os << discount;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> name;
+			os >> reserved;
+			os >> discount;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<MerchantDiscount>	MerchantDiscountVector;
+};
+#endif

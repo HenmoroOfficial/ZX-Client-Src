@@ -1,0 +1,88 @@
+#ifndef __GNET_GAPPLYINFO_RPCDATA
+#define __GNET_GAPPLYINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GApplyInfo : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets rolename;
+		short count;
+		int last_time;
+		int level;
+		char gender;
+
+	public:
+		GApplyInfo (int l_roleid = 0,const Octets& l_rolename = Octets(),short l_count = 0
+			,int l_last_time = 0,int l_level = 0,char l_gender = 0)
+			: roleid(l_roleid),rolename(l_rolename),count(l_count)
+			,last_time(l_last_time),level(l_level),gender(l_gender)
+		{
+		}
+
+		GApplyInfo(const GApplyInfo &rhs)
+			: roleid(rhs.roleid),rolename(rhs.rolename),count(rhs.count),
+			last_time(rhs.last_time),level(rhs.level),gender(rhs.gender) { }
+
+		Rpc::Data *Clone() const { return new GApplyInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GApplyInfo *r = dynamic_cast<const GApplyInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				count = r->count;
+				last_time = r->last_time;
+				level = r->level;
+				gender = r->gender;
+			}
+			return *this;
+		}
+
+		GApplyInfo& operator = (const GApplyInfo &rhs)
+		{
+			const GApplyInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				count = r->count;
+				last_time = r->last_time;
+				level = r->level;
+				gender = r->gender;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << rolename;
+			os << count;
+			os << last_time;
+			os << level;
+			os << gender;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> rolename;
+			os >> count;
+			os >> last_time;
+			os >> level;
+			os >> gender;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GApplyInfo>	GApplyInfoVector;
+};
+#endif

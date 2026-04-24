@@ -1,0 +1,82 @@
+#ifndef __GNET_UNIQUEWINNER_RPCDATA
+#define __GNET_UNIQUEWINNER_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class UniqueWinner : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets rolename;
+		int money;
+		int itemid;
+		int time;
+
+	public:
+		UniqueWinner (int l_roleid = 0,const Octets& l_rolename = Octets(0),int l_money = 0
+			,int l_itemid = 0,int l_time = 0)
+			: roleid(l_roleid),rolename(l_rolename),money(l_money)
+			,itemid(l_itemid),time(l_time)
+		{
+		}
+
+		UniqueWinner(const UniqueWinner &rhs)
+			: roleid(rhs.roleid),rolename(rhs.rolename),money(rhs.money),
+			itemid(rhs.itemid),time(rhs.time) { }
+
+		Rpc::Data *Clone() const { return new UniqueWinner(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const UniqueWinner *r = dynamic_cast<const UniqueWinner *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				money = r->money;
+				itemid = r->itemid;
+				time = r->time;
+			}
+			return *this;
+		}
+
+		UniqueWinner& operator = (const UniqueWinner &rhs)
+		{
+			const UniqueWinner *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				money = r->money;
+				itemid = r->itemid;
+				time = r->time;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << rolename;
+			os << money;
+			os << itemid;
+			os << time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> rolename;
+			os >> money;
+			os >> itemid;
+			os >> time;
+			return os;
+		}
+
+	};
+};
+#endif

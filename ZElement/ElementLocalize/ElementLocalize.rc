@@ -1,0 +1,741 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\ElementLocalize.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LISTTAG             BITMAP  DISCARDABLE     "res\\listtag.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_TREE_VIEW DIALOG DISCARDABLE  0, 0, 79, 95
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Tree1",IDC_TREE_DATA,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    TVS_FULLROWSELECT | WS_BORDER | WS_TABSTOP,0,0,77,94
+END
+
+IDD_DIALOG_IMPORT_GAME_DATA DIALOG DISCARDABLE  0, 0, 163, 58
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Progress"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,56,37,50,14
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",PBS_SMOOTH | 
+                    WS_BORDER,36,7,120,9
+    CONTROL         "Progress1",IDC_PROGRESS_TOTAL,"msctls_progress32",
+                    PBS_SMOOTH | WS_BORDER,36,24,120,9
+    LTEXT           "Part:",IDC_STATIC,7,7,21,8
+    LTEXT           "Total:",IDC_STATIC,7,24,25,8
+END
+
+IDD_DIALOG_SELECT_TRANS_TEXT DIALOG DISCARDABLE  0, 0, 301, 357
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Please select translation"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,244,335,50,14
+    CONTROL         "Tanslation2",IDC_RADIO_TWO,"Button",BS_AUTORADIOBUTTON,
+                    97,321,60,10
+    EDITTEXT        IDC_EDIT_TRANS1,10,191,277,39,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Tanslation1",IDC_STATIC,7,171,287,67
+    EDITTEXT        IDC_EDIT_ORGTEXT,10,27,278,39,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Original1",IDC_STATIC,7,7,287,67
+    CONTROL         "Tanslation1",IDC_RADIO_ONE,"Button",BS_AUTORADIOBUTTON,
+                    7,321,60,10
+    EDITTEXT        IDC_EDIT_TRANS2,10,265,277,39,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Tanslation2",IDC_STATIC,7,245,287,67
+    CONTROL         "Apply all item",IDC_CHECK_APPLYALL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,8,337,72,10
+    EDITTEXT        IDC_EDIT_ORGTEXT2,10,102,278,39,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Original2",IDC_STATIC,7,82,287,67
+    CONTROL         "Replace Original Text",IDC_CHECK_ORG,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,161,321,103,10
+END
+
+IDD_DIALOG_FINDER DIALOG DISCARDABLE  0, 0, 256, 131
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Find"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_EDIT_TEXT,46,15,145,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Find Next",IDOK,199,15,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,199,44,50,14
+    GROUPBOX        "Filter",IDC_STATIC,7,40,127,84
+    LTEXT           "Find what:",IDC_STATIC,7,18,34,8
+    CONTROL         "Match whole word only",IDC_CHECK_MATCH_WHOLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,51,100,10
+    CONTROL         "Up",IDC_RADIO_UP,"Button",BS_AUTORADIOBUTTON,147,53,25,
+                    10
+    CONTROL         "Down",IDC_RADIO_DOWN,"Button",BS_AUTORADIOBUTTON,147,65,
+                    34,10
+    GROUPBOX        "Direction",IDC_STATIC,138,40,53,84
+    CONTROL         "Translation text only",IDC_RADIO_TRANS,"Button",
+                    BS_AUTORADIOBUTTON,12,74,100,10
+    CONTROL         "Original text only",IDC_RADIO_ORG,"Button",
+                    BS_AUTORADIOBUTTON,12,85,88,10
+    CONTROL         "Find in new items only",IDC_CHECK_ONLY_NEW_ITEM,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,62,104,10
+    CONTROL         "Use Global ID",IDC_RADIO_USE_ID,"Button",
+                    BS_AUTORADIOBUTTON,12,96,68,10
+    CONTROL         "Use id of template",IDC_RADIO_USE_TEMP_ID,"Button",
+                    BS_AUTORADIOBUTTON,12,107,88,10
+END
+
+IDD_SELECT_ITEMS DIALOG DISCARDABLE  0, 0, 155, 365
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select items"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,344,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,98,344,50,14
+    CONTROL         "Text from template data",IDC_TEMPLATE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,11,124,9
+    CONTROL         "Text from interface hint data",IDC_INTERFACE_HINT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,21,124,9
+    CONTROL         "Text from interface string data",IDC_INTERFACE_STRING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,31,124,9
+    CONTROL         "Text from task data",IDC_TASK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,19,41,124,9
+    CONTROL         "Text from policy data",IDC_POLICY,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,51,124,9
+    CONTROL         "Text from item description data",IDC_ITEM_DESC,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,61,124,9
+    CONTROL         "Text from item description ext data",IDC_ITEM_DESC_EXT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,71,124,9
+    CONTROL         "Text from instance text data",IDC_INSTANCE_TEXT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,81,124,9
+    CONTROL         "Text from skill description data",IDC_SKILL_DESC,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,91,124,9
+    CONTROL         "Text from fixed message data",IDC_FIX_MSG,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,101,124,9
+    CONTROL         "Text from server error data",IDC_SERVER_ERROR,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,111,124,9
+    CONTROL         "Text from buff description data",IDC_BUFF_DESC,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,121,124,9
+    CONTROL         "Text from task error data",IDC_TASK_ERROR,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,131,124,9
+    CONTROL         "Text from loading hint data",IDC_LOADING_HINT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,141,124,9
+    CONTROL         "Text from pet talk data",IDC_PET_TALK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,151,124,9
+    CONTROL         "Text from addon string data",IDC_ADDON_STRING,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,161,124,9
+    CONTROL         "Text from precinct data",IDC_PRECINCT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,171,124,9
+    CONTROL         "Text from help script data",IDC_HELP_SCRIPT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,181,124,9
+    CONTROL         "Text from help text data",IDC_HELP_TEXT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,191,124,9
+    CONTROL         "Text from gshop data",IDC_GSHOP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,201,124,9
+    CONTROL         "Text from gshop types",IDC_GSHOP_TYPES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,211,124,9
+    CONTROL         "Text from gshop1 data",IDC_GSHOP1,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,221,124,9
+    CONTROL         "Text from gshop1 types",IDC_GSHOP1_TYPES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,231,124,9
+    CONTROL         "All / None",IDC_SELECT_ALL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,19,304,51,12
+    CONTROL         "Text from text file data",IDC_SCRIPT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,261,124,9
+    CONTROL         "Input label",IDC_CK_LABEL,"Button",BS_AUTOCHECKBOX | 
+                    NOT WS_VISIBLE | WS_TABSTOP,19,322,51,12
+    EDITTEXT        IDC_EDIT_LABEL,88,322,51,12,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE | WS_DISABLED
+    CONTROL         "Text from home town data",IDC_HOMETOWN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,271,124,9
+    CONTROL         "Text from domaininfor data",IDC_DOMAIN_INFO,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,281,124,9
+    CONTROL         "Text from gshop2 data",IDC_GSHOP2,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,241,124,9
+    CONTROL         "Text from gshop2 types",IDC_GSHOP2_TYPES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,251,124,9
+    CONTROL         "Text from domaininfor2 data",IDC_DOMAIN_INFO2,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,291,124,9
+END
+
+IDD_DIALOG_TOXML DIALOG DISCARDABLE  0, 0, 159, 79
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "提示"
+FONT 10, "新宋体"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,21,58,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,88,58,50,14
+    CONTROL         "只输出未翻译模板",IDC_CHECK_UNTRANS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,40,14,80,10
+    CONTROL         "输出时包含ID",IDC_CHECK_ID,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,40,36,80,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON_NORMAL         ICON    DISCARDABLE     "res\\icon1.ico"
+IDI_ICON_DEL            ICON    DISCARDABLE     "res\\ico00001.ico"
+IDI_ICON_NEW            ICON    DISCARDABLE     "res\\icon2.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALOG_IMPORT_GAME_DATA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 156
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 51
+    END
+
+    IDD_DIALOG_SELECT_TRANS_TEXT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 294
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 350
+    END
+
+    IDD_DIALOG_FINDER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 249
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 124
+    END
+
+    IDD_SELECT_ITEMS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 148
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 358
+    END
+
+    IDD_DIALOG_TOXML, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS DISCARDABLE 
+BEGIN
+    "-",            ID_PREV,                ASCII,  ALT, NOINVERT
+    "=",            ID_NEXT,                ASCII,  ALT, NOINVERT
+    "F",            ID_FIND_TEXT,           VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_HELP_EXT,            VIRTKEY, NOINVERT
+    VK_F12,         ID_STAT_ITEMS,          VIRTKEY, NOINVERT
+    VK_F2,          ID_FIND_UP,             VIRTKEY, NOINVERT
+    VK_F3,          ID_FIND_DOWN,           VIRTKEY, NOINVERT
+    VK_F5,          ID_FIND_NEW_ITEM,       VIRTKEY, NOINVERT
+    VK_F6,          ID_FIND_NEW_ITEMEX,     VIRTKEY, NOINVERT
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 237, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ElementLocalize"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "QElementLocalize Version 1.0",IDC_STATIC,44,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright (C) 2004 - 2007\nBeijing Perfect World Co., Ltd.",
+                    IDC_STATIC,44,23,126,23
+    DEFPUSHBUTTON   "OK",IDOK,180,21,50,14,WS_GROUP
+END
+
+IDD_ELEMENTLOCALIZE_FORM DIALOGEX 0, 0, 314, 250
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_ORG,15,22,282,64,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | ES_NOHIDESEL | ES_READONLY | 
+                    ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
+    GROUPBOX        "Original text",IDC_STATIC_ORG,7,7,300,126
+    EDITTEXT        IDC_EDIT_TRANS,15,167,282,29,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | 
+                    WS_VSCROLL | WS_HSCROLL
+    GROUPBOX        "Translation text",IDC_STATIC_TRANS,7,146,300,85
+    LTEXT           "",IDC_STATIC_LENGTH,16,93,66,17,SS_CENTERIMAGE,
+                    WS_EX_STATICEDGE
+    LTEXT           "",IDC_STATIC_IS_MULTI_LINE,152,93,66,17,SS_CENTERIMAGE,
+                    WS_EX_STATICEDGE
+    LTEXT           "",IDC_STATIC_TEXT_LIMIT,87,94,66,17,SS_CENTERIMAGE,
+                    WS_EX_STATICEDGE
+    LTEXT           "",IDC_STATIC_TRANS_LENGTH,16,205,66,17,SS_CENTERIMAGE,
+                    WS_EX_STATICEDGE
+    LTEXT           "",IDC_STATIC_LINE_NUM,220,93,66,17,SS_CENTERIMAGE,
+                    WS_EX_STATICEDGE
+    LTEXT           "",IDC_STATIC_TRANS_LINE_NUM,86,205,66,17,SS_CENTERIMAGE,
+                    WS_EX_STATICEDGE
+    ICON            IDR_MAINFRAME,IDC_STATIC_FLAG,276,91,20,20
+    PUSHBUTTON      "Replace(Ctrl + Enter)",IDC_BUTTON_REPLACE,195,205,96,18
+    PUSHBUTTON      "Auto To Big5 >>",IDC_BUTTON_AUTO_TRANS,141,127,96,18
+    PUSHBUTTON      "Replace Next",IDC_BUTTON_REPLACE_NEXT,163,209,96,18
+    EDITTEXT        IDC_EDIT_ID,15,117,270,18,ES_MULTILINE | ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,
+                    WS_EX_STATICEDGE
+END
+
+IDD_DIALOG_PROG DIALOG DISCARDABLE  0, 0, 356, 73
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Processing..."
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,153,52,50,14
+    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",PBS_SMOOTH | 
+                    WS_BORDER,7,32,342,14
+    LTEXT           "",IDC_STATIC_MSG,7,17,295,8
+    RTEXT           "",IDC_STATIC_PERCENT,321,17,28,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\ElementLocalize.ico"
+IDR_ELEMENTYPE          ICON    DISCARDABLE     "res\\ElementLocalizeDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 230
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_ELEMENTLOCALIZE_FORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 307
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 243
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_DATA_OPEN
+    BUTTON      ID_DATA_SAVE
+    SEPARATOR
+    BUTTON      ID_FIND_NEW_ITEMEX
+    BUTTON      ID_FIND_NEW_ITEM
+    SEPARATOR
+    BUTTON      ID_FIND_TEXT
+    BUTTON      ID_PREV
+    BUTTON      ID_NEXT
+    SEPARATOR
+    BUTTON      ID_GO_SEL
+    BUTTON      ID_HELP_EXT
+    BUTTON      ID_CHECK_SYNAC
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "Import Game Data",            ID_IMPORT_GAME_DATA
+        MENUITEM "Import Other...",             ID_IMPORT_OTHER
+        MENUITEM SEPARATOR
+        MENUITEM "Export Game Data... ",        ID_EXPORT_GAME_DATA
+        MENUITEM SEPARATOR
+        MENUITEM "Generate report ...",         ID_SAVE_TEXT_TO_FILE
+        MENUITEM "Import from text...",         ID_IMPORT_FROM_TEXT_FILE
+        MENUITEM "Import from ordered text...", ID_IMPORT_ORDER_TEXT
+        MENUITEM "Auto to big5",                ID_AUTO_TO_BIG5
+        MENUITEM "Copy orgin to trans",         ID_COPY_ORIGIN_TO_TRANS
+        MENUITEM "Clear all translations",      ID_CLEAR_TRANS
+        MENUITEM SEPARATOR
+        MENUITEM "&Open...\tCtrl+O",            ID_DATA_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_DATA_SAVE
+        MENUITEM "Save &As...",                 ID_DATA_SAVE_AS
+        MENUITEM "Save Custom",                 ID_DATA_SAVE_CUSTOM
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "Next item\t (Alt + =)",       ID_NEXT
+        MENUITEM "Last item\t (Alt + -)",       ID_PREV
+        MENUITEM SEPARATOR
+        MENUITEM "Find\t (Ctrl + F)",           ID_FIND_TEXT
+        MENUITEM "Find up\t (F2)",              ID_FIND_UP
+        MENUITEM "Find down\t (F3)",            ID_FIND_DOWN
+        MENUITEM SEPARATOR
+        MENUITEM "Next new item\t (F5)",        ID_FIND_NEW_ITEM
+        MENUITEM "Last new item\t (F6)",        ID_FIND_NEW_ITEMEX
+        MENUITEM SEPARATOR
+        MENUITEM "Stat items\t (F12)",          ID_STAT_ITEMS
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Contents",                    ID_HELP_EXT
+        MENUITEM "&About ElementLocalize...",   ID_APP_ABOUT
+    END
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,1,9
+ PRODUCTVERSION 1,0,1,9
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "Beijing Perfect World Co., Ltd\0"
+            VALUE "FileDescription", "ZElementLocalize MFC Application\0"
+            VALUE "FileVersion", "1, 0, 1, 9\0"
+            VALUE "InternalName", "ZElementLocalize 2010/08/30(internal)\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004 - 2006\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "ZElementLocalize.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "ZElementLocalize Application\0"
+            VALUE "ProductVersion", "1, 0, 1, 9\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "ElementLocalize\n\nElemen\n\n\nElementLocalize.Document\nElemen Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "ElementLocalize"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+    ID_INDICATOR_TOTAL      "Total Text:        0"
+    ID_INDICATOR_TRANS      "Trans Text:        0"
+    ID_INDICATOR_DISUSE     "Disuse Text:        0"
+    ID_INDICATOR_NEW        "New Text:        0"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_DATA_OPEN            "Open\nOpen"
+    ID_DATA_SAVE            "Save\nSave"
+    ID_PREV                 "Last Item\nLast Item"
+    ID_NEXT                 "Next Item\nNext Item"
+    ID_FIND_NEW_ITEM        "Next New Item\nNext New Item"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FIND_TEXT            "Find An Item\nFind An Item"
+    ID_GO_SEL               "Locate current item in tree view\nLocate current item in tree view"
+    ID_FIND_NEW_ITEMEX      "Last New Item\nLast New Item"
+    ID_HELP_EXT             "Help\nHelp"
+    ID_CHECK_SYNAC          "auto to big5 & update item number"
+    ID_SAVE_OPT             "\n保存自定义数据"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SAVE_CUSTOM          "\n保存自定义数据"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\ElementLocalize.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

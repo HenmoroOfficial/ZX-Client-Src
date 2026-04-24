@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		int flag;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMSETGAMEATTRI };
+	public:
+		KingdomSetGameAttri() { type = PROTOCOL_KINGDOMSETGAMEATTRI; }
+		KingdomSetGameAttri(void*) : Protocol(PROTOCOL_KINGDOMSETGAMEATTRI) { }
+		KingdomSetGameAttri (int l_roleid,int l_flag,unsigned int l_localsid)
+			 : roleid(l_roleid),flag(l_flag),localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMSETGAMEATTRI;
+		}
+
+		KingdomSetGameAttri(const KingdomSetGameAttri &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),flag(rhs.flag),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomSetGameAttri(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << flag;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> flag;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

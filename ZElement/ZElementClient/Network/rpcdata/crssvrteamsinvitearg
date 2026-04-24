@@ -1,0 +1,82 @@
+#ifndef __GNET_CRSSVRTEAMSINVITEARG_RPCDATA
+#define __GNET_CRSSVRTEAMSINVITEARG_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CrssvrTeamsInviteArg : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int invitee;
+		int teamid;
+		Octets team_name;
+		Octets role_name;
+
+	public:
+		CrssvrTeamsInviteArg (int l_roleid = -1,int l_invitee = -1,int l_teamid = -1
+			,const Octets& l_team_name = Octets(),const Octets& l_role_name = Octets())
+			: roleid(l_roleid),invitee(l_invitee),teamid(l_teamid)
+			,team_name(l_team_name),role_name(l_role_name)
+		{
+		}
+
+		CrssvrTeamsInviteArg(const CrssvrTeamsInviteArg &rhs)
+			: roleid(rhs.roleid),invitee(rhs.invitee),teamid(rhs.teamid),
+			team_name(rhs.team_name),role_name(rhs.role_name) { }
+
+		Rpc::Data *Clone() const { return new CrssvrTeamsInviteArg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CrssvrTeamsInviteArg *r = dynamic_cast<const CrssvrTeamsInviteArg *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				invitee = r->invitee;
+				teamid = r->teamid;
+				team_name = r->team_name;
+				role_name = r->role_name;
+			}
+			return *this;
+		}
+
+		CrssvrTeamsInviteArg& operator = (const CrssvrTeamsInviteArg &rhs)
+		{
+			const CrssvrTeamsInviteArg *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				invitee = r->invitee;
+				teamid = r->teamid;
+				team_name = r->team_name;
+				role_name = r->role_name;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << invitee;
+			os << teamid;
+			os << team_name;
+			os << role_name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> invitee;
+			os >> teamid;
+			os >> team_name;
+			os >> role_name;
+			return os;
+		}
+
+	};
+};
+#endif

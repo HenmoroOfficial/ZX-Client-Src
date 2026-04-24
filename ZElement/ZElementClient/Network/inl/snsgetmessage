@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		char message_type;
+		int message_id;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSGETMESSAGE };
+	public:
+		SNSGetMessage() { type = PROTOCOL_SNSGETMESSAGE; }
+		SNSGetMessage(void*) : Protocol(PROTOCOL_SNSGETMESSAGE) { }
+		SNSGetMessage (int l_roleid,char l_message_type = 0,int l_message_id = 0,
+			int l_localsid = 0)
+			 : roleid(l_roleid),message_type(l_message_type),message_id(l_message_id)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSGETMESSAGE;
+		}
+
+		SNSGetMessage(const SNSGetMessage &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),message_type(rhs.message_type),message_id(rhs.message_id)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSGetMessage(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << message_type;
+			os << message_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> message_type;
+			os >> message_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

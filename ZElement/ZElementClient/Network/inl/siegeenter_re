@@ -1,0 +1,59 @@
+	public:
+		int retcode;
+		int roleid;
+		int battle_id;
+		GFactionMaster owner;
+		GFactionMaster attacker;
+		GFactionMaster assistant;
+		int end_time;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SIEGEENTER_RE };
+	public:
+		SiegeEnter_Re() { type = PROTOCOL_SIEGEENTER_RE; }
+		SiegeEnter_Re(void*) : Protocol(PROTOCOL_SIEGEENTER_RE) { }
+		SiegeEnter_Re (int l_retcode,int l_roleid = 0,int l_battle_id = 0,
+			const GFactionMaster& l_owner = GFactionMaster(),const GFactionMaster& l_attacker = GFactionMaster(),const GFactionMaster& l_assistant = GFactionMaster(),
+			int l_end_time = 0,int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),battle_id(l_battle_id)
+			,owner(l_owner),attacker(l_attacker),assistant(l_assistant)
+			,end_time(l_end_time),localsid(l_localsid)
+		{
+			type = PROTOCOL_SIEGEENTER_RE;
+		}
+
+		SiegeEnter_Re(const SiegeEnter_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),battle_id(rhs.battle_id)
+			,owner(rhs.owner),attacker(rhs.attacker),assistant(rhs.assistant)
+			,end_time(rhs.end_time),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SiegeEnter_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << battle_id;
+			os << owner;
+			os << attacker;
+			os << assistant;
+			os << end_time;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> battle_id;
+			os >> owner;
+			os >> attacker;
+			os >> assistant;
+			os >> end_time;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

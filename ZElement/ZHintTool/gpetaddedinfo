@@ -1,0 +1,142 @@
+#ifndef __GNET_GPETADDEDINFO_RPCDATA
+#define __GNET_GPETADDEDINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GPetAddedInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned char pet_index;
+		unsigned short max_hp;
+		unsigned short max_mp;
+		unsigned short defence;
+		unsigned short attack;
+		unsigned short resistance1;
+		unsigned short resistance2;
+		unsigned short resistance3;
+		unsigned short resistance4;
+		unsigned short resistance5;
+		unsigned short hit;
+		unsigned short jouk;
+		float crit_rate;
+		float crit_damage;
+		int equip_mask;
+
+	public:
+		GPetAddedInfo (unsigned char l_pet_index = 0,unsigned short l_max_hp = 0,unsigned short l_max_mp = 0
+			,unsigned short l_defence = 0,unsigned short l_attack = 0,unsigned short l_resistance1 = 0
+			,unsigned short l_resistance2 = 0,unsigned short l_resistance3 = 0,unsigned short l_resistance4 = 0
+			,unsigned short l_resistance5 = 0,unsigned short l_hit = 0,unsigned short l_jouk = 0
+			,float l_crit_rate = 0.0f,float l_crit_damage = 0.0f,int l_equip_mask = 0)
+			: pet_index(l_pet_index),max_hp(l_max_hp),max_mp(l_max_mp)
+			,defence(l_defence),attack(l_attack),resistance1(l_resistance1)
+			,resistance2(l_resistance2),resistance3(l_resistance3),resistance4(l_resistance4)
+			,resistance5(l_resistance5),hit(l_hit),jouk(l_jouk)
+			,crit_rate(l_crit_rate),crit_damage(l_crit_damage),equip_mask(l_equip_mask)
+		{
+		}
+
+		GPetAddedInfo(const GPetAddedInfo &rhs)
+			: pet_index(rhs.pet_index),max_hp(rhs.max_hp),max_mp(rhs.max_mp),
+			defence(rhs.defence),attack(rhs.attack),resistance1(rhs.resistance1),
+			resistance2(rhs.resistance2),resistance3(rhs.resistance3),resistance4(rhs.resistance4),
+			resistance5(rhs.resistance5),hit(rhs.hit),jouk(rhs.jouk),
+			crit_rate(rhs.crit_rate),crit_damage(rhs.crit_damage),equip_mask(rhs.equip_mask) { }
+
+		Rpc::Data *Clone() const { return new GPetAddedInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GPetAddedInfo *r = dynamic_cast<const GPetAddedInfo *>(&rhs);
+			if (r && r != this)
+			{
+				pet_index = r->pet_index;
+				max_hp = r->max_hp;
+				max_mp = r->max_mp;
+				defence = r->defence;
+				attack = r->attack;
+				resistance1 = r->resistance1;
+				resistance2 = r->resistance2;
+				resistance3 = r->resistance3;
+				resistance4 = r->resistance4;
+				resistance5 = r->resistance5;
+				hit = r->hit;
+				jouk = r->jouk;
+				crit_rate = r->crit_rate;
+				crit_damage = r->crit_damage;
+				equip_mask = r->equip_mask;
+			}
+			return *this;
+		}
+
+		GPetAddedInfo& operator = (const GPetAddedInfo &rhs)
+		{
+			const GPetAddedInfo *r = &rhs;
+			if (r && r != this)
+			{
+				pet_index = r->pet_index;
+				max_hp = r->max_hp;
+				max_mp = r->max_mp;
+				defence = r->defence;
+				attack = r->attack;
+				resistance1 = r->resistance1;
+				resistance2 = r->resistance2;
+				resistance3 = r->resistance3;
+				resistance4 = r->resistance4;
+				resistance5 = r->resistance5;
+				hit = r->hit;
+				jouk = r->jouk;
+				crit_rate = r->crit_rate;
+				crit_damage = r->crit_damage;
+				equip_mask = r->equip_mask;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << pet_index;
+			os << max_hp;
+			os << max_mp;
+			os << defence;
+			os << attack;
+			os << resistance1;
+			os << resistance2;
+			os << resistance3;
+			os << resistance4;
+			os << resistance5;
+			os << hit;
+			os << jouk;
+			os << crit_rate;
+			os << crit_damage;
+			os << equip_mask;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> pet_index;
+			os >> max_hp;
+			os >> max_mp;
+			os >> defence;
+			os >> attack;
+			os >> resistance1;
+			os >> resistance2;
+			os >> resistance3;
+			os >> resistance4;
+			os >> resistance5;
+			os >> hit;
+			os >> jouk;
+			os >> crit_rate;
+			os >> crit_damage;
+			os >> equip_mask;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GPetAddedInfo>	GPetAddedInfoVector;
+};
+#endif

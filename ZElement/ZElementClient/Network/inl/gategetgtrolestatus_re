@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		std::vector<GGateRoleGTStatus> statuslist;
+		unsigned int localsid;
+		int retcode;
+		enum { PROTOCOL_TYPE = PROTOCOL_GATEGETGTROLESTATUS_RE };
+	public:
+		GateGetGTRoleStatus_Re() { type = PROTOCOL_GATEGETGTROLESTATUS_RE; }
+		GateGetGTRoleStatus_Re(void*) : Protocol(PROTOCOL_GATEGETGTROLESTATUS_RE) { }
+		GateGetGTRoleStatus_Re (int l_roleid,const std::vector<GGateRoleGTStatus>& l_statuslist,unsigned int l_localsid,
+			int l_retcode)
+			 : roleid(l_roleid),statuslist(l_statuslist),localsid(l_localsid)
+			,retcode(l_retcode)
+		{
+			type = PROTOCOL_GATEGETGTROLESTATUS_RE;
+		}
+
+		GateGetGTRoleStatus_Re(const GateGetGTRoleStatus_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),statuslist(rhs.statuslist),localsid(rhs.localsid)
+			,retcode(rhs.retcode) { }
+
+		GNET::Protocol *Clone() const { return new GateGetGTRoleStatus_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << statuslist;
+			os << localsid;
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> statuslist;
+			os >> localsid;
+			os >> retcode;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 8192; }

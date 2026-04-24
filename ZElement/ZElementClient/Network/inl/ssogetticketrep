@@ -1,0 +1,47 @@
+	public:
+		int retcode;
+		UserSSOInfo user;
+		Octets ticket;
+		Octets local_context;
+		Octets reserved;
+		enum { PROTOCOL_TYPE = PROTOCOL_SSOGETTICKETREP };
+	public:
+		SSOGetTicketRep() { type = PROTOCOL_SSOGETTICKETREP; }
+		SSOGetTicketRep(void*) : Protocol(PROTOCOL_SSOGETTICKETREP) { }
+		SSOGetTicketRep (int l_retcode,UserSSOInfo l_user,const Octets& l_ticket = Octets(0),
+			const Octets& l_local_context = Octets(0),const Octets& l_reserved = Octets(0))
+			 : retcode(l_retcode),user(l_user),ticket(l_ticket)
+			,local_context(l_local_context),reserved(l_reserved)
+		{
+			type = PROTOCOL_SSOGETTICKETREP;
+		}
+
+		SSOGetTicketRep(const SSOGetTicketRep &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),user(rhs.user),ticket(rhs.ticket)
+			,local_context(rhs.local_context),reserved(rhs.reserved) { }
+
+		GNET::Protocol *Clone() const { return new SSOGetTicketRep(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << user;
+			os << ticket;
+			os << local_context;
+			os << reserved;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> user;
+			os >> ticket;
+			os >> local_context;
+			os >> reserved;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 101; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }

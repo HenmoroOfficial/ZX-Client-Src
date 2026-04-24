@@ -1,0 +1,44 @@
+	public:
+		char retcode;
+		int enemy;
+		char oper;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_UPDATEENEMY_RE };
+	public:
+		UpdateEnemy_Re() { type = PROTOCOL_UPDATEENEMY_RE; }
+		UpdateEnemy_Re(void*) : Protocol(PROTOCOL_UPDATEENEMY_RE) { }
+		UpdateEnemy_Re (char l_retcode,int l_enemy,char l_oper,
+			unsigned int l_localsid)
+			 : retcode(l_retcode),enemy(l_enemy),oper(l_oper)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_UPDATEENEMY_RE;
+		}
+
+		UpdateEnemy_Re(const UpdateEnemy_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),enemy(rhs.enemy),oper(rhs.oper)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new UpdateEnemy_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << enemy;
+			os << oper;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> enemy;
+			os >> oper;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

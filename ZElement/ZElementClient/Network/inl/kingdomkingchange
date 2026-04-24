@@ -1,0 +1,35 @@
+	public:
+		int newking;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMKINGCHANGE };
+	public:
+		KingdomKingChange() { type = PROTOCOL_KINGDOMKINGCHANGE; }
+		KingdomKingChange(void*) : Protocol(PROTOCOL_KINGDOMKINGCHANGE) { }
+		KingdomKingChange (int l_newking,unsigned int l_localsid)
+			 : newking(l_newking),localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMKINGCHANGE;
+		}
+
+		KingdomKingChange(const KingdomKingChange &rhs)
+			: Protocol(rhs),newking(rhs.newking),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomKingChange(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << newking;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> newking;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

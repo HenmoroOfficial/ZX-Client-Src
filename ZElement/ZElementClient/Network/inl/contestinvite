@@ -1,0 +1,38 @@
+	public:
+		int invite;
+		int remain_time;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTINVITE };
+	public:
+		ContestInvite() { type = PROTOCOL_CONTESTINVITE; }
+		ContestInvite(void*) : Protocol(PROTOCOL_CONTESTINVITE) { }
+		ContestInvite (int l_invite,int l_remain_time,unsigned int l_localsid)
+			 : invite(l_invite),remain_time(l_remain_time),localsid(l_localsid)
+		{
+			type = PROTOCOL_CONTESTINVITE;
+		}
+
+		ContestInvite(const ContestInvite &rhs)
+			: Protocol(rhs),invite(rhs.invite),remain_time(rhs.remain_time),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ContestInvite(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << invite;
+			os << remain_time;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> invite;
+			os >> remain_time;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

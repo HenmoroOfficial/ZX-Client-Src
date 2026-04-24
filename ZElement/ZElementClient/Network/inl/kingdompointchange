@@ -1,0 +1,35 @@
+	public:
+		int points;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMPOINTCHANGE };
+	public:
+		KingdomPointChange() { type = PROTOCOL_KINGDOMPOINTCHANGE; }
+		KingdomPointChange(void*) : Protocol(PROTOCOL_KINGDOMPOINTCHANGE) { }
+		KingdomPointChange (int l_points,unsigned int l_localsid)
+			 : points(l_points),localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMPOINTCHANGE;
+		}
+
+		KingdomPointChange(const KingdomPointChange &rhs)
+			: Protocol(rhs),points(rhs.points),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomPointChange(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << points;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> points;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

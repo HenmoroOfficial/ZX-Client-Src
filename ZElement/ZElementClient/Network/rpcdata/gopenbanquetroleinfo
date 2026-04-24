@@ -1,0 +1,64 @@
+#ifndef __GNET_GOPENBANQUETROLEINFO_RPCDATA
+#define __GNET_GOPENBANQUETROLEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GOpenBanquetRoleInfo : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets name;
+
+	public:
+		GOpenBanquetRoleInfo (const Octets& l_name = Octets(0))
+			: name(l_name)
+		{
+		}
+
+		GOpenBanquetRoleInfo(const GOpenBanquetRoleInfo &rhs)
+			: roleid(rhs.roleid),name(rhs.name) { }
+
+		Rpc::Data *Clone() const { return new GOpenBanquetRoleInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GOpenBanquetRoleInfo *r = dynamic_cast<const GOpenBanquetRoleInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+			}
+			return *this;
+		}
+
+		GOpenBanquetRoleInfo& operator = (const GOpenBanquetRoleInfo &rhs)
+		{
+			const GOpenBanquetRoleInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> name;
+			return os;
+		}
+
+	};
+};
+#endif

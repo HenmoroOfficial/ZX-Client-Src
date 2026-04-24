@@ -1,0 +1,42 @@
+
+#ifndef __GNET_QUEENOPENBATHINVITE_HPP
+#define __GNET_QUEENOPENBATHINVITE_HPP
+
+#include "rpcdefs.h"
+#include "callid.hxx"
+#include "state.hxx"
+
+#include "queenopenbathinvitearg"
+#include "queenopenbathinviteres"
+
+namespace GNET
+{
+
+class QueenOpenBathInvite : public Rpc
+{
+#define	RPC_BASECLASS	Rpc
+	#include "queenopenbathinvite"
+#undef	RPC_BASECLASS
+
+	void Server(Rpc::Data *argument, Rpc::Data *result, Manager *manager, Manager::Session::ID sid)
+	{
+		// QueenOpenBathInviteArg *arg = (QueenOpenBathInviteArg *)argument;
+		// QueenOpenBathInviteRes *res = (QueenOpenBathInviteRes *)result;
+	}
+
+	void Client(Rpc::Data *argument, Rpc::Data *result, Manager *manager, Manager::Session::ID sid)
+	{
+		// TODO
+		// QueenOpenBathInviteArg *arg = (QueenOpenBathInviteArg *)argument;
+		// QueenOpenBathInviteRes *res = (QueenOpenBathInviteRes *)result;
+	}
+
+	void OnTimeout()
+	{
+		// TODO Client Only
+	}
+
+};
+
+};
+#endif

@@ -1,0 +1,98 @@
+#ifndef __GNET_GFACTIONPKROOMINFO_RPCDATA
+#define __GNET_GFACTIONPKROOMINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GFactionPkRoomInfo : public GNET::Rpc::Data
+	{
+	public:
+		int raidroom_id;
+		int attacker;
+		int defender;
+		short attacker_num;
+		short defender_num;
+		short watcher_num;
+		char attacker_level;
+		char defender_level;
+
+	public:
+		GFactionPkRoomInfo (int l_raidroom_id = 0,short l_attacker_num = 0,short l_defender_num = 0
+			,short l_watcher_num = 0)
+			: raidroom_id(l_raidroom_id),attacker_num(l_attacker_num),defender_num(l_defender_num)
+			,watcher_num(l_watcher_num)
+		{
+		}
+
+		GFactionPkRoomInfo(const GFactionPkRoomInfo &rhs)
+			: raidroom_id(rhs.raidroom_id),attacker(rhs.attacker),defender(rhs.defender),
+			attacker_num(rhs.attacker_num),defender_num(rhs.defender_num),watcher_num(rhs.watcher_num),
+			attacker_level(rhs.attacker_level),defender_level(rhs.defender_level) { }
+
+		Rpc::Data *Clone() const { return new GFactionPkRoomInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GFactionPkRoomInfo *r = dynamic_cast<const GFactionPkRoomInfo *>(&rhs);
+			if (r && r != this)
+			{
+				raidroom_id = r->raidroom_id;
+				attacker = r->attacker;
+				defender = r->defender;
+				attacker_num = r->attacker_num;
+				defender_num = r->defender_num;
+				watcher_num = r->watcher_num;
+				attacker_level = r->attacker_level;
+				defender_level = r->defender_level;
+			}
+			return *this;
+		}
+
+		GFactionPkRoomInfo& operator = (const GFactionPkRoomInfo &rhs)
+		{
+			const GFactionPkRoomInfo *r = &rhs;
+			if (r && r != this)
+			{
+				raidroom_id = r->raidroom_id;
+				attacker = r->attacker;
+				defender = r->defender;
+				attacker_num = r->attacker_num;
+				defender_num = r->defender_num;
+				watcher_num = r->watcher_num;
+				attacker_level = r->attacker_level;
+				defender_level = r->defender_level;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << raidroom_id;
+			os << attacker;
+			os << defender;
+			os << attacker_num;
+			os << defender_num;
+			os << watcher_num;
+			os << attacker_level;
+			os << defender_level;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> raidroom_id;
+			os >> attacker;
+			os >> defender;
+			os >> attacker_num;
+			os >> defender_num;
+			os >> watcher_num;
+			os >> attacker_level;
+			os >> defender_level;
+			return os;
+		}
+
+	};
+};
+#endif

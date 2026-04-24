@@ -1,0 +1,93 @@
+#ifndef __GNET_GTOPFLOWERDATA_RPCDATA
+#define __GNET_GTOPFLOWERDATA_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GTopFlowerData : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int userid;
+		Octets rolename;
+		int stamp;
+		int count;
+		int gender;
+		char isGiftTake;
+
+	public:
+		GTopFlowerData (int l_userid = 0,const Octets& l_rolename = Octets(),int l_stamp = 0
+			,int l_count = 0,int l_gender = 0,char l_isGiftTake = 0)
+			: userid(l_userid),rolename(l_rolename),stamp(l_stamp)
+			,count(l_count),gender(l_gender),isGiftTake(l_isGiftTake)
+		{
+		}
+
+		GTopFlowerData(const GTopFlowerData &rhs)
+			: roleid(rhs.roleid),userid(rhs.userid),rolename(rhs.rolename),
+			stamp(rhs.stamp),count(rhs.count),gender(rhs.gender),
+			isGiftTake(rhs.isGiftTake) { }
+
+		Rpc::Data *Clone() const { return new GTopFlowerData(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GTopFlowerData *r = dynamic_cast<const GTopFlowerData *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				userid = r->userid;
+				rolename = r->rolename;
+				stamp = r->stamp;
+				count = r->count;
+				gender = r->gender;
+				isGiftTake = r->isGiftTake;
+			}
+			return *this;
+		}
+
+		GTopFlowerData& operator = (const GTopFlowerData &rhs)
+		{
+			const GTopFlowerData *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				userid = r->userid;
+				rolename = r->rolename;
+				stamp = r->stamp;
+				count = r->count;
+				gender = r->gender;
+				isGiftTake = r->isGiftTake;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << userid;
+			os << rolename;
+			os << stamp;
+			os << count;
+			os << gender;
+			os << isGiftTake;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> userid;
+			os >> rolename;
+			os >> stamp;
+			os >> count;
+			os >> gender;
+			os >> isGiftTake;
+			return os;
+		}
+
+	};
+};
+#endif

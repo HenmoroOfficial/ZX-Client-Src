@@ -1,0 +1,117 @@
+DIALOG "Win_TestTowergame" 0 0 696 610 0 1 10 "" "TOWERDEFENSE\window\Window5.tga" "" 0 0 476 33 "" 30 6 255 255 255 255 1 0
+IMAGEPICTURE "Pic_Map" "" "" 10 70 492 492 1 0 "TOWERDEFENSE\window\TD_Map2.tga" ""
+IMAGEPICTURE "Pic_Base1" "" "" 506 494 168 96 1 0 "TOWERDEFENSE\frame\Frame6.tga" ""
+IMAGEPICTURE "Pic_Base2" "" "" 506 198 168 292 1 0 "TOWERDEFENSE\frame\Frame5.tga" ""
+STILLIMAGEBUTTON "Btn_Close" "IDCANCEL" "" 671 5 20 20 0 0 0 0 2 10 255 255 255 255 "TOWERDEFENSE\button\Td_Close.tga" "TOWERDEFENSE\button\Td_CloseDown.tga" "" 3 1 0
+STILLIMAGEBUTTON "Btn_Help" "help" "" 8 8 48 24 0 0 0 0 4 10 255 255 255 255 "TOWERDEFENSE\button\Td_Help.tga" "TOWERDEFENSE\button\Td_HelpDown.tga" "TOWERDEFENSE\button\Td_HelpDown.tga" 5 1 0
+EDIT "Edit_Gold" "" "" 330 48 70 20 "TOWERDEFENSE\editbox\TD_MoneyInput.tga" 6 10 255 248 153 "TEXT" 1 0 6 0
+STILLIMAGEBUTTON "Btn_Wsell" "weaponsell" "" 521 510 64 64 0 0 0 0 7 10 255 255 255 255 "TOWERDEFENSE\button\Td_Sell.tga" "TOWERDEFENSE\button\Td_SellDown.tga" "TOWERDEFENSE\button\Td_SellDown.tga" 8 1 0
+STILLIMAGEBUTTON "Btn_Start" "start" "" 10 565 126 30 0 0 0 0 9 10 255 255 255 255 "TOWERDEFENSE\button\Td_Start.tga" "TOWERDEFENSE\button\Td_StartDown.tga" "TOWERDEFENSE\button\Td_StartDown.tga" 10 1 0
+STILLIMAGEBUTTON "Btn_Wimprove" "weaponipv" "" 601 510 64 64 0 0 0 0 11 10 255 255 255 255 "TOWERDEFENSE\button\Td_LvUp.tga" "TOWERDEFENSE\button\Td_LvUpDown.tga" "TOWERDEFENSE\button\Td_LvUpDown.tga" 12 1 0
+STILLIMAGEBUTTON "Btn_WinMin" "winmin" "" 651 5 19 19 0 0 0 0 13 10 255 255 255 255 "TOWERDEFENSE\button\还原按钮1.tga" "TOWERDEFENSE\button\还原按钮3.tga" "TOWERDEFENSE\button\还原按钮3.tga" 14 1 0
+IMAGEPICTURE "Pic_GoldText" "" "" 276 46 38 22 1 0 "TOWERDEFENSE\TextPic\金钱.tga" ""
+IMAGEPICTURE "Pic_ScoreText" "" "" 404 48 38 19 1 0 "TOWERDEFENSE\TextPic\得分.tga" ""
+IMAGEPICTURE "Pic_LifeText" "" "" 7 46 48 22 1 0 "TOWERDEFENSE\TextPic\生命.tga" ""
+IMAGEPICTURE "Pic_WindowTitle" "" "" 217 11 252 22 1 0 "TOWERDEFENSE\TextPic\题目字体2.tga" ""
+IMAGEPICTURE "Pic_LevelText" "" "" 196 570 97 19 1 0 "TOWERDEFENSE\TextPic\还剩的波数.tga" ""
+IMAGEPICTURE "Pic_InfoText" "" "" 508 199 35 21 1 0 "TOWERDEFENSE\TextPic\信息.tga" ""
+PROGRESS "Prog_Life" "" "" 65 45 210 24 "TOWERDEFENSE\progress\HpProgress.tga" "TOWERDEFENSE\血条.bmp" 11 7 11 5 0
+EDIT "Edit_Score" "" "" 458 48 70 20 "TOWERDEFENSE\editbox\TD_MoneyInput.tga" 15 10 255 248 153 "TEXT" 1 0 6 0
+IMAGEPICTURE "Pic_Life" "" "" 47 50 20 18 1 0 "TOWERDEFENSE\icon\Heart.tga" ""
+IMAGEPICTURE "Pic_Gold" "" "" 312 48 18 18 1 0 "TOWERDEFENSE\icon\TD_Money.tga" ""
+IMAGEPICTURE "Pic_Score" "" "" 440 48 18 18 1 0 "TOWERDEFENSE\icon\TD_Score.tga" ""
+EDIT "Edit_Wave" "" "" 295 570 70 20 "TOWERDEFENSE\editbox\TD_MoneyInput.tga" 16 10 255 248 153 "TEXT" 1 0 5 0
+IMAGEPICTURE "Pic_WeaponBK1" "" "" 631 157 48 36 2 0 "TOWERDEFENSE\extra\TD_青云光效.tga" ""
+IMAGEPICTURE "Pic_WeaponBK2" "" "" 546 73 48 36 2 0 "TOWERDEFENSE\extra\TD_鬼王光效.tga" ""
+IMAGEPICTURE "Pic_WeaponBK3" "" "" 631 73 48 36 2 0 "TOWERDEFENSE\extra\TD_青云光效.tga" ""
+IMAGEPICTURE "Pic_WeaponBK4" "" "" 546 115 48 36 2 0 "TOWERDEFENSE\extra\TD_合欢光效.tga" ""
+IMAGEPICTURE "Pic_WeaponBK5" "" "" 631 115 48 36 2 0 "TOWERDEFENSE\extra\TD_天音光效.tga" ""
+IMAGEPICTURE "Pic_WeaponBK6" "" "" 546 157 48 36 2 0 "TOWERDEFENSE\extra\TD_鬼道光效.tga" ""
+IMAGEPICTURE "Pic_Weapon1Text" "" "" 632 175 44 15 1 0 "TOWERDEFENSE\TextPic\仙石.tga" ""
+IMAGEPICTURE "Pic_Weapon2Text" "" "" 547 91 43 16 1 0 "TOWERDEFENSE\TextPic\鬼王宗.tga" ""
+IMAGEPICTURE "Pic_Weapon3Text" "" "" 632 91 42 16 1 0 "TOWERDEFENSE\TextPic\青云门.tga" ""
+IMAGEPICTURE "Pic_Weapon4Text" "" "" 547 133 45 15 1 0 "TOWERDEFENSE\TextPic\合欢派.tga" ""
+IMAGEPICTURE "Pic_Weapon5Text" "" "" 632 133 43 16 1 0 "TOWERDEFENSE\TextPic\天音寺.tga" ""
+IMAGEPICTURE "Pic_Weapon6Text" "" "" 547 175 44 15 1 0 "TOWERDEFENSE\TextPic\鬼道.tga" ""
+STILLIMAGEBUTTON "Btn_NextWave" "nextwave" "" 373 565 126 30 0 0 0 0 17 10 255 255 255 255 "TOWERDEFENSE\button\Td_Next.tga" "TOWERDEFENSE\button\Td_NextDown.tga" "TOWERDEFENSE\button\Td_NextDown.tga" 18 1 0
+STILLIMAGEBUTTON "Btn_Weapon1" "weaponset" "" 591 154 42 42 0 0 0 0 19 10 255 255 255 255 "TOWERDEFENSE\extra\TD_仙石1.tga" "TOWERDEFENSE\extra\TD_仙石2.tga" "TOWERDEFENSE\extra\TD_仙石3.tga" 20 1 0
+STILLIMAGEBUTTON "Btn_Weapon2" "weaponset" "" 506 70 42 42 0 0 0 0 21 10 255 255 255 255 "TOWERDEFENSE\extra\TD_鬼王1.tga" "TOWERDEFENSE\extra\TD_鬼王2.tga" "TOWERDEFENSE\extra\TD_鬼王3.tga" 22 1 0
+STILLIMAGEBUTTON "Btn_Weapon3" "weaponset" "" 591 70 42 42 0 0 0 0 23 10 255 255 255 255 "TOWERDEFENSE\extra\TD_青云1.tga" "TOWERDEFENSE\extra\TD_青云2.tga" "TOWERDEFENSE\extra\TD_青云3.tga" 24 1 0
+STILLIMAGEBUTTON "Btn_Weapon4" "weaponset" "" 506 112 42 42 0 0 0 0 25 10 255 255 255 255 "TOWERDEFENSE\extra\TD_合欢1.tga" "TOWERDEFENSE\extra\TD_合欢2.tga" "TOWERDEFENSE\extra\TD_合欢3.tga" 26 1 0
+STILLIMAGEBUTTON "Btn_Weapon5" "weaponset" "" 591 112 42 42 0 0 0 0 27 10 255 255 255 255 "TOWERDEFENSE\extra\TD_天音1.tga" "TOWERDEFENSE\extra\TD_天音2.tga" "TOWERDEFENSE\extra\TD_天音3.tga" 28 1 0
+STILLIMAGEBUTTON "Btn_Weapon6" "weaponset" "" 506 154 42 42 0 0 0 0 29 10 255 255 255 255 "TOWERDEFENSE\extra\TD_鬼道1.tga" "TOWERDEFENSE\extra\TD_鬼道2.tga" "TOWERDEFENSE\extra\TD_鬼道3.tga" 30 1 0
+LABEL "Lab_MonsterPic" "" "" 510 233 0 0 31 10 32 255 248 153 255
+LABEL "Lab_CurTower" "" "" 510 261 0 0 33 10 34 255 248 153 255
+LABEL "Edit_CurTowerType" "" "" 525 278 0 0 35 10 36 255 248 153 255
+LABEL "Edit_CurTowerToair" "" "" 595 278 0 0 37 10 38 255 248 153 255
+LABEL "Lab_CurTowerValue" "" "" 525 293 0 0 39 10 40 255 248 153 255
+LABEL "Edit_CurTowerValue" "" "" 595 293 0 0 41 10 42 255 248 153 255
+LABEL "Lab_CurTowerA" "" "" 525 308 0 0 43 10 44 255 248 153 255
+LABEL "Edit_CurTowerA" "" "" 595 308 0 0 45 10 46 255 248 153 255
+LABEL "Lab_CurTowerB" "" "" 525 323 0 0 47 10 48 255 248 153 255
+LABEL "Edit_CurTowerB" "" "" 595 323 0 0 49 10 50 255 248 153 255
+LABEL "Lab_CurTowerToA" "" "" 525 338 0 0 51 10 52 255 248 153 255
+LABEL "Edit_CurTowerToA" "" "" 595 338 0 0 53 10 54 255 248 153 255
+LABEL "Lab_CurTowerToB" "" "" 525 353 0 0 55 10 56 255 248 153 255
+LABEL "Edit_CurTowerToB" "" "" 595 353 0 0 57 10 58 255 248 153 255
+LABEL "Lab_CurTowerSpeL" "" "" 525 368 0 0 59 10 60 255 248 153 255
+LABEL "Edit_CurTowerSpeL" "" "" 595 368 0 0 61 10 62 255 248 153 255
+LABEL "Lab_CurTowerAttFre" "" "" 525 383 0 0 63 10 64 255 248 153 255
+LABEL "Edit_CurTowerAttFre" "" "" 595 383 0 0 65 10 66 255 248 153 255
+LABEL "Lab_CurTowerRadius" "" "" 525 398 0 0 67 10 68 255 248 153 255
+LABEL "Edit_CurTowerRadius" "" "" 595 398 0 0 69 10 70 255 248 153 255
+LABEL "Edit_CurTowerMulPro" "" "" 595 413 0 0 71 10 72 255 248 153 255
+LABEL "Lab_CurTowerMulPro" "" "" 525 413 0 0 73 10 74 255 248 153 255
+LABEL "Lab_CurTowerSellM" "" "" 525 428 0 0 75 10 76 255 248 153 255
+LABEL "Edit_CurTowerSellM" "" "" 595 428 0 0 77 10 78 255 248 153 255
+LABEL "Lab_CurTowerImprM" "" "" 525 443 0 0 79 10 80 255 248 153 255
+LABEL "Edit_CurTowerImprM" "" "" 595 443 0 0 81 10 82 255 248 153 255
+LABEL "Lab_CurMonster" "" "" 510 261 0 0 83 10 84 255 248 153 255
+LABEL "Lab_CurMonsterLife" "" "" 525 278 0 0 85 10 86 255 248 153 255
+LABEL "Edit_CurMonsterLife" "" "" 595 278 0 0 87 10 88 255 248 153 255
+LABEL "Lab_CurMonsterSped" "" "" 525 293 0 0 89 10 90 255 248 153 255
+LABEL "Edit_CurMonsterSped" "" "" 595 293 0 0 91 10 92 255 248 153 255
+LABEL "Lab_CurMonsterA" "" "" 525 308 0 0 93 10 94 255 248 153 255
+LABEL "Edit_CurMonsterA" "" "" 595 308 0 0 95 10 96 255 248 153 255
+LABEL "Lab_CurMonsterB" "" "" 525 323 0 0 97 10 98 255 248 153 255
+LABEL "Edit_CurMonsterB" "" "" 595 323 0 0 99 10 100 255 248 153 255
+LABEL "Lab_CurMonsterM" "" "" 525 338 0 0 101 10 102 255 248 153 255
+LABEL "Edit_CurMonsterM" "" "" 595 338 0 0 103 10 104 255 248 153 255
+IMAGEPICTURE "Pic_MShow1" "" "" 594 224 24 24 24 150 "TOWERDEFENSE\monsterpics\诛仙兔子24.tga" ""
+IMAGEPICTURE "Pic_MShow2" "" "" 627 224 24 24 24 150 "TOWERDEFENSE\monsterpics\诛仙小鸡24.tga" ""
+IMAGEPICTURE "Pic_MShow3" "" "" 591 222 32 32 24 150 "TOWERDEFENSE\monsterpics\诛仙红蝴蝶32.tga" ""
+IMAGEPICTURE "Pic_MShow4" "" "" 622 222 32 32 24 150 "TOWERDEFENSE\monsterpics\诛仙小白32.tga" ""
+IMAGEPICTURE "Pic_Weapon" "" "" 502 12 32 32 48 0 "TOWERDEFENSE\weaponpic\青云1级兵种.tga" ""
+IMAGEPICTURE "Pic_Monster24" "" "" 658 205 23 24 24 150 "TOWERDEFENSE\monsterpics\诛仙青鸟24.tga" ""
+IMAGEPICTURE "Pic_Monster32" "" "" 657 286 32 32 24 150 "TOWERDEFENSE\monsterpics\诛仙红蝴蝶32.tga" ""
+IMAGEPICTURE "Pic_WeaponDrag1" "" "" 651 331 31 35 2 0 "TOWERDEFENSE\extra\仙石亮暗.tga" ""
+IMAGEPICTURE "Pic_WeaponDrag2" "" "" 651 345 32 32 2 0 "TOWERDEFENSE\extra\鬼王明暗.tga" ""
+IMAGEPICTURE "Pic_WeaponDrag3" "" "" 650 369 32 32 2 0 "TOWERDEFENSE\extra\青云明暗.tga" ""
+IMAGEPICTURE "Pic_WeaponDrag4" "" "" 653 393 32 32 2 0 "TOWERDEFENSE\extra\合欢明暗.tga" ""
+IMAGEPICTURE "Pic_WeaponDrag5" "" "" 653 410 32 32 2 0 "TOWERDEFENSE\extra\天音明暗.tga" ""
+IMAGEPICTURE "Pic_WeaponDrag6" "" "" 653 431 32 32 2 0 "TOWERDEFENSE\extra\鬼道明暗.tga" ""
+IMAGEPICTURE "Pic_WRange1" "" "" 241 365 96 96 3 200 "TOWERDEFENSE\RangeRing\半径50.tga" ""
+IMAGEPICTURE "Pic_WRange2" "" "" 225 349 128 128 3 200 "TOWERDEFENSE\RangeRing\半径60.tga" ""
+IMAGEPICTURE "Pic_WRange3" "" "" 209 332 160 160 3 200 "TOWERDEFENSE\RangeRing\半径80.tga" ""
+IMAGEPICTURE "Pic_WRange4" "" "" 193 316 192 192 3 200 "TOWERDEFENSE\RangeRing\半径100.tga" ""
+IMAGEPICTURE "Pic_WRange5" "" "" 177 300 224 224 3 200 "TOWERDEFENSE\RangeRing\半径110.tga" ""
+IMAGEPICTURE "Pic_WRange6" "" "" 161 283 256 256 3 200 "TOWERDEFENSE\RangeRing\半径130.tga" ""
+IMAGEPICTURE "Pic_Bullet4" "" "" 662 268 12 12 3 150 "TOWERDEFENSE\bulletpic\天音子弹效果.tga" ""
+IMAGEPICTURE "Pic_Bullet5" "" "" 662 281 12 10 3 150 "TOWERDEFENSE\bulletpic\鬼道子弹效果.tga" ""
+IMAGEPICTURE "Pic_BeAttackFreeze" "" "" 657 226 24 24 3 200 "TOWERDEFENSE\bulletpic\冰系攻击附加特效2.tga" ""
+IMAGEPICTURE "Pic_BeAttackToAD" "" "" 657 240 24 24 3 200 "TOWERDEFENSE\bulletpic\毒雾腐蚀特效.tga" ""
+IMAGEPICTURE "Pic_BeAttackToBD" "" "" 657 246 24 24 3 200 "TOWERDEFENSE\bulletpic\毒雾腐蚀特效.tga" ""
+IMAGEPICTURE "Pic_RTeffect1" "" "" 545 7 32 53 4 200 "TOWERDEFENSE\weaponpic\升级光效.tga" ""
+IMAGEPICTURE "Pic_RTeffect2" "" "" 558 26 32 32 5 200 "TOWERDEFENSE\monsterpics\死亡爆炸.tga" ""
+IMAGEPICTURE "Pic_RTeffect3" "" "" 575 37 28 20 3 150 "TOWERDEFENSE\bulletpic\鬼王击中效果.tga" ""
+IMAGEPICTURE "Pic_RTeffect4" "" "" 587 21 31 40 3 150 "TOWERDEFENSE\bulletpic\青云击中效果.tga" ""
+IMAGEPICTURE "Pic_RTeffect5" "" "" 581 14 43 7 3 150 "TOWERDEFENSE\bulletpic\合欢击中效果.tga" ""
+IMAGEPICTURE "Pic_RTeffect6" "" "" 611 28 31 28 3 150 "TOWERDEFENSE\bulletpic\天音击中效果.tga" ""
+IMAGEPICTURE "Pic_RTeffect7" "" "" 630 27 35 32 3 150 "TOWERDEFENSE\bulletpic\鬼道击中效果.tga" ""
+STILLIMAGEBUTTON "Btn_Pause" "pause" "" 10 565 126 30 0 0 0 0 105 10 255 255 255 255 "TOWERDEFENSE\button\Td_Pause.tga" "TOWERDEFENSE\button\Td_PauseDown.tga" "TOWERDEFENSE\button\Td_PauseDown.tga" 106 1 0
+STILLIMAGEBUTTON "Btn_Continue" "continue" "" 10 565 126 30 0 0 0 0 107 10 255 255 255 255 "TOWERDEFENSE\button\Td_Continue.tga" "TOWERDEFENSE\button\Td_ContinueDown.tga" "TOWERDEFENSE\button\Td_ContinueDown.tga" 108 1 0
+PROGRESS "Pro_Mlife" "" "" 656 222 24 5 "" "TOWERDEFENSE\血条.bmp" 0 0 0 0 0
+PROGRESS "Pro_Wimprove" "" "" 617 578 32 4 "" "TOWERDEFENSE\progress\DarkGreen.tga" 0 0 0 0 0
+IMAGEPICTURE "Pic_Multinum" "" "" 648 312 37 23 3 200 "TOWERDEFENSE\bulletpic\暴击数字2.tga" ""
+STILLIMAGEBUTTON "Btn_SoundOn" "sound" "" 140 570 22 18 0 0 0 0 109 10 255 255 255 255 "TOWERDEFENSE\button\声音开起亮.tga" "TOWERDEFENSE\button\声音开起暗.tga" "TOWERDEFENSE\button\声音开起暗.tga" 110 1 0
+STILLIMAGEBUTTON "Btn_SoundOff" "sound" "" 140 570 22 18 0 0 0 0 111 10 255 255 255 255 "TOWERDEFENSE\button\声音关闭亮.tga" "TOWERDEFENSE\button\声音关闭暗.tga" "TOWERDEFENSE\button\声音关闭暗.tga" 112 1 0

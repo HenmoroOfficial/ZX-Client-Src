@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int enemy;
+		char oper;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_UPDATEENEMY };
+	public:
+		UpdateEnemy() { type = PROTOCOL_UPDATEENEMY; }
+		UpdateEnemy(void*) : Protocol(PROTOCOL_UPDATEENEMY) { }
+		UpdateEnemy (int l_roleid,int l_enemy,char l_oper,
+			unsigned int l_localsid)
+			 : roleid(l_roleid),enemy(l_enemy),oper(l_oper)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_UPDATEENEMY;
+		}
+
+		UpdateEnemy(const UpdateEnemy &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),enemy(rhs.enemy),oper(rhs.oper)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new UpdateEnemy(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << enemy;
+			os << oper;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> enemy;
+			os >> oper;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

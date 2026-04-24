@@ -1,0 +1,59 @@
+	public:
+		int retcode;
+		int map_id;
+		int raidroom_id;
+		unsigned int attacker;
+		unsigned int defender;
+		Octets attacker_name;
+		Octets defender_name;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPKRAIDBEGIN };
+	public:
+		FactionPkRaidBegin() { type = PROTOCOL_FACTIONPKRAIDBEGIN; }
+		FactionPkRaidBegin(void*) : Protocol(PROTOCOL_FACTIONPKRAIDBEGIN) { }
+		FactionPkRaidBegin (int l_retcode,int l_map_id,int l_raidroom_id,
+			unsigned int l_attacker = 0,unsigned int l_defender = 0,const Octets& l_attacker_name = Octets(),
+			const Octets& l_defender_name = Octets(),unsigned int l_localsid = 0)
+			 : retcode(l_retcode),map_id(l_map_id),raidroom_id(l_raidroom_id)
+			,attacker(l_attacker),defender(l_defender),attacker_name(l_attacker_name)
+			,defender_name(l_defender_name),localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONPKRAIDBEGIN;
+		}
+
+		FactionPkRaidBegin(const FactionPkRaidBegin &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),map_id(rhs.map_id),raidroom_id(rhs.raidroom_id)
+			,attacker(rhs.attacker),defender(rhs.defender),attacker_name(rhs.attacker_name)
+			,defender_name(rhs.defender_name),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionPkRaidBegin(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << map_id;
+			os << raidroom_id;
+			os << attacker;
+			os << defender;
+			os << attacker_name;
+			os << defender_name;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> map_id;
+			os >> raidroom_id;
+			os >> attacker;
+			os >> defender;
+			os >> attacker_name;
+			os >> defender_name;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

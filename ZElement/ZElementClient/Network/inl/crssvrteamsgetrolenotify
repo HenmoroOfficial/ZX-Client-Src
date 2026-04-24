@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSGETROLENOTIFY };
+	public:
+		CrssvrTeamsGetRoleNotify() { type = PROTOCOL_CRSSVRTEAMSGETROLENOTIFY; }
+		CrssvrTeamsGetRoleNotify(void*) : Protocol(PROTOCOL_CRSSVRTEAMSGETROLENOTIFY) { }
+		CrssvrTeamsGetRoleNotify (int l_roleid,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSGETROLENOTIFY;
+		}
+
+		CrssvrTeamsGetRoleNotify(const CrssvrTeamsGetRoleNotify &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsGetRoleNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

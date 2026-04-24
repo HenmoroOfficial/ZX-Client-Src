@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int localsid;
+		char repost;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPOSTMSG_RE };
+	public:
+		FactionPostMsg_Re() { type = PROTOCOL_FACTIONPOSTMSG_RE; }
+		FactionPostMsg_Re(void*) : Protocol(PROTOCOL_FACTIONPOSTMSG_RE) { }
+		FactionPostMsg_Re (int l_retcode,int l_roleid,unsigned int l_localsid = 0,
+			char l_repost = 0)
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid)
+			,repost(l_repost)
+		{
+			type = PROTOCOL_FACTIONPOSTMSG_RE;
+		}
+
+		FactionPostMsg_Re(const FactionPostMsg_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid)
+			,repost(rhs.repost) { }
+
+		GNET::Protocol *Clone() const { return new FactionPostMsg_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << repost;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> repost;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

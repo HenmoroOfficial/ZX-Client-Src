@@ -1,0 +1,47 @@
+	public:
+		std::vector<GConsignListNode> nodes;
+		int page;
+		int timestamp;
+		unsigned int localsid;
+		int retcode;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNLISTLARGECATEGORY_RE };
+	public:
+		ConsignListLargeCategory_Re() { type = PROTOCOL_CONSIGNLISTLARGECATEGORY_RE; }
+		ConsignListLargeCategory_Re(void*) : Protocol(PROTOCOL_CONSIGNLISTLARGECATEGORY_RE) { }
+		ConsignListLargeCategory_Re (const std::vector<GConsignListNode>& l_nodes,int l_page,int l_timestamp,
+			unsigned int l_localsid,int l_retcode = 0)
+			 : nodes(l_nodes),page(l_page),timestamp(l_timestamp)
+			,localsid(l_localsid),retcode(l_retcode)
+		{
+			type = PROTOCOL_CONSIGNLISTLARGECATEGORY_RE;
+		}
+
+		ConsignListLargeCategory_Re(const ConsignListLargeCategory_Re &rhs)
+			: Protocol(rhs),nodes(rhs.nodes),page(rhs.page),timestamp(rhs.timestamp)
+			,localsid(rhs.localsid),retcode(rhs.retcode) { }
+
+		GNET::Protocol *Clone() const { return new ConsignListLargeCategory_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << nodes;
+			os << page;
+			os << timestamp;
+			os << localsid;
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> nodes;
+			os >> page;
+			os >> timestamp;
+			os >> localsid;
+			os >> retcode;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 65536; }

@@ -1,0 +1,69 @@
+#ifndef __GNET_GMAILSYNCDATA_RPCDATA
+#define __GNET_GMAILSYNCDATA_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GMailSyncData : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int money;
+		short inv_size;
+		GRoleInventoryVector inventory;
+
+	public:
+		GMailSyncData (unsigned int l_money = 0,short l_inv_size = 0,const GRoleInventoryVector& l_inventory = GRoleInventoryVector())
+			: money(l_money),inv_size(l_inv_size),inventory(l_inventory)
+		{
+		}
+
+		GMailSyncData(const GMailSyncData &rhs)
+			: money(rhs.money),inv_size(rhs.inv_size),inventory(rhs.inventory) { }
+
+		Rpc::Data *Clone() const { return new GMailSyncData(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GMailSyncData *r = dynamic_cast<const GMailSyncData *>(&rhs);
+			if (r && r != this)
+			{
+				money = r->money;
+				inv_size = r->inv_size;
+				inventory = r->inventory;
+			}
+			return *this;
+		}
+
+		GMailSyncData& operator = (const GMailSyncData &rhs)
+		{
+			const GMailSyncData *r = &rhs;
+			if (r && r != this)
+			{
+				money = r->money;
+				inv_size = r->inv_size;
+				inventory = r->inventory;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << money;
+			os << inv_size;
+			os << inventory;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> money;
+			os >> inv_size;
+			os >> inventory;
+			return os;
+		}
+
+	};
+};
+#endif

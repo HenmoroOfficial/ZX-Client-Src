@@ -1,0 +1,35 @@
+	public:
+		int retcode;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNSTARTERR };
+	public:
+		ConsignStartErr() { type = PROTOCOL_CONSIGNSTARTERR; }
+		ConsignStartErr(void*) : Protocol(PROTOCOL_CONSIGNSTARTERR) { }
+		ConsignStartErr (int l_retcode,unsigned int l_localsid)
+			 : retcode(l_retcode),localsid(l_localsid)
+		{
+			type = PROTOCOL_CONSIGNSTARTERR;
+		}
+
+		ConsignStartErr(const ConsignStartErr &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ConsignStartErr(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

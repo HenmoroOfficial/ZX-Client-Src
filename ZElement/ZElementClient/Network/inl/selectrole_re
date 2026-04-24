@@ -1,0 +1,47 @@
+	public:
+		int result;
+		ByteVector auth;
+		RoleInfo select_roleinfo;
+		int lastlogin_ip;
+		char direct_enter_raid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SELECTROLE_RE };
+	public:
+		SelectRole_Re() { type = PROTOCOL_SELECTROLE_RE; }
+		SelectRole_Re(void*) : Protocol(PROTOCOL_SELECTROLE_RE) { }
+		SelectRole_Re (int l_result,ByteVector l_auth = ByteVector(),RoleInfo l_select_roleinfo = RoleInfo(),
+			int l_lastlogin_ip = 0,char l_direct_enter_raid = 0)
+			 : result(l_result),auth(l_auth),select_roleinfo(l_select_roleinfo)
+			,lastlogin_ip(l_lastlogin_ip),direct_enter_raid(l_direct_enter_raid)
+		{
+			type = PROTOCOL_SELECTROLE_RE;
+		}
+
+		SelectRole_Re(const SelectRole_Re &rhs)
+			: Protocol(rhs),result(rhs.result),auth(rhs.auth),select_roleinfo(rhs.select_roleinfo)
+			,lastlogin_ip(rhs.lastlogin_ip),direct_enter_raid(rhs.direct_enter_raid) { }
+
+		GNET::Protocol *Clone() const { return new SelectRole_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << result;
+			os << auth;
+			os << select_roleinfo;
+			os << lastlogin_ip;
+			os << direct_enter_raid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> result;
+			os >> auth;
+			os >> select_roleinfo;
+			os >> lastlogin_ip;
+			os >> direct_enter_raid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 101; }
+
+		bool SizePolicy(size_t size) const { return size <= 8192; }

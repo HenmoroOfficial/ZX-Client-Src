@@ -1,0 +1,50 @@
+	public:
+		int pageid;
+		int maxsize;
+		int selfrank;
+		std::vector<GTopItem> items;
+		unsigned int localsid;
+		char can_create_base;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFACACTTOPTABLE_RE };
+	public:
+		GetFacActTopTable_Re() { type = PROTOCOL_GETFACACTTOPTABLE_RE; }
+		GetFacActTopTable_Re(void*) : Protocol(PROTOCOL_GETFACACTTOPTABLE_RE) { }
+		GetFacActTopTable_Re (int l_pageid,int l_maxsize,int l_selfrank,
+			const std::vector<GTopItem>& l_items,unsigned int l_localsid,char l_can_create_base = 0)
+			 : pageid(l_pageid),maxsize(l_maxsize),selfrank(l_selfrank)
+			,items(l_items),localsid(l_localsid),can_create_base(l_can_create_base)
+		{
+			type = PROTOCOL_GETFACACTTOPTABLE_RE;
+		}
+
+		GetFacActTopTable_Re(const GetFacActTopTable_Re &rhs)
+			: Protocol(rhs),pageid(rhs.pageid),maxsize(rhs.maxsize),selfrank(rhs.selfrank)
+			,items(rhs.items),localsid(rhs.localsid),can_create_base(rhs.can_create_base) { }
+
+		GNET::Protocol *Clone() const { return new GetFacActTopTable_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << pageid;
+			os << maxsize;
+			os << selfrank;
+			os << items;
+			os << localsid;
+			os << can_create_base;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> pageid;
+			os >> maxsize;
+			os >> selfrank;
+			os >> items;
+			os >> localsid;
+			os >> can_create_base;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

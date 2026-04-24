@@ -1,0 +1,10 @@
+DIALOG "Win_TestTowerHelp" 0 0 621 409 0 1 10 "TOWERDEFENSE\window\底板.tga" "" "" 0 0 -1 -1 "" 0 0 96 96 96 255 1 0
+IMAGEPICTURE "Pic_Title" "" "" 183 0 252 22 1 0 "TOWERDEFENSE\TextPic\题目字体2.tga" ""
+STILLIMAGEBUTTON "Control_Close" "IDCANCEL" "" 590 10 21 21 0 0 0 0 2 10 255 255 255 255 "TOWERDEFENSE\button\Td_Close.tga" "TOWERDEFENSE\button\Td_CloseDown.tga" "TOWERDEFENSE\button\Td_CloseDown.tga" 3 1 0
+TEXT "AText_Rule" "" "" 30 41 549 221 4 10 252 249 180 255 "TOWERDEFENSE\frame\Frame1.tga" "LISTBOX\DragUp.tga" "LISTBOX\DragDown.tga" "LISTBOX\DragSlot.tga" "LISTBOX\DragButton.tga" 0
+TEXT "BackGround" "" "" 30 275 534 95 5 10 255 255 255 255 "TOWERDEFENSE\frame\Frame1.tga" "" "" "" "" 0
+STILLIMAGEBUTTON "Btn_ToRight" "right" "" 579 312 22 19 0 0 0 0 6 10 255 255 255 255 "TOWERDEFENSE\button\箭头2高亮.tga" "TOWERDEFENSE\button\箭头2.tga" "TOWERDEFENSE\button\箭头2.tga" 7 1 0
+STILLIMAGEBUTTON "Btn_ToLeft" "left" "" 11 312 22 19 0 0 0 0 8 10 255 255 255 255 "TOWERDEFENSE\button\箭头高亮.tga" "TOWERDEFENSE\button\箭头.tga" "TOWERDEFENSE\button\箭头.tga" 9 1 0
+IMAGEPICTURE "Pic_Weapon" "" "" 46 290 42 42 1 0 "TOWERDEFENSE\extra\TD_鬼王1.tga" ""
+IMAGEPICTURE "Pic_WeaponName" "" "" 45 337 45 16 1 0 "TOWERDEFENSE\TextPic\鬼王宗.tga" ""
+TEXT "AText_WeaponInfo" "" "" 111 289 467 70 10 10 251 248 179 255 "" "LISTBOX\DragUp.tga" "LISTBOX\DragDown.tga" "LISTBOX\DragSlot.tga" "LISTBOX\DragButton.tga" 0

@@ -1,0 +1,35 @@
+	public:
+		int retcode;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDENTER_RE };
+	public:
+		RaidEnter_Re() { type = PROTOCOL_RAIDENTER_RE; }
+		RaidEnter_Re(void*) : Protocol(PROTOCOL_RAIDENTER_RE) { }
+		RaidEnter_Re (int l_retcode,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDENTER_RE;
+		}
+
+		RaidEnter_Re(const RaidEnter_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidEnter_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

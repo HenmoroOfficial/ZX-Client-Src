@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FRIENDCALLBACKINFO };
+	public:
+		FriendCallbackInfo() { type = PROTOCOL_FRIENDCALLBACKINFO; }
+		FriendCallbackInfo(void*) : Protocol(PROTOCOL_FRIENDCALLBACKINFO) { }
+		FriendCallbackInfo (int l_roleid,unsigned int l_localsid)
+			 : roleid(l_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_FRIENDCALLBACKINFO;
+		}
+
+		FriendCallbackInfo(const FriendCallbackInfo &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FriendCallbackInfo(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 8; }

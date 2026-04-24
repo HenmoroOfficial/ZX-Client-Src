@@ -1,0 +1,62 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int localsid;
+		int newmember;
+		int operater;
+		unsigned int factionid;
+		int level;
+		char cls;
+		Octets name;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONACCEPTJOIN_RE };
+	public:
+		FactionAcceptJoin_Re() { type = PROTOCOL_FACTIONACCEPTJOIN_RE; }
+		FactionAcceptJoin_Re(void*) : Protocol(PROTOCOL_FACTIONACCEPTJOIN_RE) { }
+		FactionAcceptJoin_Re (int l_retcode,int l_roleid,unsigned int l_localsid,
+			int l_newmember,int l_operater,unsigned int l_factionid,
+			int l_level,char l_cls = 0,const Octets& l_name = Octets())
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid),
+			newmember(l_newmember),operater(l_operater),factionid(l_factionid),
+			level(l_level),cls(l_cls),name(l_name)
+		{
+			type = PROTOCOL_FACTIONACCEPTJOIN_RE;
+		}
+
+		FactionAcceptJoin_Re(const FactionAcceptJoin_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid),
+			newmember(rhs.newmember),operater(rhs.operater),factionid(rhs.factionid),
+			level(rhs.level),cls(rhs.cls),name(rhs.name) { }
+
+		GNET::Protocol *Clone() const { return new FactionAcceptJoin_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << newmember;
+			os << operater;
+			os << factionid;
+			os << level;
+			os << cls;
+			os << name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> newmember;
+			os >> operater;
+			os >> factionid;
+			os >> level;
+			os >> cls;
+			os >> name;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

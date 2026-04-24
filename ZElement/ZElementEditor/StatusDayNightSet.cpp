@@ -1,0 +1,23 @@
+// StatusDayNightSet.cpp: implementation of the CStatusDayNightSet class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "elementeditor.h"
+#include "StatusDayNightSet.h"
+
+//#define new A_DEBUG_NEW
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CStatusDayNightSet::CStatusDayNightSet()
+{
+
+}
+
+CStatusDayNightSet::~CStatusDayNightSet()
+{
+
+}

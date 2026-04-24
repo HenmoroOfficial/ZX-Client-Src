@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		int gs_id;
+		int map_id;
+		unsigned int localsid;
+		char iscross;
+		enum { PROTOCOL_TYPE = PROTOCOL_OPENBANQUETDRAG_RE };
+	public:
+		OpenBanquetDrag_Re() { type = PROTOCOL_OPENBANQUETDRAG_RE; }
+		OpenBanquetDrag_Re(void*) : Protocol(PROTOCOL_OPENBANQUETDRAG_RE) { }
+		OpenBanquetDrag_Re (int l_roleid,int l_gs_id,int l_map_id = 0,
+			unsigned int l_localsid = 0,char l_iscross = 0)
+			 : roleid(l_roleid),gs_id(l_gs_id),map_id(l_map_id)
+			,localsid(l_localsid),iscross(l_iscross)
+		{
+			type = PROTOCOL_OPENBANQUETDRAG_RE;
+		}
+
+		OpenBanquetDrag_Re(const OpenBanquetDrag_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),gs_id(rhs.gs_id),map_id(rhs.map_id)
+			,localsid(rhs.localsid),iscross(rhs.iscross) { }
+
+		GNET::Protocol *Clone() const { return new OpenBanquetDrag_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << gs_id;
+			os << map_id;
+			os << localsid;
+			os << iscross;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> gs_id;
+			os >> map_id;
+			os >> localsid;
+			os >> iscross;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 100; }

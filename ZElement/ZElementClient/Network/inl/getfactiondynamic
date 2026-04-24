@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		int pageid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFACTIONDYNAMIC };
+	public:
+		GetFactionDynamic() { type = PROTOCOL_GETFACTIONDYNAMIC; }
+		GetFactionDynamic(void*) : Protocol(PROTOCOL_GETFACTIONDYNAMIC) { }
+		GetFactionDynamic (int l_roleid,int l_pageid = 0,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),pageid(l_pageid),localsid(l_localsid)
+		{
+			type = PROTOCOL_GETFACTIONDYNAMIC;
+		}
+
+		GetFactionDynamic(const GetFactionDynamic &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),pageid(rhs.pageid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GetFactionDynamic(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << pageid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> pageid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

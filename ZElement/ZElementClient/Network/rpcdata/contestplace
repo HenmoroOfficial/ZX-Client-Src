@@ -1,0 +1,65 @@
+#ifndef __GNET_CONTESTPLACE_RPCDATA
+#define __GNET_CONTESTPLACE_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class ContestPlace : public GNET::Rpc::Data
+	{
+	public:
+		Octets rolename;
+		int score;
+
+	public:
+		ContestPlace (Octets l_rolename = Octets(),int l_score = 0)
+			: rolename(l_rolename),score(l_score)
+		{
+		}
+
+		ContestPlace(const ContestPlace &rhs)
+			: rolename(rhs.rolename),score(rhs.score) { }
+
+		Rpc::Data *Clone() const { return new ContestPlace(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const ContestPlace *r = dynamic_cast<const ContestPlace *>(&rhs);
+			if (r && r != this)
+			{
+				rolename = r->rolename;
+				score = r->score;
+			}
+			return *this;
+		}
+
+		ContestPlace& operator = (const ContestPlace &rhs)
+		{
+			const ContestPlace *r = &rhs;
+			if (r && r != this)
+			{
+				rolename = r->rolename;
+				score = r->score;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << rolename;
+			os << score;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> rolename;
+			os >> score;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<ContestPlace>	ContestPlaceVector;
+};
+#endif

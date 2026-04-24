@@ -1,0 +1,77 @@
+#ifndef __GNET_GAPPLYCONDITION_RPCDATA
+#define __GNET_GAPPLYCONDITION_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GApplyCondition : public GNET::Rpc::Data
+	{
+	public:
+		unsigned char occupation;
+		char gender;
+		int level;
+		int faction_level;
+
+	public:
+		GApplyCondition (unsigned char l_occupation = 0,char l_gender = 0,int l_level = 0
+			,int l_faction_level = 0)
+			: occupation(l_occupation),gender(l_gender),level(l_level)
+			,faction_level(l_faction_level)
+		{
+		}
+
+		GApplyCondition(const GApplyCondition &rhs)
+			: occupation(rhs.occupation),gender(rhs.gender),level(rhs.level),
+			faction_level(rhs.faction_level) { }
+
+		Rpc::Data *Clone() const { return new GApplyCondition(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GApplyCondition *r = dynamic_cast<const GApplyCondition *>(&rhs);
+			if (r && r != this)
+			{
+				occupation = r->occupation;
+				gender = r->gender;
+				level = r->level;
+				faction_level = r->faction_level;
+			}
+			return *this;
+		}
+
+		GApplyCondition& operator = (const GApplyCondition &rhs)
+		{
+			const GApplyCondition *r = &rhs;
+			if (r && r != this)
+			{
+				occupation = r->occupation;
+				gender = r->gender;
+				level = r->level;
+				faction_level = r->faction_level;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << occupation;
+			os << gender;
+			os << level;
+			os << faction_level;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> occupation;
+			os >> gender;
+			os >> level;
+			os >> faction_level;
+			return os;
+		}
+
+	};
+};
+#endif

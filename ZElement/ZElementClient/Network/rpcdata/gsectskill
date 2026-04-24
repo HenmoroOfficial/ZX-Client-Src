@@ -1,0 +1,65 @@
+#ifndef __GNET_GSECTSKILL_RPCDATA
+#define __GNET_GSECTSKILL_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GSectSkill : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int id;
+		unsigned int level;
+
+	public:
+		GSectSkill (unsigned int l_id = 0,unsigned int l_level = 0)
+			: id(l_id),level(l_level)
+		{
+		}
+
+		GSectSkill(const GSectSkill &rhs)
+			: id(rhs.id),level(rhs.level) { }
+
+		Rpc::Data *Clone() const { return new GSectSkill(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GSectSkill *r = dynamic_cast<const GSectSkill *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				level = r->level;
+			}
+			return *this;
+		}
+
+		GSectSkill& operator = (const GSectSkill &rhs)
+		{
+			const GSectSkill *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				level = r->level;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << level;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> level;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GSectSkill>	GSectSkillVector;
+};
+#endif

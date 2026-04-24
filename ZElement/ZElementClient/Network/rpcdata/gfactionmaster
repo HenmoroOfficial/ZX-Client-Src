@@ -1,0 +1,64 @@
+#ifndef __GNET_GFACTIONMASTER_RPCDATA
+#define __GNET_GFACTIONMASTER_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GFactionMaster : public GNET::Rpc::Data
+	{
+	public:
+		int fid;
+		int master;
+
+	public:
+		GFactionMaster (int l_fid = 0,int l_master = 0)
+			: fid(l_fid),master(l_master)
+		{
+		}
+
+		GFactionMaster(const GFactionMaster &rhs)
+			: fid(rhs.fid),master(rhs.master) { }
+
+		Rpc::Data *Clone() const { return new GFactionMaster(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GFactionMaster *r = dynamic_cast<const GFactionMaster *>(&rhs);
+			if (r && r != this)
+			{
+				fid = r->fid;
+				master = r->master;
+			}
+			return *this;
+		}
+
+		GFactionMaster& operator = (const GFactionMaster &rhs)
+		{
+			const GFactionMaster *r = &rhs;
+			if (r && r != this)
+			{
+				fid = r->fid;
+				master = r->master;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << fid;
+			os << master;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> fid;
+			os >> master;
+			return os;
+		}
+
+	};
+};
+#endif

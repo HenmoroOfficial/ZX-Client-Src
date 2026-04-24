@@ -1,0 +1,87 @@
+#ifndef __GNET_NAMEHISTORY_RPCDATA
+#define __GNET_NAMEHISTORY_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class NameHistory : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		unsigned char occupation;
+		int level;
+		int reborn_cnt;
+		char gender;
+		std::vector<Octets> namelist;
+
+	public:
+		NameHistory (int l_roleid = 0,unsigned char l_occupation = 0,int l_level = 1
+			,int l_reborn_cnt = 0,char l_gender = 0,const std::vector<Octets>& l_namelist = std::vector<Octets>())
+			: roleid(l_roleid),occupation(l_occupation),level(l_level)
+			,reborn_cnt(l_reborn_cnt),gender(l_gender),namelist(l_namelist)
+		{
+		}
+
+		NameHistory(const NameHistory &rhs)
+			: roleid(rhs.roleid),occupation(rhs.occupation),level(rhs.level),
+			reborn_cnt(rhs.reborn_cnt),gender(rhs.gender),namelist(rhs.namelist) { }
+
+		Rpc::Data *Clone() const { return new NameHistory(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const NameHistory *r = dynamic_cast<const NameHistory *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				occupation = r->occupation;
+				level = r->level;
+				reborn_cnt = r->reborn_cnt;
+				gender = r->gender;
+				namelist = r->namelist;
+			}
+			return *this;
+		}
+
+		NameHistory& operator = (const NameHistory &rhs)
+		{
+			const NameHistory *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				occupation = r->occupation;
+				level = r->level;
+				reborn_cnt = r->reborn_cnt;
+				gender = r->gender;
+				namelist = r->namelist;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << occupation;
+			os << level;
+			os << reborn_cnt;
+			os << gender;
+			os << namelist;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> occupation;
+			os >> level;
+			os >> reborn_cnt;
+			os >> gender;
+			os >> namelist;
+			return os;
+		}
+
+	};
+};
+#endif

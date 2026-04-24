@@ -1,0 +1,9 @@
+		GNET::Protocol *Clone() const {  return new KingGuardInvite(*this); }
+	public:
+		enum { PROTOCOL_TYPE = RPC_KINGGUARDINVITE };
+		KingGuardInvite(Type type, Rpc::Data *argument, Rpc::Data *result)
+			: RPC_BASECLASS(type, argument, result ) { }
+		KingGuardInvite(const KingGuardInvite &rhs) : RPC_BASECLASS(rhs) { }
+		int  PriorPolicy( ) const { return 1; }
+		bool SizePolicy(size_t size) const { return size <= 64; }
+		bool TimePolicy(int timeout) const { return timeout <= 35; }

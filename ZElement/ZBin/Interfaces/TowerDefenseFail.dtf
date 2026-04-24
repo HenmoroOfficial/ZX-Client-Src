@@ -1,0 +1,5 @@
+DIALOG "Win_TowerDefenseFail" 0 0 696 610 0 1 10 "TOWERDEFENSE\window\黑色衬底.tga" "" "" 0 0 -1 -1 "" 0 0 96 96 96 255 1 0
+IMAGEPICTURE "Pic_Window" "" "" 193 218 305 173 1 0 "TOWERDEFENSE\window\游戏结果小底板.tga" ""
+IMAGEPICTURE "Pic_Text" "" "" 131 240 416 65 1 0 "TOWERDEFENSE\TextPic\游戏失败.tga" ""
+STILLIMAGEBUTTON "Btn_ToMain" "main" "" 209 323 116 31 0 0 0 0 2 10 255 255 255 255 "TOWERDEFENSE\button\返回主菜单按钮1.tga" "TOWERDEFENSE\button\返回主菜单按钮3.tga" "TOWERDEFENSE\button\返回主菜单按钮3.tga" 3 1 0
+STILLIMAGEBUTTON "Btn_Again" "again" "" 364 323 116 31 0 0 0 0 4 10 255 255 255 255 "TOWERDEFENSE\button\重新游戏按钮1.tga" "TOWERDEFENSE\button\重新游戏按钮3.tga" "TOWERDEFENSE\button\重新游戏按钮3.tga" 5 1 0

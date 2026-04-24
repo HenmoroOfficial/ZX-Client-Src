@@ -1,0 +1,65 @@
+#ifndef __GNET_GPETSINFO_RPCDATA
+#define __GNET_GPETSINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "groleinventory"
+
+namespace GNET
+{
+	class GPetsInfo : public GNET::Rpc::Data
+	{
+	public:
+		GRoleInventoryVector petbadge;
+		GRoleInventoryVector petequip;
+
+	public:
+		GPetsInfo (const GRoleInventoryVector& l_petbadge = GRoleInventoryVector(),const GRoleInventoryVector& l_petequip = GRoleInventoryVector())
+			: petbadge(l_petbadge),petequip(l_petequip)
+		{
+		}
+
+		GPetsInfo(const GPetsInfo &rhs)
+			: petbadge(rhs.petbadge),petequip(rhs.petequip) { }
+
+		Rpc::Data *Clone() const { return new GPetsInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GPetsInfo *r = dynamic_cast<const GPetsInfo *>(&rhs);
+			if (r && r != this)
+			{
+				petbadge = r->petbadge;
+				petequip = r->petequip;
+			}
+			return *this;
+		}
+
+		GPetsInfo& operator = (const GPetsInfo &rhs)
+		{
+			const GPetsInfo *r = &rhs;
+			if (r && r != this)
+			{
+				petbadge = r->petbadge;
+				petequip = r->petequip;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << petbadge;
+			os << petequip;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> petbadge;
+			os >> petequip;
+			return os;
+		}
+
+	};
+};
+#endif

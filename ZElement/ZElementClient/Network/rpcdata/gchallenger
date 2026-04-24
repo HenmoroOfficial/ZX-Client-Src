@@ -1,0 +1,72 @@
+#ifndef __GNET_GCHALLENGER_RPCDATA
+#define __GNET_GCHALLENGER_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gfactionmaster"
+#include "gfactionmaster"
+
+namespace GNET
+{
+	class GChallenger : public GNET::Rpc::Data
+	{
+	public:
+		GFactionMaster challenger;
+		GFactionMaster assistant;
+		int begin_time;
+
+	public:
+		GChallenger (const GFactionMaster& l_challenger = GFactionMaster(),const GFactionMaster& l_assistant = GFactionMaster(),int l_begin_time = 0)
+			: challenger(l_challenger),assistant(l_assistant),begin_time(l_begin_time)
+		{
+		}
+
+		GChallenger(const GChallenger &rhs)
+			: challenger(rhs.challenger),assistant(rhs.assistant),begin_time(rhs.begin_time) { }
+
+		Rpc::Data *Clone() const { return new GChallenger(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GChallenger *r = dynamic_cast<const GChallenger *>(&rhs);
+			if (r && r != this)
+			{
+				challenger = r->challenger;
+				assistant = r->assistant;
+				begin_time = r->begin_time;
+			}
+			return *this;
+		}
+
+		GChallenger& operator = (const GChallenger &rhs)
+		{
+			const GChallenger *r = &rhs;
+			if (r && r != this)
+			{
+				challenger = r->challenger;
+				assistant = r->assistant;
+				begin_time = r->begin_time;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << challenger;
+			os << assistant;
+			os << begin_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> challenger;
+			os >> assistant;
+			os >> begin_time;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GChallenger>	GChallengerVector;
+};
+#endif

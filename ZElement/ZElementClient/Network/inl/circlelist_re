@@ -1,0 +1,59 @@
+	public:
+		unsigned int circleid;
+		int createtime;
+		unsigned char online_num;
+		std::vector<CircleMemberInfo> members;
+		std::vector<GCircleHistory> history;
+		unsigned int localsid;
+		int64_t grad_bonus;
+		unsigned int circlepoint;
+		enum { PROTOCOL_TYPE = PROTOCOL_CIRCLELIST_RE };
+	public:
+		CircleList_Re() { type = PROTOCOL_CIRCLELIST_RE; }
+		CircleList_Re(void*) : Protocol(PROTOCOL_CIRCLELIST_RE) { }
+		CircleList_Re (unsigned int l_circleid,int l_createtime,unsigned char l_online_num,
+			const std::vector<CircleMemberInfo>& l_members,const std::vector<GCircleHistory>& l_history,unsigned int l_localsid = 0,
+			int64_t l_grad_bonus = 0,unsigned int l_circlepoint = 0)
+			 : circleid(l_circleid),createtime(l_createtime),online_num(l_online_num)
+			,members(l_members),history(l_history),localsid(l_localsid)
+			,grad_bonus(l_grad_bonus),circlepoint(l_circlepoint)
+		{
+			type = PROTOCOL_CIRCLELIST_RE;
+		}
+
+		CircleList_Re(const CircleList_Re &rhs)
+			: Protocol(rhs),circleid(rhs.circleid),createtime(rhs.createtime),online_num(rhs.online_num)
+			,members(rhs.members),history(rhs.history),localsid(rhs.localsid)
+			,grad_bonus(rhs.grad_bonus),circlepoint(rhs.circlepoint) { }
+
+		GNET::Protocol *Clone() const { return new CircleList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << circleid;
+			os << createtime;
+			os << online_num;
+			os << members;
+			os << history;
+			os << localsid;
+			os << grad_bonus;
+			os << circlepoint;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> circleid;
+			os >> createtime;
+			os >> online_num;
+			os >> members;
+			os >> history;
+			os >> localsid;
+			os >> grad_bonus;
+			os >> circlepoint;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

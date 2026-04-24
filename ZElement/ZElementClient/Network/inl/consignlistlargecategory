@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		int page;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNLISTLARGECATEGORY };
+	public:
+		ConsignListLargeCategory() { type = PROTOCOL_CONSIGNLISTLARGECATEGORY; }
+		ConsignListLargeCategory(void*) : Protocol(PROTOCOL_CONSIGNLISTLARGECATEGORY) { }
+		ConsignListLargeCategory (int l_roleid,int l_page,unsigned int l_localsid)
+			 : roleid(l_roleid),page(l_page),localsid(l_localsid)
+		{
+			type = PROTOCOL_CONSIGNLISTLARGECATEGORY;
+		}
+
+		ConsignListLargeCategory(const ConsignListLargeCategory &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),page(rhs.page),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ConsignListLargeCategory(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << page;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> page;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

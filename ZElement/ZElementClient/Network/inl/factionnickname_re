@@ -1,0 +1,47 @@
+	public:
+		int retcode;
+		int roleid;
+		int receiver;
+		Octets nickname;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONNICKNAME_RE };
+	public:
+		FactionNickname_Re() { type = PROTOCOL_FACTIONNICKNAME_RE; }
+		FactionNickname_Re(void*) : Protocol(PROTOCOL_FACTIONNICKNAME_RE) { }
+		FactionNickname_Re (int l_retcode,int l_roleid,int l_receiver,
+			const Octets& l_nickname,unsigned int l_localsid)
+			 : retcode(l_retcode),roleid(l_roleid),receiver(l_receiver)
+			,nickname(l_nickname),localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONNICKNAME_RE;
+		}
+
+		FactionNickname_Re(const FactionNickname_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),receiver(rhs.receiver)
+			,nickname(rhs.nickname),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionNickname_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << receiver;
+			os << nickname;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> receiver;
+			os >> nickname;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 512; }

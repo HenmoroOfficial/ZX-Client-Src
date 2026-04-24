@@ -1,0 +1,96 @@
+#ifndef __GNET_GLEAVEMESSAGE_RPCDATA
+#define __GNET_GLEAVEMESSAGE_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GLeaveMessage : public GNET::Rpc::Data
+	{
+	public:
+		short index;
+		short dst_index;
+		char type;
+		int roleid;
+		Octets rolename;
+		int time;
+		Octets message;
+
+	public:
+		GLeaveMessage (short l_index = 0,short l_dst_index = 0,char l_type = 0
+			,int l_roleid = 0,const Octets& l_rolename = Octets(),int l_time = 0
+			,const Octets& l_message = Octets())
+			: index(l_index),dst_index(l_dst_index),type(l_type)
+			,roleid(l_roleid),rolename(l_rolename),time(l_time)
+			,message(l_message)
+		{
+		}
+
+		GLeaveMessage(const GLeaveMessage &rhs)
+			: index(rhs.index),dst_index(rhs.dst_index),type(rhs.type),
+			roleid(rhs.roleid),rolename(rhs.rolename),time(rhs.time),
+			message(rhs.message) { }
+
+		Rpc::Data *Clone() const { return new GLeaveMessage(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GLeaveMessage *r = dynamic_cast<const GLeaveMessage *>(&rhs);
+			if (r && r != this)
+			{
+				index = r->index;
+				dst_index = r->dst_index;
+				type = r->type;
+				roleid = r->roleid;
+				rolename = r->rolename;
+				time = r->time;
+				message = r->message;
+			}
+			return *this;
+		}
+
+		GLeaveMessage& operator = (const GLeaveMessage &rhs)
+		{
+			const GLeaveMessage *r = &rhs;
+			if (r && r != this)
+			{
+				index = r->index;
+				dst_index = r->dst_index;
+				type = r->type;
+				roleid = r->roleid;
+				rolename = r->rolename;
+				time = r->time;
+				message = r->message;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << index;
+			os << dst_index;
+			os << type;
+			os << roleid;
+			os << rolename;
+			os << time;
+			os << message;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> index;
+			os >> dst_index;
+			os >> type;
+			os >> roleid;
+			os >> rolename;
+			os >> time;
+			os >> message;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GLeaveMessage>	GLeaveMessageVector;
+};
+#endif

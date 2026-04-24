@@ -1,0 +1,35 @@
+	public:
+		int retcode;
+		int value;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETCOMMONDATA_RE };
+	public:
+		GetCommonData_Re() { type = PROTOCOL_GETCOMMONDATA_RE; }
+		GetCommonData_Re(void*) : Protocol(PROTOCOL_GETCOMMONDATA_RE) { }
+		GetCommonData_Re (int l_retcode,int l_value = -1)
+			 : retcode(l_retcode),value(l_value)
+		{
+			type = PROTOCOL_GETCOMMONDATA_RE;
+		}
+
+		GetCommonData_Re(const GetCommonData_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),value(rhs.value) { }
+
+		GNET::Protocol *Clone() const { return new GetCommonData_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << value;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> value;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

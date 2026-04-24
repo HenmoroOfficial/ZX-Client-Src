@@ -1,0 +1,100 @@
+#ifndef __GNET_GINSTANCINGFIELDINFO_RPCDATA
+#define __GNET_GINSTANCINGFIELDINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GInstancingFieldInfo : public GNET::Rpc::Data
+	{
+	public:
+		int tid;
+		int gs_id;
+		int map_id;
+		int status;
+		int time_left;
+		int player_number;
+		int player_limit;
+		Octets leader;
+
+	public:
+		GInstancingFieldInfo (int l_tid = 0,int l_gs_id = 0,int l_map_id = 0
+			,int l_status = 0,int l_time_left = 0,int l_player_number = 0
+			,int l_player_limit = 0,const Octets& l_leader = Octets())
+			: tid(l_tid),gs_id(l_gs_id),map_id(l_map_id)
+			,status(l_status),time_left(l_time_left),player_number(l_player_number)
+			,player_limit(l_player_limit),leader(l_leader)
+		{
+		}
+
+		GInstancingFieldInfo(const GInstancingFieldInfo &rhs)
+			: tid(rhs.tid),gs_id(rhs.gs_id),map_id(rhs.map_id),
+			status(rhs.status),time_left(rhs.time_left),player_number(rhs.player_number),
+			player_limit(rhs.player_limit),leader(rhs.leader) { }
+
+		Rpc::Data *Clone() const { return new GInstancingFieldInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GInstancingFieldInfo *r = dynamic_cast<const GInstancingFieldInfo *>(&rhs);
+			if (r && r != this)
+			{
+				tid = r->tid;
+				gs_id = r->gs_id;
+				map_id = r->map_id;
+				status = r->status;
+				time_left = r->time_left;
+				player_number = r->player_number;
+				player_limit = r->player_limit;
+				leader = r->leader;
+			}
+			return *this;
+		}
+
+		GInstancingFieldInfo& operator = (const GInstancingFieldInfo &rhs)
+		{
+			const GInstancingFieldInfo *r = &rhs;
+			if (r && r != this)
+			{
+				tid = r->tid;
+				gs_id = r->gs_id;
+				map_id = r->map_id;
+				status = r->status;
+				time_left = r->time_left;
+				player_number = r->player_number;
+				player_limit = r->player_limit;
+				leader = r->leader;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << tid;
+			os << gs_id;
+			os << map_id;
+			os << status;
+			os << time_left;
+			os << player_number;
+			os << player_limit;
+			os << leader;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> tid;
+			os >> gs_id;
+			os >> map_id;
+			os >> status;
+			os >> time_left;
+			os >> player_number;
+			os >> player_limit;
+			os >> leader;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		int flag;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMSETGAMEATTRI_RE };
+	public:
+		KingdomSetGameAttri_Re() { type = PROTOCOL_KINGDOMSETGAMEATTRI_RE; }
+		KingdomSetGameAttri_Re(void*) : Protocol(PROTOCOL_KINGDOMSETGAMEATTRI_RE) { }
+		KingdomSetGameAttri_Re (int l_retcode,int l_roleid,int l_flag,
+			unsigned int l_localsid)
+			 : retcode(l_retcode),roleid(l_roleid),flag(l_flag)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMSETGAMEATTRI_RE;
+		}
+
+		KingdomSetGameAttri_Re(const KingdomSetGameAttri_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),flag(rhs.flag)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomSetGameAttri_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << flag;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> flag;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

@@ -1,0 +1,160 @@
+#ifndef __GNET_TERRITORYBRIEF_RPCDATA
+#define __GNET_TERRITORYBRIEF_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class TerritoryBrief : public GNET::Rpc::Data
+	{
+	public:
+		int territoryid;
+		unsigned int owner;
+		unsigned int defender;
+		unsigned int attacker;
+		char flag;
+		int color;
+		int battle_time;
+		int item_count;
+		int assis_num;
+		int assis_drawn_num;
+		int defender_num;
+		int attacker_num;
+		int player_limit;
+		int rand_award_itemid;
+		int rand_award_count;
+		char rand_award_drawn;
+		char challenged_by_selffaction;
+		int battle_end_time;
+
+	public:
+		TerritoryBrief (int l_territoryid = 0,unsigned int l_owner = 0,unsigned int l_defender = 0
+			,unsigned int l_attacker = 0,char l_flag = -1,int l_color = 0
+			,int l_battle_time = 0,int l_item_count = 0,int l_assis_num = 0
+			,int l_assis_drawn_num = 0,int l_defender_num = 0,int l_attacker_num = 0
+			,int l_player_limit = 0,int l_rand_award_itemid = 0,int l_rand_award_count = 0
+			,char l_rand_award_drawn = 1,char l_challenged_by_selffaction = 0,int l_battle_end_time = 0)
+			: territoryid(l_territoryid),owner(l_owner),defender(l_defender)
+			,attacker(l_attacker),flag(l_flag),color(l_color)
+			,battle_time(l_battle_time),item_count(l_item_count),assis_num(l_assis_num)
+			,assis_drawn_num(l_assis_drawn_num),defender_num(l_defender_num),attacker_num(l_attacker_num)
+			,player_limit(l_player_limit),rand_award_itemid(l_rand_award_itemid),rand_award_count(l_rand_award_count)
+			,rand_award_drawn(l_rand_award_drawn),challenged_by_selffaction(l_challenged_by_selffaction),battle_end_time(l_battle_end_time)
+		{
+		}
+
+		TerritoryBrief(const TerritoryBrief &rhs)
+			: territoryid(rhs.territoryid),owner(rhs.owner),defender(rhs.defender),
+			attacker(rhs.attacker),flag(rhs.flag),color(rhs.color),
+			battle_time(rhs.battle_time),item_count(rhs.item_count),assis_num(rhs.assis_num),
+			assis_drawn_num(rhs.assis_drawn_num),defender_num(rhs.defender_num),attacker_num(rhs.attacker_num),
+			player_limit(rhs.player_limit),rand_award_itemid(rhs.rand_award_itemid),rand_award_count(rhs.rand_award_count),
+			rand_award_drawn(rhs.rand_award_drawn),challenged_by_selffaction(rhs.challenged_by_selffaction),battle_end_time(rhs.battle_end_time) { }
+
+		Rpc::Data *Clone() const { return new TerritoryBrief(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const TerritoryBrief *r = dynamic_cast<const TerritoryBrief *>(&rhs);
+			if (r && r != this)
+			{
+				territoryid = r->territoryid;
+				owner = r->owner;
+				defender = r->defender;
+				attacker = r->attacker;
+				flag = r->flag;
+				color = r->color;
+				battle_time = r->battle_time;
+				item_count = r->item_count;
+				assis_num = r->assis_num;
+				assis_drawn_num = r->assis_drawn_num;
+				defender_num = r->defender_num;
+				attacker_num = r->attacker_num;
+				player_limit = r->player_limit;
+				rand_award_itemid = r->rand_award_itemid;
+				rand_award_count = r->rand_award_count;
+				rand_award_drawn = r->rand_award_drawn;
+				challenged_by_selffaction = r->challenged_by_selffaction;
+				battle_end_time = r->battle_end_time;
+			}
+			return *this;
+		}
+
+		TerritoryBrief& operator = (const TerritoryBrief &rhs)
+		{
+			const TerritoryBrief *r = &rhs;
+			if (r && r != this)
+			{
+				territoryid = r->territoryid;
+				owner = r->owner;
+				defender = r->defender;
+				attacker = r->attacker;
+				flag = r->flag;
+				color = r->color;
+				battle_time = r->battle_time;
+				item_count = r->item_count;
+				assis_num = r->assis_num;
+				assis_drawn_num = r->assis_drawn_num;
+				defender_num = r->defender_num;
+				attacker_num = r->attacker_num;
+				player_limit = r->player_limit;
+				rand_award_itemid = r->rand_award_itemid;
+				rand_award_count = r->rand_award_count;
+				rand_award_drawn = r->rand_award_drawn;
+				challenged_by_selffaction = r->challenged_by_selffaction;
+				battle_end_time = r->battle_end_time;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << territoryid;
+			os << owner;
+			os << defender;
+			os << attacker;
+			os << flag;
+			os << color;
+			os << battle_time;
+			os << item_count;
+			os << assis_num;
+			os << assis_drawn_num;
+			os << defender_num;
+			os << attacker_num;
+			os << player_limit;
+			os << rand_award_itemid;
+			os << rand_award_count;
+			os << rand_award_drawn;
+			os << challenged_by_selffaction;
+			os << battle_end_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> territoryid;
+			os >> owner;
+			os >> defender;
+			os >> attacker;
+			os >> flag;
+			os >> color;
+			os >> battle_time;
+			os >> item_count;
+			os >> assis_num;
+			os >> assis_drawn_num;
+			os >> defender_num;
+			os >> attacker_num;
+			os >> player_limit;
+			os >> rand_award_itemid;
+			os >> rand_award_count;
+			os >> rand_award_drawn;
+			os >> challenged_by_selffaction;
+			os >> battle_end_time;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<TerritoryBrief>	TerritoryBriefVector;
+};
+#endif

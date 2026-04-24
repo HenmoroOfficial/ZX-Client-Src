@@ -1,0 +1,56 @@
+	public:
+		int mapid;
+		int attacker;
+		int defender;
+		int attacker_kills;
+		int defender_kills;
+		int remain_time;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_COMBATSTATUS };
+	public:
+		CombatStatus() { type = PROTOCOL_COMBATSTATUS; }
+		CombatStatus(void*) : Protocol(PROTOCOL_COMBATSTATUS) { }
+		CombatStatus (int l_mapid,int l_attacker,int l_defender = 0,
+			int l_attacker_kills = 0,int l_defender_kills = 0,int l_remain_time = 0,
+			unsigned int l_localsid = 0)
+			 : mapid(l_mapid),attacker(l_attacker),defender(l_defender)
+			,attacker_kills(l_attacker_kills),defender_kills(l_defender_kills),remain_time(l_remain_time)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_COMBATSTATUS;
+		}
+
+		CombatStatus(const CombatStatus &rhs)
+			: Protocol(rhs),mapid(rhs.mapid),attacker(rhs.attacker),defender(rhs.defender)
+			,attacker_kills(rhs.attacker_kills),defender_kills(rhs.defender_kills),remain_time(rhs.remain_time)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CombatStatus(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << mapid;
+			os << attacker;
+			os << defender;
+			os << attacker_kills;
+			os << defender_kills;
+			os << remain_time;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> mapid;
+			os >> attacker;
+			os >> defender;
+			os >> attacker_kills;
+			os >> defender_kills;
+			os >> remain_time;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

@@ -1,0 +1,38 @@
+DIALOG "Dlg_Road" 0 0 275 480 0 1 10 "Window\对话框_标准边框.dds" "" "" 0 0 250 27 "" 26 5 96 96 96 255 1
+STILLIMAGEBUTTON "Btn_RDlgMountain" "ChooseMountain" "" 0 59 58 60 0 0 0 0 2 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 3 1
+STILLIMAGEBUTTON "Btn_RDlgWater" "ChooseWater" "" 0 118 58 60 0 0 0 0 4 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 5 1
+STILLIMAGEBUTTON "Btn_RDlgRoad" "ChooseRoad" "" 1 178 58 60 0 0 0 0 6 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 7 1
+STILLIMAGEBUTTON "Btn_RDlgLocalTexture" "ChooseLocalTexture" "" 0 238 58 60 0 0 0 0 8 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 9 1
+STILLIMAGEBUTTON "Btn_RDlgPlant" "ChoosePlant" "" 0 298 58 60 0 0 0 0 10 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 11 1
+STILLIMAGEBUTTON "Btn_RDlgBuilding" "ChooseBuilding" "" 0 358 58 60 0 0 0 0 12 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 13 1
+STILLIMAGEBUTTON "Btn_RDlgLight" "ChooseLight" "" 1 418 58 60 0 0 0 0 14 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 15 1
+STILLIMAGEBUTTON "Btn_RDlgTerrain" "ChooseTerrain" "" 0 0 58 60 0 0 0 0 16 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 17 1
+IMAGEPICTURE "Control_118212343" "" "" 64 36 200 3 1 0 "Window\分隔线.tga"
+LABEL "Control_237543476" "" "" 139 7 25 19 18 16 19 255 203 74 255
+LABEL "Control_113787290" "" "" 60 60 63 16 20 15 21 255 255 255 255
+LABEL "Control_324443340" "" "" 60 89 69 15 22 15 23 255 255 255 255
+LABEL "Control_184714352" "" "" 60 120 69 18 24 15 25 255 255 255 255
+LABEL "Control_600077764" "" "" 60 152 61 16 26 15 27 255 255 255 255
+LABEL "Control_118472368" "" "" 61 182 62 19 28 15 29 255 255 255 255
+SLIDER "Slider_MaxRoadHeight" "moveSlider" "" 126 65 140 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_PartSmoothRoad" "moveSlider" "" 126 124 140 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_SeedRoad" "moveSlider" "" 125 187 140 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_MainSmoothRoad" "moveSlider" "" 126 93 140 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_RoadWidth" "moveSlider" "" 126 157 140 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+CHECK "Check_FlatRoad" "" "" 133 211 16 18 "Extra\复选框_标准.tga"
+STILLIMAGEBUTTON "Control_151420668" "OpenChooseTexture" "" 98 234 108 25 0 0 0 0 30 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 31 1
+STILLIMAGEBUTTON "Control_210068211" "ClearAllRoad" "" 98 293 108 25 0 0 0 0 32 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 33 1
+STILLIMAGEBUTTON "Control_180808272" "CreateRoad" "" 160 264 78 25 0 0 0 0 34 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 35 1
+LABEL "Control_450058599" "" "" 62 211 56 18 36 15 37 255 255 255 255
+LABEL "Label_MaxRoadHeight" "" "" 127 45 51 17 38 15 39 255 255 255 255
+LABEL "Label_MainSmoothRoad" "" "" 126 73 52 17 40 15 41 255 255 255 255
+LABEL "Label_PartSmoothRoad" "" "" 128 103 51 17 42 15 43 255 255 255 255
+LABEL "Label_RoadWidth" "" "" 127 136 57 17 44 15 45 255 255 255 255
+LABEL "Label_SeedRoad" "" "" 127 167 53 17 46 15 47 255 255 255 255
+STILLIMAGEBUTTON "Control_311557164" "EditRoad" "" 72 264 78 25 0 0 0 0 48 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 49 1
+IMAGEPICTURE "Control_4160240" "" "" 61 323 202 4 1 0 "Window\分隔线.tga"
+STILLIMAGEBUTTON "Control_644385" "EditFlat" "" 66 374 83 25 0 0 0 0 50 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 51 1
+STILLIMAGEBUTTON "Control_79943992" "CreateFlat" "" 166 374 83 25 0 0 0 0 52 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 53 1
+LABEL "Control_177344720" "" "" 63 329 62 18 54 15 55 255 255 255 255
+STILLIMAGEBUTTON "Control_551875620" "PerspectiveView" "" 110 446 83 25 0 0 0 0 56 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 57 1
+IMAGEPICTURE "Control_92483457" "" "" 64 419 200 3 1 0 "Window\分隔线.tga"

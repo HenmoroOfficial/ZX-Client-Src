@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int retcode;
+		GCrssvrTeamsData info;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSSEARCH_RE };
+	public:
+		CrssvrTeamsSearch_Re() { type = PROTOCOL_CRSSVRTEAMSSEARCH_RE; }
+		CrssvrTeamsSearch_Re(void*) : Protocol(PROTOCOL_CRSSVRTEAMSSEARCH_RE) { }
+		CrssvrTeamsSearch_Re (int l_roleid,int l_retcode,const GCrssvrTeamsData& l_info = GCrssvrTeamsData(),
+			unsigned int l_localsid = 0)
+			 : roleid(l_roleid),retcode(l_retcode),info(l_info)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSSEARCH_RE;
+		}
+
+		CrssvrTeamsSearch_Re(const CrssvrTeamsSearch_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),retcode(rhs.retcode),info(rhs.info)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsSearch_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << retcode;
+			os << info;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> retcode;
+			os >> info;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

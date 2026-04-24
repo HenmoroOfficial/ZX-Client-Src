@@ -1,0 +1,78 @@
+#ifndef __GNET_SIEGETOPRECORD_RPCDATA
+#define __GNET_SIEGETOPRECORD_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class SiegeTopRecord : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets role_name;
+		int kills;
+		int deaths;
+
+	public:
+		SiegeTopRecord (int l_roleid = 0,const Octets& l_role_name = Octets(),int l_kills = 0
+			,int l_deaths = 0)
+			: roleid(l_roleid),role_name(l_role_name),kills(l_kills)
+			,deaths(l_deaths)
+		{
+		}
+
+		SiegeTopRecord(const SiegeTopRecord &rhs)
+			: roleid(rhs.roleid),role_name(rhs.role_name),kills(rhs.kills),
+			deaths(rhs.deaths) { }
+
+		Rpc::Data *Clone() const { return new SiegeTopRecord(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SiegeTopRecord *r = dynamic_cast<const SiegeTopRecord *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				role_name = r->role_name;
+				kills = r->kills;
+				deaths = r->deaths;
+			}
+			return *this;
+		}
+
+		SiegeTopRecord& operator = (const SiegeTopRecord &rhs)
+		{
+			const SiegeTopRecord *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				role_name = r->role_name;
+				kills = r->kills;
+				deaths = r->deaths;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << role_name;
+			os << kills;
+			os << deaths;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> role_name;
+			os >> kills;
+			os >> deaths;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<SiegeTopRecord>	SiegeTopRecordVector;
+};
+#endif

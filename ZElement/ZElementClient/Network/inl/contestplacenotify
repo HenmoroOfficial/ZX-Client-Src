@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		ContestPlaceVector placelist;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTPLACENOTIFY };
+	public:
+		ContestPlaceNotify() { type = PROTOCOL_CONTESTPLACENOTIFY; }
+		ContestPlaceNotify(void*) : Protocol(PROTOCOL_CONTESTPLACENOTIFY) { }
+		ContestPlaceNotify (int l_roleid,unsigned int l_localsid,ContestPlaceVector l_placelist)
+			 : roleid(l_roleid),localsid(l_localsid),placelist(l_placelist)
+		{
+			type = PROTOCOL_CONTESTPLACENOTIFY;
+		}
+
+		ContestPlaceNotify(const ContestPlaceNotify &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),placelist(rhs.placelist) { }
+
+		GNET::Protocol *Clone() const { return new ContestPlaceNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << placelist;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> placelist;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

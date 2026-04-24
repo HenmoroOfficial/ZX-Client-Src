@@ -1,0 +1,38 @@
+	public:
+		MerchantDiscountVector discount;
+		int reserved1;
+		Octets reserved2;
+		enum { PROTOCOL_TYPE = PROTOCOL_DISCOUNTANNOUNCE };
+	public:
+		DiscountAnnounce() { type = PROTOCOL_DISCOUNTANNOUNCE; }
+		DiscountAnnounce(void*) : Protocol(PROTOCOL_DISCOUNTANNOUNCE) { }
+		DiscountAnnounce (MerchantDiscountVector l_discount,int l_reserved1 = 0,Octets l_reserved2 = Octets(0))
+			 : discount(l_discount),reserved1(l_reserved1),reserved2(l_reserved2)
+		{
+			type = PROTOCOL_DISCOUNTANNOUNCE;
+		}
+
+		DiscountAnnounce(const DiscountAnnounce &rhs)
+			: Protocol(rhs),discount(rhs.discount),reserved1(rhs.reserved1),reserved2(rhs.reserved2) { }
+
+		GNET::Protocol *Clone() const { return new DiscountAnnounce(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << discount;
+			os << reserved1;
+			os << reserved2;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> discount;
+			os >> reserved1;
+			os >> reserved2;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 512; }

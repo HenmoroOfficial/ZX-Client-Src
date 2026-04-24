@@ -1,0 +1,38 @@
+	public:
+		int master;
+		int disciple;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SECTEXPEL };
+	public:
+		SectExpel() { type = PROTOCOL_SECTEXPEL; }
+		SectExpel(void*) : Protocol(PROTOCOL_SECTEXPEL) { }
+		SectExpel (int l_master,int l_disciple = 0,unsigned int l_localsid = 0)
+			 : master(l_master),disciple(l_disciple),localsid(l_localsid)
+		{
+			type = PROTOCOL_SECTEXPEL;
+		}
+
+		SectExpel(const SectExpel &rhs)
+			: Protocol(rhs),master(rhs.master),disciple(rhs.disciple),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SectExpel(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << master;
+			os << disciple;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> master;
+			os >> disciple;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

@@ -1,0 +1,56 @@
+	public:
+		int start_result;
+		int roleid;
+		int gs_id;
+		int map_id;
+		int starttime;
+		unsigned int localsid;
+		char iscross;
+		enum { PROTOCOL_TYPE = PROTOCOL_BATTLESTARTNOTIFY };
+	public:
+		BattleStartNotify() { type = PROTOCOL_BATTLESTARTNOTIFY; }
+		BattleStartNotify(void*) : Protocol(PROTOCOL_BATTLESTARTNOTIFY) { }
+		BattleStartNotify (int l_start_result,int l_roleid,int l_gs_id,
+			int l_map_id = 0,int l_starttime = 0,unsigned int l_localsid = 0,
+			char l_iscross = 0)
+			 : start_result(l_start_result),roleid(l_roleid),gs_id(l_gs_id)
+			,map_id(l_map_id),starttime(l_starttime),localsid(l_localsid)
+			,iscross(l_iscross)
+		{
+			type = PROTOCOL_BATTLESTARTNOTIFY;
+		}
+
+		BattleStartNotify(const BattleStartNotify &rhs)
+			: Protocol(rhs),start_result(rhs.start_result),roleid(rhs.roleid),gs_id(rhs.gs_id)
+			,map_id(rhs.map_id),starttime(rhs.starttime),localsid(rhs.localsid)
+			,iscross(rhs.iscross) { }
+
+		GNET::Protocol *Clone() const { return new BattleStartNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << start_result;
+			os << roleid;
+			os << gs_id;
+			os << map_id;
+			os << starttime;
+			os << localsid;
+			os << iscross;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> start_result;
+			os >> roleid;
+			os >> gs_id;
+			os >> map_id;
+			os >> starttime;
+			os >> localsid;
+			os >> iscross;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

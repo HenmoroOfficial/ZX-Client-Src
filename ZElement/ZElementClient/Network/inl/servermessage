@@ -1,0 +1,35 @@
+	public:
+		int errcode;
+		Octets message;
+		enum { PROTOCOL_TYPE = PROTOCOL_SERVERMESSAGE };
+	public:
+		ServerMessage() { type = PROTOCOL_SERVERMESSAGE; }
+		ServerMessage(void*) : Protocol(PROTOCOL_SERVERMESSAGE) { }
+		ServerMessage (int l_errcode,const Octets& l_message)
+			 : errcode(l_errcode),message(l_message)
+		{
+			type = PROTOCOL_SERVERMESSAGE;
+		}
+
+		ServerMessage(const ServerMessage &rhs)
+			: Protocol(rhs),errcode(rhs.errcode),message(rhs.message) { }
+
+		GNET::Protocol *Clone() const { return new ServerMessage(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << errcode;
+			os << message;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> errcode;
+			os >> message;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

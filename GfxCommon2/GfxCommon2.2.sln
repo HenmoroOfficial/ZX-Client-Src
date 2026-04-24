@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GfxCommon", "GfxCommon2.2.vcproj", "{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DbgRelease|Win32 = DbgRelease|Win32
+		Debug|Win32 = Debug|Win32
+		EditorDebug|Win32 = EditorDebug|Win32
+		EditorRelease|Win32 = EditorRelease|Win32
+		PhyDebug|Win32 = PhyDebug|Win32
+		PhyDebugRelease|Win32 = PhyDebugRelease|Win32
+		PhyRelease|Win32 = PhyRelease|Win32
+		Release|Win32 = Release|Win32
+		UnicodeEditorDebug|Win32 = UnicodeEditorDebug|Win32
+		UnicodeEditorRelease|Win32 = UnicodeEditorRelease|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.DbgRelease|Win32.ActiveCfg = DbgRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.DbgRelease|Win32.Build.0 = DbgRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.Debug|Win32.Build.0 = Debug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.EditorDebug|Win32.ActiveCfg = EditorDebug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.EditorDebug|Win32.Build.0 = EditorDebug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.EditorRelease|Win32.ActiveCfg = EditorRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.EditorRelease|Win32.Build.0 = EditorRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.PhyDebug|Win32.ActiveCfg = PhyDebug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.PhyDebug|Win32.Build.0 = PhyDebug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.PhyDebugRelease|Win32.ActiveCfg = PhyDebugRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.PhyDebugRelease|Win32.Build.0 = PhyDebugRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.PhyRelease|Win32.ActiveCfg = PhyRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.PhyRelease|Win32.Build.0 = PhyRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.Release|Win32.ActiveCfg = Release|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.Release|Win32.Build.0 = Release|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.UnicodeEditorDebug|Win32.ActiveCfg = UnicodeEditorDebug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.UnicodeEditorDebug|Win32.Build.0 = UnicodeEditorDebug|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.UnicodeEditorRelease|Win32.ActiveCfg = UnicodeEditorRelease|Win32
+		{F269CB2A-43E8-4C03-A04C-EDC752E8B0B8}.UnicodeEditorRelease|Win32.Build.0 = UnicodeEditorRelease|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

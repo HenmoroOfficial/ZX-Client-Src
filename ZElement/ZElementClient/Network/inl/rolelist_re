@@ -1,0 +1,50 @@
+	public:
+		int result;
+		int handle;
+		int userid;
+		unsigned int localsid;
+		RoleInfoVector rolelist;
+		int referrer;
+		enum { PROTOCOL_TYPE = PROTOCOL_ROLELIST_RE };
+	public:
+		RoleList_Re() { type = PROTOCOL_ROLELIST_RE; }
+		RoleList_Re(void*) : Protocol(PROTOCOL_ROLELIST_RE) { }
+		RoleList_Re (int l_result,int l_handle,int l_userid,
+			unsigned int l_localsid,RoleInfoVector l_rolelist,int l_referrer = 0)
+			 : result(l_result),handle(l_handle),userid(l_userid)
+			,localsid(l_localsid),rolelist(l_rolelist),referrer(l_referrer)
+		{
+			type = PROTOCOL_ROLELIST_RE;
+		}
+
+		RoleList_Re(const RoleList_Re &rhs)
+			: Protocol(rhs),result(rhs.result),handle(rhs.handle),userid(rhs.userid)
+			,localsid(rhs.localsid),rolelist(rhs.rolelist),referrer(rhs.referrer) { }
+
+		GNET::Protocol *Clone() const { return new RoleList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << result;
+			os << handle;
+			os << userid;
+			os << localsid;
+			os << rolelist;
+			os << referrer;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> result;
+			os >> handle;
+			os >> userid;
+			os >> localsid;
+			os >> rolelist;
+			os >> referrer;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 101; }
+
+		bool SizePolicy(size_t size) const { return size <= 8192; }

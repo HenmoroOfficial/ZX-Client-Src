@@ -1,0 +1,44 @@
+	public:
+		int killer_id;
+		int deader_id;
+		Octets killer_name;
+		Octets deader_name;
+		enum { PROTOCOL_TYPE = PROTOCOL_PKMESSAGE };
+	public:
+		PKMessage() { type = PROTOCOL_PKMESSAGE; }
+		PKMessage(void*) : Protocol(PROTOCOL_PKMESSAGE) { }
+		PKMessage (int l_killer_id,int l_deader_id,const Octets& l_killer_name = Octets(),
+			const Octets& l_deader_name = Octets())
+			 : killer_id(l_killer_id),deader_id(l_deader_id),killer_name(l_killer_name)
+			,deader_name(l_deader_name)
+		{
+			type = PROTOCOL_PKMESSAGE;
+		}
+
+		PKMessage(const PKMessage &rhs)
+			: Protocol(rhs),killer_id(rhs.killer_id),deader_id(rhs.deader_id),killer_name(rhs.killer_name)
+			,deader_name(rhs.deader_name) { }
+
+		GNET::Protocol *Clone() const { return new PKMessage(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << killer_id;
+			os << deader_id;
+			os << killer_name;
+			os << deader_name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> killer_id;
+			os >> deader_id;
+			os >> killer_name;
+			os >> deader_name;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

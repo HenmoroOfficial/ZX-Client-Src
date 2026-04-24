@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		int invitee;
+		enum { PROTOCOL_TYPE = PROTOCOL_SECTRECRUIT };
+	public:
+		SectRecruit() { type = PROTOCOL_SECTRECRUIT; }
+		SectRecruit(void*) : Protocol(PROTOCOL_SECTRECRUIT) { }
+		SectRecruit (int l_roleid,int l_invitee)
+			 : roleid(l_roleid),invitee(l_invitee)
+		{
+			type = PROTOCOL_SECTRECRUIT;
+		}
+
+		SectRecruit(const SectRecruit &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),invitee(rhs.invitee) { }
+
+		GNET::Protocol *Clone() const { return new SectRecruit(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << invitee;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> invitee;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

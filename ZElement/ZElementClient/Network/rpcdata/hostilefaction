@@ -1,0 +1,70 @@
+#ifndef __GNET_HOSTILEFACTION_RPCDATA
+#define __GNET_HOSTILEFACTION_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class HostileFaction : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int fid;
+		Octets name;
+		int addtime;
+
+	public:
+		HostileFaction (unsigned int l_fid = 0,const Octets& l_name = Octets(0),int l_addtime = 0)
+			: fid(l_fid),name(l_name),addtime(l_addtime)
+		{
+		}
+
+		HostileFaction(const HostileFaction &rhs)
+			: fid(rhs.fid),name(rhs.name),addtime(rhs.addtime) { }
+
+		Rpc::Data *Clone() const { return new HostileFaction(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const HostileFaction *r = dynamic_cast<const HostileFaction *>(&rhs);
+			if (r && r != this)
+			{
+				fid = r->fid;
+				name = r->name;
+				addtime = r->addtime;
+			}
+			return *this;
+		}
+
+		HostileFaction& operator = (const HostileFaction &rhs)
+		{
+			const HostileFaction *r = &rhs;
+			if (r && r != this)
+			{
+				fid = r->fid;
+				name = r->name;
+				addtime = r->addtime;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << fid;
+			os << name;
+			os << addtime;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> fid;
+			os >> name;
+			os >> addtime;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<HostileFaction>	HostileFactionVector;
+};
+#endif

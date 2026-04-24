@@ -1,0 +1,77 @@
+#ifndef __GNET_FLOWERTOPRECORD_RPCDATA
+#define __GNET_FLOWERTOPRECORD_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class FlowerTopRecord : public GNET::Rpc::Data
+	{
+	public:
+		int userid;
+		Octets rolename;
+		int64_t timestamp;
+		int number;
+
+	public:
+		FlowerTopRecord (int l_userid = 0,Octets l_rolename = Octets(),int64_t l_timestamp = 0
+			,int l_number = 0)
+			: userid(l_userid),rolename(l_rolename),timestamp(l_timestamp)
+			,number(l_number)
+		{
+		}
+
+		FlowerTopRecord(const FlowerTopRecord &rhs)
+			: userid(rhs.userid),rolename(rhs.rolename),timestamp(rhs.timestamp),
+			number(rhs.number) { }
+
+		Rpc::Data *Clone() const { return new FlowerTopRecord(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const FlowerTopRecord *r = dynamic_cast<const FlowerTopRecord *>(&rhs);
+			if (r && r != this)
+			{
+				userid = r->userid;
+				rolename = r->rolename;
+				timestamp = r->timestamp;
+				number = r->number;
+			}
+			return *this;
+		}
+
+		FlowerTopRecord& operator = (const FlowerTopRecord &rhs)
+		{
+			const FlowerTopRecord *r = &rhs;
+			if (r && r != this)
+			{
+				userid = r->userid;
+				rolename = r->rolename;
+				timestamp = r->timestamp;
+				number = r->number;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << userid;
+			os << rolename;
+			os << timestamp;
+			os << number;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> userid;
+			os >> rolename;
+			os >> timestamp;
+			os >> number;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,44 @@
+	public:
+		int teamid;
+		int roleid;
+		int kick_roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSKICK };
+	public:
+		CrssvrTeamsKick() { type = PROTOCOL_CRSSVRTEAMSKICK; }
+		CrssvrTeamsKick(void*) : Protocol(PROTOCOL_CRSSVRTEAMSKICK) { }
+		CrssvrTeamsKick (int l_teamid,int l_roleid,int l_kick_roleid,
+			unsigned int l_localsid = 0)
+			 : teamid(l_teamid),roleid(l_roleid),kick_roleid(l_kick_roleid)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSKICK;
+		}
+
+		CrssvrTeamsKick(const CrssvrTeamsKick &rhs)
+			: Protocol(rhs),teamid(rhs.teamid),roleid(rhs.roleid),kick_roleid(rhs.kick_roleid)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsKick(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << teamid;
+			os << roleid;
+			os << kick_roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> teamid;
+			os >> roleid;
+			os >> kick_roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

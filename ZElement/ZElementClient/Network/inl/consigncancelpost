@@ -1,0 +1,38 @@
+	public:
+		int64_t sn;
+		int roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNCANCELPOST };
+	public:
+		ConsignCancelPost() { type = PROTOCOL_CONSIGNCANCELPOST; }
+		ConsignCancelPost(void*) : Protocol(PROTOCOL_CONSIGNCANCELPOST) { }
+		ConsignCancelPost (int64_t l_sn,int l_roleid,unsigned int l_localsid)
+			 : sn(l_sn),roleid(l_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_CONSIGNCANCELPOST;
+		}
+
+		ConsignCancelPost(const ConsignCancelPost &rhs)
+			: Protocol(rhs),sn(rhs.sn),roleid(rhs.roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ConsignCancelPost(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << sn;
+			os << roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> sn;
+			os >> roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

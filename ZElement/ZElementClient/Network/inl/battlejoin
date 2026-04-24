@@ -1,0 +1,56 @@
+	public:
+		int roleid;
+		int gs_id;
+		int map_id;
+		char iscross;
+		unsigned char team;
+		unsigned int localsid;
+		char isreenter;
+		enum { PROTOCOL_TYPE = PROTOCOL_BATTLEJOIN };
+	public:
+		BattleJoin() { type = PROTOCOL_BATTLEJOIN; }
+		BattleJoin(void*) : Protocol(PROTOCOL_BATTLEJOIN) { }
+		BattleJoin (int l_roleid,int l_gs_id = 0,int l_map_id = 0,
+			char l_iscross = 0,unsigned char l_team = 0,unsigned int l_localsid = 0,
+			char l_isreenter = 0)
+			 : roleid(l_roleid),gs_id(l_gs_id),map_id(l_map_id)
+			,iscross(l_iscross),team(l_team),localsid(l_localsid)
+			,isreenter(l_isreenter)
+		{
+			type = PROTOCOL_BATTLEJOIN;
+		}
+
+		BattleJoin(const BattleJoin &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),gs_id(rhs.gs_id),map_id(rhs.map_id)
+			,iscross(rhs.iscross),team(rhs.team),localsid(rhs.localsid)
+			,isreenter(rhs.isreenter) { }
+
+		GNET::Protocol *Clone() const { return new BattleJoin(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << gs_id;
+			os << map_id;
+			os << iscross;
+			os << team;
+			os << localsid;
+			os << isreenter;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> gs_id;
+			os >> map_id;
+			os >> iscross;
+			os >> team;
+			os >> localsid;
+			os >> isreenter;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

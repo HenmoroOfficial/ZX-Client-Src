@@ -1,0 +1,64 @@
+#ifndef __GNET_RAIDGROUPLIMIT_RPCDATA
+#define __GNET_RAIDGROUPLIMIT_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class RaidGroupLimit : public GNET::Rpc::Data
+	{
+	public:
+		int max_player_limit;
+		int min_start_player_num;
+
+	public:
+		RaidGroupLimit (int l_max_player_limit = 0,int l_min_start_player_num = 0)
+			: max_player_limit(l_max_player_limit),min_start_player_num(l_min_start_player_num)
+		{
+		}
+
+		RaidGroupLimit(const RaidGroupLimit &rhs)
+			: max_player_limit(rhs.max_player_limit),min_start_player_num(rhs.min_start_player_num) { }
+
+		Rpc::Data *Clone() const { return new RaidGroupLimit(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const RaidGroupLimit *r = dynamic_cast<const RaidGroupLimit *>(&rhs);
+			if (r && r != this)
+			{
+				max_player_limit = r->max_player_limit;
+				min_start_player_num = r->min_start_player_num;
+			}
+			return *this;
+		}
+
+		RaidGroupLimit& operator = (const RaidGroupLimit &rhs)
+		{
+			const RaidGroupLimit *r = &rhs;
+			if (r && r != this)
+			{
+				max_player_limit = r->max_player_limit;
+				min_start_player_num = r->min_start_player_num;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << max_player_limit;
+			os << min_start_player_num;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> max_player_limit;
+			os >> min_start_player_num;
+			return os;
+		}
+
+	};
+};
+#endif

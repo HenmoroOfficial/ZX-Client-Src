@@ -1,0 +1,100 @@
+#ifndef __GNET_GBATTLEROLE_RPCDATA
+#define __GNET_GBATTLEROLE_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GBattleRole : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets name;
+		unsigned char level;
+		int reborn_cnt;
+		unsigned char occupation;
+		int score;
+		char cultivation;
+		int src_zoneid;
+
+	public:
+		GBattleRole (int l_roleid = 0,const Octets& l_name = Octets(0),unsigned char l_level = 0
+			,int l_reborn_cnt = 0,unsigned char l_occupation = 0,int l_score = 0
+			,char l_cultivation = 0,int l_src_zoneid = 0)
+			: roleid(l_roleid),name(l_name),level(l_level)
+			,reborn_cnt(l_reborn_cnt),occupation(l_occupation),score(l_score)
+			,cultivation(l_cultivation),src_zoneid(l_src_zoneid)
+		{
+		}
+
+		GBattleRole(const GBattleRole &rhs)
+			: roleid(rhs.roleid),name(rhs.name),level(rhs.level),
+			reborn_cnt(rhs.reborn_cnt),occupation(rhs.occupation),score(rhs.score),
+			cultivation(rhs.cultivation),src_zoneid(rhs.src_zoneid) { }
+
+		Rpc::Data *Clone() const { return new GBattleRole(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GBattleRole *r = dynamic_cast<const GBattleRole *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				reborn_cnt = r->reborn_cnt;
+				occupation = r->occupation;
+				score = r->score;
+				cultivation = r->cultivation;
+				src_zoneid = r->src_zoneid;
+			}
+			return *this;
+		}
+
+		GBattleRole& operator = (const GBattleRole &rhs)
+		{
+			const GBattleRole *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				reborn_cnt = r->reborn_cnt;
+				occupation = r->occupation;
+				score = r->score;
+				cultivation = r->cultivation;
+				src_zoneid = r->src_zoneid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << name;
+			os << level;
+			os << reborn_cnt;
+			os << occupation;
+			os << score;
+			os << cultivation;
+			os << src_zoneid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> name;
+			os >> level;
+			os >> reborn_cnt;
+			os >> occupation;
+			os >> score;
+			os >> cultivation;
+			os >> src_zoneid;
+			return os;
+		}
+
+	};
+};
+#endif

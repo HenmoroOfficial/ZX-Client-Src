@@ -1,0 +1,50 @@
+	public:
+		int retcode;
+		int battle_id;
+		std::vector<SiegeTopRecord> owner_top;
+		std::vector<SiegeTopRecord> attacker_top;
+		std::vector<SiegeTopRecord> assistant_top;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SIEGETOP_RE };
+	public:
+		SiegeTop_Re() { type = PROTOCOL_SIEGETOP_RE; }
+		SiegeTop_Re(void*) : Protocol(PROTOCOL_SIEGETOP_RE) { }
+		SiegeTop_Re (int l_retcode,int l_battle_id = 0,const std::vector<SiegeTopRecord>& l_owner_top = std::vector<SiegeTopRecord>(),
+			const std::vector<SiegeTopRecord>& l_attacker_top = std::vector<SiegeTopRecord>(),const std::vector<SiegeTopRecord>& l_assistant_top = std::vector<SiegeTopRecord>(),unsigned int l_localsid = 0)
+			 : retcode(l_retcode),battle_id(l_battle_id),owner_top(l_owner_top)
+			,attacker_top(l_attacker_top),assistant_top(l_assistant_top),localsid(l_localsid)
+		{
+			type = PROTOCOL_SIEGETOP_RE;
+		}
+
+		SiegeTop_Re(const SiegeTop_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),battle_id(rhs.battle_id),owner_top(rhs.owner_top)
+			,attacker_top(rhs.attacker_top),assistant_top(rhs.assistant_top),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SiegeTop_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << battle_id;
+			os << owner_top;
+			os << attacker_top;
+			os << assistant_top;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> battle_id;
+			os >> owner_top;
+			os >> attacker_top;
+			os >> assistant_top;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

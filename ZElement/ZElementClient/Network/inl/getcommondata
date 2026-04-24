@@ -1,0 +1,32 @@
+	public:
+		int key;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETCOMMONDATA };
+	public:
+		GetCommonData() { type = PROTOCOL_GETCOMMONDATA; }
+		GetCommonData(void*) : Protocol(PROTOCOL_GETCOMMONDATA) { }
+		GetCommonData (int l_key)
+			 : key(l_key)
+		{
+			type = PROTOCOL_GETCOMMONDATA;
+		}
+
+		GetCommonData(const GetCommonData &rhs)
+			: Protocol(rhs),key(rhs.key) { }
+
+		GNET::Protocol *Clone() const { return new GetCommonData(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << key;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> key;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

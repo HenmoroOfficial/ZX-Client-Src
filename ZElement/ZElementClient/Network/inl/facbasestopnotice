@@ -1,0 +1,32 @@
+	public:
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACBASESTOPNOTICE };
+	public:
+		FacBaseStopNotice() { type = PROTOCOL_FACBASESTOPNOTICE; }
+		FacBaseStopNotice(void*) : Protocol(PROTOCOL_FACBASESTOPNOTICE) { }
+		FacBaseStopNotice (unsigned int l_localsid)
+			 : localsid(l_localsid)
+		{
+			type = PROTOCOL_FACBASESTOPNOTICE;
+		}
+
+		FacBaseStopNotice(const FacBaseStopNotice &rhs)
+			: Protocol(rhs),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FacBaseStopNotice(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

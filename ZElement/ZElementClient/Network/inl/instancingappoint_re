@@ -1,0 +1,47 @@
+	public:
+		int retcode;
+		int roleid;
+		int map_id;
+		int target;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGAPPOINT_RE };
+	public:
+		InstancingAppoint_Re() { type = PROTOCOL_INSTANCINGAPPOINT_RE; }
+		InstancingAppoint_Re(void*) : Protocol(PROTOCOL_INSTANCINGAPPOINT_RE) { }
+		InstancingAppoint_Re (int l_retcode,int l_roleid,int l_map_id,
+			int l_target,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),map_id(l_map_id)
+			,target(l_target),localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGAPPOINT_RE;
+		}
+
+		InstancingAppoint_Re(const InstancingAppoint_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),map_id(rhs.map_id)
+			,target(rhs.target),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingAppoint_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << map_id;
+			os << target;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> map_id;
+			os >> target;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

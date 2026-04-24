@@ -1,0 +1,82 @@
+#ifndef __GNET_KINGDOMFUNCTIONARY_RPCDATA
+#define __GNET_KINGDOMFUNCTIONARY_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class KingdomFunctionary : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		char title;
+		Octets rolename;
+		unsigned int privileges_mask;
+		unsigned char online;
+
+	public:
+		KingdomFunctionary (int l_roleid = 0,char l_title = 0,Octets l_rolename = Octets()
+			,unsigned int l_privileges_mask = 0,unsigned char l_online = 0)
+			: roleid(l_roleid),title(l_title),rolename(l_rolename)
+			,privileges_mask(l_privileges_mask),online(l_online)
+		{
+		}
+
+		KingdomFunctionary(const KingdomFunctionary &rhs)
+			: roleid(rhs.roleid),title(rhs.title),rolename(rhs.rolename),
+			privileges_mask(rhs.privileges_mask),online(rhs.online) { }
+
+		Rpc::Data *Clone() const { return new KingdomFunctionary(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const KingdomFunctionary *r = dynamic_cast<const KingdomFunctionary *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				title = r->title;
+				rolename = r->rolename;
+				privileges_mask = r->privileges_mask;
+				online = r->online;
+			}
+			return *this;
+		}
+
+		KingdomFunctionary& operator = (const KingdomFunctionary &rhs)
+		{
+			const KingdomFunctionary *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				title = r->title;
+				rolename = r->rolename;
+				privileges_mask = r->privileges_mask;
+				online = r->online;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << title;
+			os << rolename;
+			os << privileges_mask;
+			os << online;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> title;
+			os >> rolename;
+			os >> privileges_mask;
+			os >> online;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,65 @@
+#ifndef __GNET_FAMILYSKILL_RPCDATA
+#define __GNET_FAMILYSKILL_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class FamilySkill : public GNET::Rpc::Data
+	{
+	public:
+		short id;
+		int ability;
+
+	public:
+		FamilySkill (short l_id = 0,int l_ability = 0)
+			: id(l_id),ability(l_ability)
+		{
+		}
+
+		FamilySkill(const FamilySkill &rhs)
+			: id(rhs.id),ability(rhs.ability) { }
+
+		Rpc::Data *Clone() const { return new FamilySkill(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const FamilySkill *r = dynamic_cast<const FamilySkill *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				ability = r->ability;
+			}
+			return *this;
+		}
+
+		FamilySkill& operator = (const FamilySkill &rhs)
+		{
+			const FamilySkill *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				ability = r->ability;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << ability;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> ability;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<FamilySkill>	FamilySkillVector;
+};
+#endif

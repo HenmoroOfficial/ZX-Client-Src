@@ -1,0 +1,35 @@
+	public:
+		unsigned int discount;
+		unsigned int sale;
+		enum { PROTOCOL_TYPE = PROTOCOL_GSHOPNOTIFYSCHEME };
+	public:
+		GShopNotifyScheme() { type = PROTOCOL_GSHOPNOTIFYSCHEME; }
+		GShopNotifyScheme(void*) : Protocol(PROTOCOL_GSHOPNOTIFYSCHEME) { }
+		GShopNotifyScheme (unsigned int l_discount = 0,unsigned int l_sale = 0)
+			 : discount(l_discount),sale(l_sale)
+		{
+			type = PROTOCOL_GSHOPNOTIFYSCHEME;
+		}
+
+		GShopNotifyScheme(const GShopNotifyScheme &rhs)
+			: Protocol(rhs),discount(rhs.discount),sale(rhs.sale) { }
+
+		GNET::Protocol *Clone() const { return new GShopNotifyScheme(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << discount;
+			os << sale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> discount;
+			os >> sale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

@@ -1,0 +1,47 @@
+	public:
+		int gs_id;
+		int map_id;
+		int roleid;
+		char isqueue;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_OPENBANQUETCANCEL };
+	public:
+		OpenBanquetCancel() { type = PROTOCOL_OPENBANQUETCANCEL; }
+		OpenBanquetCancel(void*) : Protocol(PROTOCOL_OPENBANQUETCANCEL) { }
+		OpenBanquetCancel (int l_gs_id,int l_map_id = 0,int l_roleid = 0,
+			char l_isqueue = 0,unsigned int l_localsid = 0)
+			 : gs_id(l_gs_id),map_id(l_map_id),roleid(l_roleid)
+			,isqueue(l_isqueue),localsid(l_localsid)
+		{
+			type = PROTOCOL_OPENBANQUETCANCEL;
+		}
+
+		OpenBanquetCancel(const OpenBanquetCancel &rhs)
+			: Protocol(rhs),gs_id(rhs.gs_id),map_id(rhs.map_id),roleid(rhs.roleid)
+			,isqueue(rhs.isqueue),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new OpenBanquetCancel(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << gs_id;
+			os << map_id;
+			os << roleid;
+			os << isqueue;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> gs_id;
+			os >> map_id;
+			os >> roleid;
+			os >> isqueue;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 20; }

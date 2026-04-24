@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int map_id;
+		Octets dst_rolename;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPKRAIDCHALLENGE };
+	public:
+		FactionPkRaidChallenge() { type = PROTOCOL_FACTIONPKRAIDCHALLENGE; }
+		FactionPkRaidChallenge(void*) : Protocol(PROTOCOL_FACTIONPKRAIDCHALLENGE) { }
+		FactionPkRaidChallenge (int l_roleid,int l_map_id,const Octets& l_dst_rolename = Octets(),
+			unsigned int l_localsid = 0)
+			 : roleid(l_roleid),map_id(l_map_id),dst_rolename(l_dst_rolename)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONPKRAIDCHALLENGE;
+		}
+
+		FactionPkRaidChallenge(const FactionPkRaidChallenge &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),map_id(rhs.map_id),dst_rolename(rhs.dst_rolename)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionPkRaidChallenge(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << map_id;
+			os << dst_rolename;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> map_id;
+			os >> dst_rolename;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

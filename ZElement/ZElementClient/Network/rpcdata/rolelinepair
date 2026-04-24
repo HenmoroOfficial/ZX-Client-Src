@@ -1,0 +1,65 @@
+#ifndef __GNET_ROLELINEPAIR_RPCDATA
+#define __GNET_ROLELINEPAIR_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class RoleLinePair : public GNET::Rpc::Data
+	{
+	public:
+		int rid;
+		char lineid;
+
+	public:
+		RoleLinePair (int l_rid = 0,char l_lineid = 0)
+			: rid(l_rid),lineid(l_lineid)
+		{
+		}
+
+		RoleLinePair(const RoleLinePair &rhs)
+			: rid(rhs.rid),lineid(rhs.lineid) { }
+
+		Rpc::Data *Clone() const { return new RoleLinePair(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const RoleLinePair *r = dynamic_cast<const RoleLinePair *>(&rhs);
+			if (r && r != this)
+			{
+				rid = r->rid;
+				lineid = r->lineid;
+			}
+			return *this;
+		}
+
+		RoleLinePair& operator = (const RoleLinePair &rhs)
+		{
+			const RoleLinePair *r = &rhs;
+			if (r && r != this)
+			{
+				rid = r->rid;
+				lineid = r->lineid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << rid;
+			os << lineid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> rid;
+			os >> lineid;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<RoleLinePair>	RoleLinePairVector;
+};
+#endif

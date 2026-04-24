@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		char fulllist;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETENEMIES };
+	public:
+		GetEnemies() { type = PROTOCOL_GETENEMIES; }
+		GetEnemies(void*) : Protocol(PROTOCOL_GETENEMIES) { }
+		GetEnemies (int l_roleid,char l_fulllist,unsigned int l_localsid)
+			 : roleid(l_roleid),fulllist(l_fulllist),localsid(l_localsid)
+		{
+			type = PROTOCOL_GETENEMIES;
+		}
+
+		GetEnemies(const GetEnemies &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),fulllist(rhs.fulllist),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GetEnemies(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << fulllist;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> fulllist;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

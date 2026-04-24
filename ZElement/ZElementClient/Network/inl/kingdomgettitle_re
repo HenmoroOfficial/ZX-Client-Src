@@ -1,0 +1,50 @@
+	public:
+		int retcode;
+		int roleid;
+		char self_title;
+		unsigned int localsid;
+		int king;
+		int points;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMGETTITLE_RE };
+	public:
+		KingdomGetTitle_Re() { type = PROTOCOL_KINGDOMGETTITLE_RE; }
+		KingdomGetTitle_Re(void*) : Protocol(PROTOCOL_KINGDOMGETTITLE_RE) { }
+		KingdomGetTitle_Re (int l_retcode,int l_roleid,char l_self_title,
+			unsigned int l_localsid,int l_king,int l_points)
+			 : retcode(l_retcode),roleid(l_roleid),self_title(l_self_title)
+			,localsid(l_localsid),king(l_king),points(l_points)
+		{
+			type = PROTOCOL_KINGDOMGETTITLE_RE;
+		}
+
+		KingdomGetTitle_Re(const KingdomGetTitle_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),self_title(rhs.self_title)
+			,localsid(rhs.localsid),king(rhs.king),points(rhs.points) { }
+
+		GNET::Protocol *Clone() const { return new KingdomGetTitle_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << self_title;
+			os << localsid;
+			os << king;
+			os << points;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> self_title;
+			os >> localsid;
+			os >> king;
+			os >> points;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

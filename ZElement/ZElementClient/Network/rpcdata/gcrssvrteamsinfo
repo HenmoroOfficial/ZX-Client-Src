@@ -1,0 +1,141 @@
+#ifndef __GNET_GCRSSVRTEAMSINFO_RPCDATA
+#define __GNET_GCRSSVRTEAMSINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCrssvrTeamsInfo : public GNET::Rpc::Data
+	{
+	public:
+		int createtime;
+		int zoneid;
+		int teamid;
+		int master;
+		Octets name;
+		int score;
+		int battle_losses ;
+		int battle_draws ;
+		int battle_wins ;
+		int changenametime;
+		int weekbattletimes;
+		int lastbattletime;
+		int seasonlastbattletime;
+		int reserved4;
+		int reserved5;
+
+	public:
+		GCrssvrTeamsInfo (int l_zoneid = -1,int l_teamid = -1,int l_master = -1
+			,const Octets& l_name = Octets(),int l_score = 0,int l_battle_losses  = 0
+			,int l_battle_draws  = 0,int l_battle_wins  = 0,int l_changenametime = 0
+			,int l_weekbattletimes = 0,int l_lastbattletime = 0,int l_seasonlastbattletime = 0
+			,int l_reserved4 = 0,int l_reserved5 = 0)
+			: zoneid(l_zoneid),teamid(l_teamid),master(l_master)
+			,name(l_name),score(l_score),battle_losses (l_battle_losses )
+			,battle_draws (l_battle_draws ),battle_wins (l_battle_wins ),changenametime(l_changenametime)
+			,weekbattletimes(l_weekbattletimes),lastbattletime(l_lastbattletime),seasonlastbattletime(l_seasonlastbattletime)
+			,reserved4(l_reserved4),reserved5(l_reserved5)
+		{
+		}
+
+		GCrssvrTeamsInfo(const GCrssvrTeamsInfo &rhs)
+			: createtime(rhs.createtime),zoneid(rhs.zoneid),teamid(rhs.teamid),
+			master(rhs.master),name(rhs.name),score(rhs.score),
+			battle_losses (rhs.battle_losses ),battle_draws (rhs.battle_draws ),battle_wins (rhs.battle_wins ),
+			changenametime(rhs.changenametime),weekbattletimes(rhs.weekbattletimes),lastbattletime(rhs.lastbattletime),
+			seasonlastbattletime(rhs.seasonlastbattletime),reserved4(rhs.reserved4),reserved5(rhs.reserved5) { }
+
+		Rpc::Data *Clone() const { return new GCrssvrTeamsInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCrssvrTeamsInfo *r = dynamic_cast<const GCrssvrTeamsInfo *>(&rhs);
+			if (r && r != this)
+			{
+				createtime = r->createtime;
+				zoneid = r->zoneid;
+				teamid = r->teamid;
+				master = r->master;
+				name = r->name;
+				score = r->score;
+				battle_losses  = r->battle_losses ;
+				battle_draws  = r->battle_draws ;
+				battle_wins  = r->battle_wins ;
+				changenametime = r->changenametime;
+				weekbattletimes = r->weekbattletimes;
+				lastbattletime = r->lastbattletime;
+				seasonlastbattletime = r->seasonlastbattletime;
+				reserved4 = r->reserved4;
+				reserved5 = r->reserved5;
+			}
+			return *this;
+		}
+
+		GCrssvrTeamsInfo& operator = (const GCrssvrTeamsInfo &rhs)
+		{
+			const GCrssvrTeamsInfo *r = &rhs;
+			if (r && r != this)
+			{
+				createtime = r->createtime;
+				zoneid = r->zoneid;
+				teamid = r->teamid;
+				master = r->master;
+				name = r->name;
+				score = r->score;
+				battle_losses  = r->battle_losses ;
+				battle_draws  = r->battle_draws ;
+				battle_wins  = r->battle_wins ;
+				changenametime = r->changenametime;
+				weekbattletimes = r->weekbattletimes;
+				lastbattletime = r->lastbattletime;
+				seasonlastbattletime = r->seasonlastbattletime;
+				reserved4 = r->reserved4;
+				reserved5 = r->reserved5;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << createtime;
+			os << zoneid;
+			os << teamid;
+			os << master;
+			os << name;
+			os << score;
+			os << battle_losses ;
+			os << battle_draws ;
+			os << battle_wins ;
+			os << changenametime;
+			os << weekbattletimes;
+			os << lastbattletime;
+			os << seasonlastbattletime;
+			os << reserved4;
+			os << reserved5;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> createtime;
+			os >> zoneid;
+			os >> teamid;
+			os >> master;
+			os >> name;
+			os >> score;
+			os >> battle_losses ;
+			os >> battle_draws ;
+			os >> battle_wins ;
+			os >> changenametime;
+			os >> weekbattletimes;
+			os >> lastbattletime;
+			os >> seasonlastbattletime;
+			os >> reserved4;
+			os >> reserved5;
+			return os;
+		}
+
+	};
+};
+#endif

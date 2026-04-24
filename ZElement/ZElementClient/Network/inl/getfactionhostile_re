@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		HostileInfo hostiles;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFACTIONHOSTILE_RE };
+	public:
+		GetFactionHostile_Re() { type = PROTOCOL_GETFACTIONHOSTILE_RE; }
+		GetFactionHostile_Re(void*) : Protocol(PROTOCOL_GETFACTIONHOSTILE_RE) { }
+		GetFactionHostile_Re (int l_roleid,const HostileInfo& l_hostiles,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),hostiles(l_hostiles),localsid(l_localsid)
+		{
+			type = PROTOCOL_GETFACTIONHOSTILE_RE;
+		}
+
+		GetFactionHostile_Re(const GetFactionHostile_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),hostiles(rhs.hostiles),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GetFactionHostile_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << hostiles;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> hostiles;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 10240; }

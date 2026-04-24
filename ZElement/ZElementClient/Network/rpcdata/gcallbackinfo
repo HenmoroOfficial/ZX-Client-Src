@@ -1,0 +1,88 @@
+#ifndef __GNET_GCALLBACKINFO_RPCDATA
+#define __GNET_GCALLBACKINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gcooldown"
+
+namespace GNET
+{
+	class GCallbackInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned short mailnum;
+		int timestamp;
+		char is_subscribe;
+		int reserved1;
+		int reserved2;
+		GCooldownVector cooldown_list;
+
+	public:
+		GCallbackInfo (unsigned short l_mailnum = 0,int l_timestamp = 0,char l_is_subscribe = 1
+			,int l_reserved1 = 0,int l_reserved2 = 0)
+			: mailnum(l_mailnum),timestamp(l_timestamp),is_subscribe(l_is_subscribe)
+			,reserved1(l_reserved1),reserved2(l_reserved2)
+		{
+		}
+
+		GCallbackInfo(const GCallbackInfo &rhs)
+			: mailnum(rhs.mailnum),timestamp(rhs.timestamp),is_subscribe(rhs.is_subscribe),
+			reserved1(rhs.reserved1),reserved2(rhs.reserved2),cooldown_list(rhs.cooldown_list) { }
+
+		Rpc::Data *Clone() const { return new GCallbackInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCallbackInfo *r = dynamic_cast<const GCallbackInfo *>(&rhs);
+			if (r && r != this)
+			{
+				mailnum = r->mailnum;
+				timestamp = r->timestamp;
+				is_subscribe = r->is_subscribe;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+				cooldown_list = r->cooldown_list;
+			}
+			return *this;
+		}
+
+		GCallbackInfo& operator = (const GCallbackInfo &rhs)
+		{
+			const GCallbackInfo *r = &rhs;
+			if (r && r != this)
+			{
+				mailnum = r->mailnum;
+				timestamp = r->timestamp;
+				is_subscribe = r->is_subscribe;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+				cooldown_list = r->cooldown_list;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << mailnum;
+			os << timestamp;
+			os << is_subscribe;
+			os << reserved1;
+			os << reserved2;
+			os << cooldown_list;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> mailnum;
+			os >> timestamp;
+			os >> is_subscribe;
+			os >> reserved1;
+			os >> reserved2;
+			os >> cooldown_list;
+			return os;
+		}
+
+	};
+};
+#endif

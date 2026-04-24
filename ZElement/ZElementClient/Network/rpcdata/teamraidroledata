@@ -1,0 +1,69 @@
+#ifndef __GNET_TEAMRAIDROLEDATA_RPCDATA
+#define __GNET_TEAMRAIDROLEDATA_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class TeamRaidRoleData : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int team;
+		int score;
+
+	public:
+		TeamRaidRoleData (int l_roleid = 0,int l_team = 0,int l_score = 0)
+			: roleid(l_roleid),team(l_team),score(l_score)
+		{
+		}
+
+		TeamRaidRoleData(const TeamRaidRoleData &rhs)
+			: roleid(rhs.roleid),team(rhs.team),score(rhs.score) { }
+
+		Rpc::Data *Clone() const { return new TeamRaidRoleData(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const TeamRaidRoleData *r = dynamic_cast<const TeamRaidRoleData *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				team = r->team;
+				score = r->score;
+			}
+			return *this;
+		}
+
+		TeamRaidRoleData& operator = (const TeamRaidRoleData &rhs)
+		{
+			const TeamRaidRoleData *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				team = r->team;
+				score = r->score;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << team;
+			os << score;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> team;
+			os >> score;
+			return os;
+		}
+
+	};
+};
+#endif

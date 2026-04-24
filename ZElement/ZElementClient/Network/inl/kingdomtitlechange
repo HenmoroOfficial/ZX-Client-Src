@@ -1,0 +1,35 @@
+	public:
+		char self_title;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMTITLECHANGE };
+	public:
+		KingdomTitleChange() { type = PROTOCOL_KINGDOMTITLECHANGE; }
+		KingdomTitleChange(void*) : Protocol(PROTOCOL_KINGDOMTITLECHANGE) { }
+		KingdomTitleChange (char l_self_title,unsigned int l_localsid)
+			 : self_title(l_self_title),localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGDOMTITLECHANGE;
+		}
+
+		KingdomTitleChange(const KingdomTitleChange &rhs)
+			: Protocol(rhs),self_title(rhs.self_title),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingdomTitleChange(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << self_title;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> self_title;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

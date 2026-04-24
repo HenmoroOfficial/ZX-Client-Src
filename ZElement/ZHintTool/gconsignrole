@@ -1,0 +1,81 @@
+#ifndef __GNET_GCONSIGNROLE_RPCDATA
+#define __GNET_GCONSIGNROLE_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gconsigngsroleinfo"
+#include "gcreditinfo"
+#include "gpetsinfo"
+#include "gpocketinfo"
+
+namespace GNET
+{
+	class GConsignRole : public GNET::Rpc::Data
+	{
+	public:
+		GConsignGsRoleInfo gsroleinfo;
+		GCreditInfo creditinfo;
+		GPetsInfo petinfo;
+		GPocketInfo pocketinfo;
+
+	public:
+		GConsignRole (const GConsignGsRoleInfo& l_gsroleinfo = GConsignGsRoleInfo(),const GCreditInfo& l_creditinfo = GCreditInfo(),const GPetsInfo& l_petinfo = GPetsInfo()
+			,const GPocketInfo& l_pocketinfo = GPocketInfo())
+			: gsroleinfo(l_gsroleinfo),creditinfo(l_creditinfo),petinfo(l_petinfo)
+			,pocketinfo(l_pocketinfo)
+		{
+		}
+
+		GConsignRole(const GConsignRole &rhs)
+			: gsroleinfo(rhs.gsroleinfo),creditinfo(rhs.creditinfo),petinfo(rhs.petinfo),
+			pocketinfo(rhs.pocketinfo) { }
+
+		Rpc::Data *Clone() const { return new GConsignRole(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GConsignRole *r = dynamic_cast<const GConsignRole *>(&rhs);
+			if (r && r != this)
+			{
+				gsroleinfo = r->gsroleinfo;
+				creditinfo = r->creditinfo;
+				petinfo = r->petinfo;
+				pocketinfo = r->pocketinfo;
+			}
+			return *this;
+		}
+
+		GConsignRole& operator = (const GConsignRole &rhs)
+		{
+			const GConsignRole *r = &rhs;
+			if (r && r != this)
+			{
+				gsroleinfo = r->gsroleinfo;
+				creditinfo = r->creditinfo;
+				petinfo = r->petinfo;
+				pocketinfo = r->pocketinfo;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << gsroleinfo;
+			os << creditinfo;
+			os << petinfo;
+			os << pocketinfo;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> gsroleinfo;
+			os >> creditinfo;
+			os >> petinfo;
+			os >> pocketinfo;
+			return os;
+		}
+
+	};
+};
+#endif

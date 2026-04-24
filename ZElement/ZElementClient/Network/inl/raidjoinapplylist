@@ -1,0 +1,38 @@
+	public:
+		int retcode;
+		int raidroom_id;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDJOINAPPLYLIST };
+	public:
+		RaidJoinApplyList() { type = PROTOCOL_RAIDJOINAPPLYLIST; }
+		RaidJoinApplyList(void*) : Protocol(PROTOCOL_RAIDJOINAPPLYLIST) { }
+		RaidJoinApplyList (int l_retcode,int l_raidroom_id = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),raidroom_id(l_raidroom_id),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDJOINAPPLYLIST;
+		}
+
+		RaidJoinApplyList(const RaidJoinApplyList &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),raidroom_id(rhs.raidroom_id),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidJoinApplyList(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << raidroom_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> raidroom_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

@@ -1,0 +1,44 @@
+	public:
+		unsigned short retcode;
+		int map_id;
+		std::vector<GRaidRoomInfo> fields;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDGETLIST_RE };
+	public:
+		RaidGetList_Re() { type = PROTOCOL_RAIDGETLIST_RE; }
+		RaidGetList_Re(void*) : Protocol(PROTOCOL_RAIDGETLIST_RE) { }
+		RaidGetList_Re (unsigned short l_retcode,int l_map_id,const std::vector<GRaidRoomInfo>& l_fields = std::vector<GRaidRoomInfo>(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),map_id(l_map_id),fields(l_fields)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDGETLIST_RE;
+		}
+
+		RaidGetList_Re(const RaidGetList_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),map_id(rhs.map_id),fields(rhs.fields)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidGetList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << map_id;
+			os << fields;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> map_id;
+			os >> fields;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 131072; }

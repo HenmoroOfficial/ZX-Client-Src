@@ -1,0 +1,77 @@
+#ifndef __GNET_GCIRCLEBASEINFO_RPCDATA
+#define __GNET_GCIRCLEBASEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCircleBaseInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int circleid;
+		unsigned int name;
+		unsigned char grade;
+		unsigned int master_roleid;
+
+	public:
+		GCircleBaseInfo (unsigned int l_circleid = 0,unsigned int l_name = 0,unsigned char l_grade = 0
+			,unsigned int l_master_roleid = 0)
+			: circleid(l_circleid),name(l_name),grade(l_grade)
+			,master_roleid(l_master_roleid)
+		{
+		}
+
+		GCircleBaseInfo(const GCircleBaseInfo &rhs)
+			: circleid(rhs.circleid),name(rhs.name),grade(rhs.grade),
+			master_roleid(rhs.master_roleid) { }
+
+		Rpc::Data *Clone() const { return new GCircleBaseInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCircleBaseInfo *r = dynamic_cast<const GCircleBaseInfo *>(&rhs);
+			if (r && r != this)
+			{
+				circleid = r->circleid;
+				name = r->name;
+				grade = r->grade;
+				master_roleid = r->master_roleid;
+			}
+			return *this;
+		}
+
+		GCircleBaseInfo& operator = (const GCircleBaseInfo &rhs)
+		{
+			const GCircleBaseInfo *r = &rhs;
+			if (r && r != this)
+			{
+				circleid = r->circleid;
+				name = r->name;
+				grade = r->grade;
+				master_roleid = r->master_roleid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << circleid;
+			os << name;
+			os << grade;
+			os << master_roleid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> circleid;
+			os >> name;
+			os >> grade;
+			os >> master_roleid;
+			return os;
+		}
+
+	};
+};
+#endif

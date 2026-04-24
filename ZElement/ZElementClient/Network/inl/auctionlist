@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		unsigned short category;
+		unsigned int begin;
+		char reverse;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_AUCTIONLIST };
+	public:
+		AuctionList() { type = PROTOCOL_AUCTIONLIST; }
+		AuctionList(void*) : Protocol(PROTOCOL_AUCTIONLIST) { }
+		AuctionList (int l_roleid,unsigned short l_category,unsigned int l_begin,
+			char l_reverse,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),category(l_category),begin(l_begin)
+			,reverse(l_reverse),localsid(l_localsid)
+		{
+			type = PROTOCOL_AUCTIONLIST;
+		}
+
+		AuctionList(const AuctionList &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),category(rhs.category),begin(rhs.begin)
+			,reverse(rhs.reverse),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new AuctionList(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << category;
+			os << begin;
+			os << reverse;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> category;
+			os >> begin;
+			os >> reverse;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

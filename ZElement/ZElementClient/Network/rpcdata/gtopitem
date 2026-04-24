@@ -1,0 +1,82 @@
+#ifndef __GNET_GTOPITEM_RPCDATA
+#define __GNET_GTOPITEM_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GTopItem : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int id;
+		Octets name;
+		unsigned int occupation;
+		short oldrank;
+		int64_t value;
+
+	public:
+		GTopItem (unsigned int l_id = 0,const Octets& l_name = Octets(),unsigned int l_occupation = 0
+			,short l_oldrank = -1,int64_t l_value = 0)
+			: id(l_id),name(l_name),occupation(l_occupation)
+			,oldrank(l_oldrank),value(l_value)
+		{
+		}
+
+		GTopItem(const GTopItem &rhs)
+			: id(rhs.id),name(rhs.name),occupation(rhs.occupation),
+			oldrank(rhs.oldrank),value(rhs.value) { }
+
+		Rpc::Data *Clone() const { return new GTopItem(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GTopItem *r = dynamic_cast<const GTopItem *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				name = r->name;
+				occupation = r->occupation;
+				oldrank = r->oldrank;
+				value = r->value;
+			}
+			return *this;
+		}
+
+		GTopItem& operator = (const GTopItem &rhs)
+		{
+			const GTopItem *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				name = r->name;
+				occupation = r->occupation;
+				oldrank = r->oldrank;
+				value = r->value;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << name;
+			os << occupation;
+			os << oldrank;
+			os << value;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> name;
+			os >> occupation;
+			os >> oldrank;
+			os >> value;
+			return os;
+		}
+
+	};
+};
+#endif

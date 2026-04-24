@@ -1,0 +1,69 @@
+#ifndef __GNET_GFACTIONPKRAIDRECORD_RPCDATA
+#define __GNET_GFACTIONPKRAIDRECORD_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GFactionPkRaidRecord : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		short kills;
+		short deaths;
+
+	public:
+		GFactionPkRaidRecord (int l_roleid = 0,short l_kills = 0,short l_deaths = 0)
+			: roleid(l_roleid),kills(l_kills),deaths(l_deaths)
+		{
+		}
+
+		GFactionPkRaidRecord(const GFactionPkRaidRecord &rhs)
+			: roleid(rhs.roleid),kills(rhs.kills),deaths(rhs.deaths) { }
+
+		Rpc::Data *Clone() const { return new GFactionPkRaidRecord(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GFactionPkRaidRecord *r = dynamic_cast<const GFactionPkRaidRecord *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				kills = r->kills;
+				deaths = r->deaths;
+			}
+			return *this;
+		}
+
+		GFactionPkRaidRecord& operator = (const GFactionPkRaidRecord &rhs)
+		{
+			const GFactionPkRaidRecord *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				kills = r->kills;
+				deaths = r->deaths;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << kills;
+			os << deaths;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> kills;
+			os >> deaths;
+			return os;
+		}
+
+	};
+};
+#endif

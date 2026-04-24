@@ -1,0 +1,239 @@
+#ifndef __CPPGEN_GNET_SKILL790
+#define __CPPGEN_GNET_SKILL790
+namespace GNET
+{
+#ifdef _SKILL_SERVER
+    class Skill790:public Skill
+    {
+      public:
+        enum
+        { SKILL_ID = 790 };
+          Skill790 ():Skill (SKILL_ID)
+        {
+        }
+    };
+#endif
+    class Skill790Stub:public SkillStub
+    {
+      public:
+#ifdef _SKILL_SERVER
+        class State1:public SkillStub::State
+        {
+          public:
+            int GetTime (Skill * skill) const
+            {
+                return 800;
+            }
+            void Calculate (Skill * skill) const
+            {
+                skill->GetPlayer ()->SetPray (1);
+            }
+        };
+#endif
+#ifdef _SKILL_SERVER
+        class State2:public SkillStub::State
+        {
+          public:
+            int GetTime (Skill * skill) const
+            {
+                return 200;
+            }
+            void Calculate (Skill * skill) const
+            {
+                skill->GetPlayer ()->SetVar2 ((skill->GetPlayer ()->GetMp () - skill->GetPlayer ()->GetMaxmp () * 0.05 * skill->GetLevel ()) >
+                                              0 ? 1 : 0);
+                skill->GetPlayer ()->SetVar1 (skill->GetPlayer ()->GetMaxmp ());
+                skill->GetPlayer ()->SetMp ((skill->GetPlayer ()->GetMp () - skill->GetPlayer ()->GetMaxmp () * 0.08 * skill->GetLevel ()) >
+                                            0 ? (skill->GetPlayer ()->GetMp () -
+                                                 skill->GetPlayer ()->GetMaxmp () * 0.08 * skill->GetLevel ()) : skill->GetPlayer ()->GetMp ());
+                skill->GetPlayer ()->SetPerform (1);
+            }
+        };
+#endif
+      Skill790Stub ():SkillStub (790)
+        {
+            occupation = 23;
+            name = L"万象生佛";
+            nativename = "万象生佛";
+            icon = "万象生佛.dds";
+            maxlevel = 5;
+            maxlearn = 4;
+            type = 2;
+            eventflag = 0;
+            spcost = 1;
+            timetype = 0;
+            targettype = 0;
+            autoattack = 0;
+            allowform = 0;
+            credittype = 0;
+            serialskill = 0;
+            charge = 0;
+            chargedist = 0;
+            succeedskillcolor = 0;
+            succeedskillcolornum = 0;
+            comboskill = 0;
+            cycle = 0;
+            cyclegfx = "";
+            cyclemode = 0;
+            skill_class = 3;
+            guide = false;
+            summon_id = 0;
+            trigger = false;
+            castInPreSkill = false;
+            preCastSkillId = 0;
+            darkLightType = 0;
+            followskill = 0;
+            targetcnt = 0;
+            excludemonstercnt = 0;
+            skillelemsnum = 0;
+            skillelemsfactor = 0;
+            preskillnum = 1;
+            talent[0] = 697;
+            talent[1] = 703;
+            talent[2] = 719;
+            talent_size = 3;
+            action[0] = "天音寺_万象生佛";
+            action[1] = "天音寺_万象生佛";
+            action[2] = "天音寺_万象生佛";
+            action[3] = "天音寺_万象生佛";
+            action[4] = "天音寺_万象生佛";
+            action[5] = "天音寺_万象生佛";
+            action[6] = "";
+            action[7] = "";
+            action[8] = "";
+            action[9] = "";
+            action[10] = "";
+            action[11] = "";
+            action[12] = "";
+            action[13] = "";
+            action[14] = "";
+            action[15] = "天音寺_骑乘_万象生佛";
+            action[16] = "天音寺_骑乘_万象生佛";
+            action[17] = "天音寺_骑乘_万象生佛";
+            action[18] = "天音寺_骑乘_万象生佛";
+            action[19] = "天音寺_骑乘_万象生佛";
+            action[20] = "天音寺_骑乘_万象生佛";
+            action[21] = "";
+            action[22] = "";
+            action[23] = "";
+            action[24] = "";
+            action[25] = "";
+            action[26] = "";
+            action[27] = "";
+            action[28] = "";
+            action[29] = "";
+            action[30] = "0";
+            rangetype = 2;
+            doenchant = true;
+            dobless = true;
+            need_item = false;
+            item_relation = 0;
+            item1_id = -1;
+            item1_num = 0;
+            item2_id = -1;
+            item2_num = 0;
+            weapon_limit = -1;
+            skill_limit = 0;
+#ifdef _SKILL_SERVER
+            statestub.push_back (new State1 ());
+            statestub.push_back (new State2 ());
+#endif
+        }
+        virtual ~ Skill790Stub ()
+        {
+        }
+        int GetDpcost (Skill * skill) const
+        {
+            return (int) (0);
+        }
+        int GetPreSkillID (int index) const
+        {
+            static int array[1] = { 789 };
+            return array[index];
+        }
+        int GetPreSkillSP (int index) const
+        {
+            static int array[1] = { 1 };
+            return array[index];
+        }
+        float GetMpcost (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        int GetExecutetime (Skill * skill) const
+        {
+            return 1000;
+        }
+        int GetCooldowntime (Skill * skill) const
+        {
+            return 60000 - 5000 * skill->GetT1 ();
+        }
+        int GetRequiredLevel (int level) const
+        {
+            static int array[4] = { 135, 135, 136, 138 };
+            return array[level - 1];
+        }
+        float GetRadius (Skill * skill) const
+        {
+            return (float) (30);
+        }
+        float GetPraydistance (Skill * skill) const
+        {
+            return (float) (15);
+        }
+        float GetCastdistance (Skill * skill) const
+        {
+            return (float) (12);
+        }
+#ifdef _SKILL_CLIENT
+        int GetDescription (Skill * skill, wchar_t * buffer, int length, wchar_t * format, const SkillStr & table) const
+        {
+            return _snwprintf (buffer, length, format,
+                               5 * skill->GetLevel (), 30, 15 + 10 * skill->GetLevel (), 20 + 5 * skill->GetLevel (), 100, 1, 60);
+
+        }
+#endif
+#ifdef _SKILL_CLIENT
+        int GetIntroduction (Skill * skill, wchar_t * buffer, int length, wchar_t * format, const SkillStr & table) const
+        {
+            return _snwprintf (buffer, length, format, skill->GetShowlevel (), 10 * skill->GetLevel ());
+
+        }
+#endif
+#ifdef _SKILL_SERVER
+        bool StateAttack (Skill * skill) const
+        {
+            skill->GetVictim ()->SetProbability (1.0 * (100));
+            skill->GetVictim ()->SetRatio (1);
+            skill->GetVictim ()->SetValue ((0.15 + 0.1 * skill->GetLevel ()) * skill->GetPlayer ()->GetMaxhp ());
+            skill->GetVictim ()->SetHeal (1);
+            skill->GetVictim ()->SetProbability (1.0 * (120));
+            skill->GetVictim ()->SetTime (50);
+            skill->GetVictim ()->SetRatio (skill->GetLevel ());
+            skill->GetVictim ()->SetBuffid (1);
+            skill->GetVictim ()->SetValue (5229);
+            skill->GetVictim ()->SetDelaycast (1);
+            skill->GetVictim ()->SetProbability (1.0 * (120 * skill->GetPlayer ()->GetVar2 ()));
+            skill->GetVictim ()->SetTime (300000);
+            skill->GetVictim ()->SetAmount (skill->GetPlayer ()->GetVar1 () * 0.1 * skill->GetLevel ());
+            skill->GetVictim ()->SetBloodpool (1);
+            return true;
+        }
+        bool BlessMe (Skill * skill) const
+        {
+            skill->GetVictim ()->SetProbability (1.0 * (100 * skill->GetPlayer ()->GetVar2 ()));
+            skill->GetVictim ()->SetTime (1800000 * norm (skill->GetT2 ()));
+            skill->GetVictim ()->SetRatio (0);
+            skill->GetVictim ()->SetBuffid (5);
+            skill->GetVictim ()->SetValue (100 * skill->GetLevel () * skill->GetT2 ());
+            skill->GetVictim ()->SetTiangu (1);
+            return true;
+        }
+        int GetCoverage (Skill * skill) const
+        {
+            return (int) (40);
+        }
+#endif
+    };
+}
+#endif

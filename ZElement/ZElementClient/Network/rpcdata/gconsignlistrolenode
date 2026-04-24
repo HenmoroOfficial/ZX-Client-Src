@@ -1,0 +1,106 @@
+#ifndef __GNET_GCONSIGNLISTROLENODE_RPCDATA
+#define __GNET_GCONSIGNLISTROLENODE_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gconsignitem"
+
+namespace GNET
+{
+	class GConsignListRoleNode : public GNET::Rpc::Data
+	{
+	public:
+		GConsignItem info;
+		int seller_roleid;
+		Octets seller_name;
+		int buyer_roleid;
+		int commodityid;
+		int level;
+		int cls;
+		char cultivation;
+		char reborn_count;
+
+	public:
+		GConsignListRoleNode (const GConsignItem& l_info = GConsignItem(),int l_seller_roleid = 0,const Octets& l_seller_name = Octets()
+			,int l_buyer_roleid = 0,int l_commodityid = 0,int l_level = 0
+			,int l_cls = 0,char l_cultivation = 0,char l_reborn_count = 0)
+			: info(l_info),seller_roleid(l_seller_roleid),seller_name(l_seller_name)
+			,buyer_roleid(l_buyer_roleid),commodityid(l_commodityid),level(l_level)
+			,cls(l_cls),cultivation(l_cultivation),reborn_count(l_reborn_count)
+		{
+		}
+
+		GConsignListRoleNode(const GConsignListRoleNode &rhs)
+			: info(rhs.info),seller_roleid(rhs.seller_roleid),seller_name(rhs.seller_name),
+			buyer_roleid(rhs.buyer_roleid),commodityid(rhs.commodityid),level(rhs.level),
+			cls(rhs.cls),cultivation(rhs.cultivation),reborn_count(rhs.reborn_count) { }
+
+		Rpc::Data *Clone() const { return new GConsignListRoleNode(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GConsignListRoleNode *r = dynamic_cast<const GConsignListRoleNode *>(&rhs);
+			if (r && r != this)
+			{
+				info = r->info;
+				seller_roleid = r->seller_roleid;
+				seller_name = r->seller_name;
+				buyer_roleid = r->buyer_roleid;
+				commodityid = r->commodityid;
+				level = r->level;
+				cls = r->cls;
+				cultivation = r->cultivation;
+				reborn_count = r->reborn_count;
+			}
+			return *this;
+		}
+
+		GConsignListRoleNode& operator = (const GConsignListRoleNode &rhs)
+		{
+			const GConsignListRoleNode *r = &rhs;
+			if (r && r != this)
+			{
+				info = r->info;
+				seller_roleid = r->seller_roleid;
+				seller_name = r->seller_name;
+				buyer_roleid = r->buyer_roleid;
+				commodityid = r->commodityid;
+				level = r->level;
+				cls = r->cls;
+				cultivation = r->cultivation;
+				reborn_count = r->reborn_count;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << info;
+			os << seller_roleid;
+			os << seller_name;
+			os << buyer_roleid;
+			os << commodityid;
+			os << level;
+			os << cls;
+			os << cultivation;
+			os << reborn_count;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> info;
+			os >> seller_roleid;
+			os >> seller_name;
+			os >> buyer_roleid;
+			os >> commodityid;
+			os >> level;
+			os >> cls;
+			os >> cultivation;
+			os >> reborn_count;
+			return os;
+		}
+
+	};
+};
+#endif

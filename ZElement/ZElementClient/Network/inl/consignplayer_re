@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		int retcode;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNPLAYER_RE };
+	public:
+		ConsignPlayer_Re() { type = PROTOCOL_CONSIGNPLAYER_RE; }
+		ConsignPlayer_Re(void*) : Protocol(PROTOCOL_CONSIGNPLAYER_RE) { }
+		ConsignPlayer_Re (int l_roleid,unsigned int l_localsid,int l_retcode = 0)
+			 : roleid(l_roleid),localsid(l_localsid),retcode(l_retcode)
+		{
+			type = PROTOCOL_CONSIGNPLAYER_RE;
+		}
+
+		ConsignPlayer_Re(const ConsignPlayer_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),retcode(rhs.retcode) { }
+
+		GNET::Protocol *Clone() const { return new ConsignPlayer_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> retcode;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

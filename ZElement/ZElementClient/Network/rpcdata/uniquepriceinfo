@@ -1,0 +1,65 @@
+#ifndef __GNET_UNIQUEPRICEINFO_RPCDATA
+#define __GNET_UNIQUEPRICEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "uniquebidder"
+
+namespace GNET
+{
+	class UniquePriceInfo : public GNET::Rpc::Data
+	{
+	public:
+		int money;
+		std::vector<UniqueBidder> same_bidders;
+
+	public:
+		UniquePriceInfo (int l_money = 0,std::vector<UniqueBidder> l_same_bidders = std::vector<UniqueBidder>())
+			: money(l_money),same_bidders(l_same_bidders)
+		{
+		}
+
+		UniquePriceInfo(const UniquePriceInfo &rhs)
+			: money(rhs.money),same_bidders(rhs.same_bidders) { }
+
+		Rpc::Data *Clone() const { return new UniquePriceInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const UniquePriceInfo *r = dynamic_cast<const UniquePriceInfo *>(&rhs);
+			if (r && r != this)
+			{
+				money = r->money;
+				same_bidders = r->same_bidders;
+			}
+			return *this;
+		}
+
+		UniquePriceInfo& operator = (const UniquePriceInfo &rhs)
+		{
+			const UniquePriceInfo *r = &rhs;
+			if (r && r != this)
+			{
+				money = r->money;
+				same_bidders = r->same_bidders;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << money;
+			os << same_bidders;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> money;
+			os >> same_bidders;
+			return os;
+		}
+
+	};
+};
+#endif

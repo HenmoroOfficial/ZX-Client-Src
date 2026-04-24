@@ -1,0 +1,9 @@
+DIALOG "Win_QuickBar10V_3" 0 0 44 328 0 1 10 "" "" "" 0 0 -1 -1 "" 0 0 255 255 255 255 1 0
+IMAGEPICTURE "Item_1" "" "" 4 20 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_2" "" "" 4 57 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_3" "" "" 4 94 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_4" "" "" 4 131 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_5" "" "" 4 168 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_6" "" "" 4 205 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_7" "" "" 4 242 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_8" "" "" 4 279 36 36 1 0 "Icon\Shortcut.tga"

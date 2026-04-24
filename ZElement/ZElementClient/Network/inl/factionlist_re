@@ -1,0 +1,95 @@
+	public:
+		int page;
+		unsigned int deletetime;
+		char istree;
+		unsigned int familyid;
+		unsigned int prosperity;
+		short population;
+		short online;
+		MemberInfoVector members;
+		Octets announce;
+		std::vector<GFamilyBrief> familylist;
+		std::vector<FamilySkill> familyskill;
+		int actionpoint;
+		std::vector<HostileFaction> hostiles;
+		unsigned int money;
+		unsigned int localsid;
+		unsigned int base_status;
+		int activity;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONLIST_RE };
+	public:
+		FactionList_Re() { type = PROTOCOL_FACTIONLIST_RE; }
+		FactionList_Re(void*) : Protocol(PROTOCOL_FACTIONLIST_RE) { }
+		FactionList_Re (int l_page,unsigned int l_deletetime,char l_istree,
+			unsigned int l_familyid,unsigned int l_prosperity,short l_population,
+			short l_online,const MemberInfoVector& l_members,const Octets& l_announce,
+			const std::vector<GFamilyBrief>& l_familylist,const std::vector<FamilySkill>& l_familyskill,const int& l_actionpoint,
+			const std::vector<HostileFaction>& l_hostiles = std::vector<HostileFaction>(),unsigned int l_money = 0,unsigned int l_localsid = 0,
+			unsigned int l_base_status = 0,int l_activity = 0)
+			 : page(l_page),deletetime(l_deletetime),istree(l_istree)
+			,familyid(l_familyid),prosperity(l_prosperity),population(l_population)
+			,online(l_online),members(l_members),announce(l_announce)
+			,familylist(l_familylist),familyskill(l_familyskill),actionpoint(l_actionpoint)
+			,hostiles(l_hostiles),money(l_money),localsid(l_localsid)
+			,base_status(l_base_status),activity(l_activity)
+		{
+			type = PROTOCOL_FACTIONLIST_RE;
+		}
+
+		FactionList_Re(const FactionList_Re &rhs)
+			: Protocol(rhs),page(rhs.page),deletetime(rhs.deletetime),istree(rhs.istree)
+			,familyid(rhs.familyid),prosperity(rhs.prosperity),population(rhs.population)
+			,online(rhs.online),members(rhs.members),announce(rhs.announce)
+			,familylist(rhs.familylist),familyskill(rhs.familyskill),actionpoint(rhs.actionpoint)
+			,hostiles(rhs.hostiles),money(rhs.money),localsid(rhs.localsid)
+			,base_status(rhs.base_status),activity(rhs.activity) { }
+
+		GNET::Protocol *Clone() const { return new FactionList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << page;
+			os << deletetime;
+			os << istree;
+			os << familyid;
+			os << prosperity;
+			os << population;
+			os << online;
+			os << members;
+			os << announce;
+			os << familylist;
+			os << familyskill;
+			os << actionpoint;
+			os << hostiles;
+			os << money;
+			os << localsid;
+			os << base_status;
+			os << activity;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> page;
+			os >> deletetime;
+			os >> istree;
+			os >> familyid;
+			os >> prosperity;
+			os >> population;
+			os >> online;
+			os >> members;
+			os >> announce;
+			os >> familylist;
+			os >> familyskill;
+			os >> actionpoint;
+			os >> hostiles;
+			os >> money;
+			os >> localsid;
+			os >> base_status;
+			os >> activity;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

@@ -1,0 +1,64 @@
+#ifndef __GNET_FACTIONINVITERES_RPCDATA
+#define __GNET_FACTIONINVITERES_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class FactionInviteRes : public GNET::Rpc::Data
+	{
+	public:
+		int retcode;
+		char scale;
+
+	public:
+		FactionInviteRes (int l_retcode = -1,char l_scale = 0)
+			: retcode(l_retcode),scale(l_scale)
+		{
+		}
+
+		FactionInviteRes(const FactionInviteRes &rhs)
+			: retcode(rhs.retcode),scale(rhs.scale) { }
+
+		Rpc::Data *Clone() const { return new FactionInviteRes(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const FactionInviteRes *r = dynamic_cast<const FactionInviteRes *>(&rhs);
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+				scale = r->scale;
+			}
+			return *this;
+		}
+
+		FactionInviteRes& operator = (const FactionInviteRes &rhs)
+		{
+			const FactionInviteRes *r = &rhs;
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+				scale = r->scale;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> scale;
+			return os;
+		}
+
+	};
+};
+#endif

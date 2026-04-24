@@ -1,0 +1,70 @@
+#ifndef __GNET_GPOCKETINVENTORY_RPCDATA
+#define __GNET_GPOCKETINVENTORY_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GPocketInventory : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int id;
+		short pos;
+		short count;
+
+	public:
+		GPocketInventory (unsigned int l_id = 0,short l_pos = -1,short l_count = 0)
+			: id(l_id),pos(l_pos),count(l_count)
+		{
+		}
+
+		GPocketInventory(const GPocketInventory &rhs)
+			: id(rhs.id),pos(rhs.pos),count(rhs.count) { }
+
+		Rpc::Data *Clone() const { return new GPocketInventory(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GPocketInventory *r = dynamic_cast<const GPocketInventory *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				pos = r->pos;
+				count = r->count;
+			}
+			return *this;
+		}
+
+		GPocketInventory& operator = (const GPocketInventory &rhs)
+		{
+			const GPocketInventory *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				pos = r->pos;
+				count = r->count;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << pos;
+			os << count;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> pos;
+			os >> count;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GPocketInventory>	GPocketInventoryVector;
+};
+#endif

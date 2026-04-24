@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		int map_id;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGAPPOINTNOTIFY };
+	public:
+		InstancingAppointNotify() { type = PROTOCOL_INSTANCINGAPPOINTNOTIFY; }
+		InstancingAppointNotify(void*) : Protocol(PROTOCOL_INSTANCINGAPPOINTNOTIFY) { }
+		InstancingAppointNotify (int l_roleid,int l_map_id,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),map_id(l_map_id),localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGAPPOINTNOTIFY;
+		}
+
+		InstancingAppointNotify(const InstancingAppointNotify &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),map_id(rhs.map_id),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingAppointNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << map_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> map_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

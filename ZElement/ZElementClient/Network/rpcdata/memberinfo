@@ -1,0 +1,132 @@
+#ifndef __GNET_MEMBERINFO_RPCDATA
+#define __GNET_MEMBERINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class MemberInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int roleid;
+		unsigned char level;
+		unsigned char occupation;
+		unsigned char title;
+		int lineid;
+		unsigned int familyid;
+		int contribution;
+		int devotion;
+		Octets name;
+		Octets nickname;
+		int reborn_cnt;
+		int cultivation;
+		int64_t fac_coupon_add;
+
+	public:
+		MemberInfo (unsigned int l_roleid = 0,unsigned char l_level = 0,unsigned char l_occupation = 0
+			,unsigned char l_title = 0,int l_lineid = 0,unsigned int l_familyid = 0
+			,int l_contribution = 0,int l_devotion = 0,Octets l_name = Octets()
+			,Octets l_nickname = Octets(),int l_reborn_cnt = -1,int l_cultivation = -1
+			,int64_t l_fac_coupon_add = 0)
+			: roleid(l_roleid),level(l_level),occupation(l_occupation)
+			,title(l_title),lineid(l_lineid),familyid(l_familyid)
+			,contribution(l_contribution),devotion(l_devotion),name(l_name)
+			,nickname(l_nickname),reborn_cnt(l_reborn_cnt),cultivation(l_cultivation)
+			,fac_coupon_add(l_fac_coupon_add)
+		{
+		}
+
+		MemberInfo(const MemberInfo &rhs)
+			: roleid(rhs.roleid),level(rhs.level),occupation(rhs.occupation),
+			title(rhs.title),lineid(rhs.lineid),familyid(rhs.familyid),
+			contribution(rhs.contribution),devotion(rhs.devotion),name(rhs.name),
+			nickname(rhs.nickname),reborn_cnt(rhs.reborn_cnt),cultivation(rhs.cultivation),
+			fac_coupon_add(rhs.fac_coupon_add) { }
+
+		Rpc::Data *Clone() const { return new MemberInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const MemberInfo *r = dynamic_cast<const MemberInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				level = r->level;
+				occupation = r->occupation;
+				title = r->title;
+				lineid = r->lineid;
+				familyid = r->familyid;
+				contribution = r->contribution;
+				devotion = r->devotion;
+				name = r->name;
+				nickname = r->nickname;
+				reborn_cnt = r->reborn_cnt;
+				cultivation = r->cultivation;
+				fac_coupon_add = r->fac_coupon_add;
+			}
+			return *this;
+		}
+
+		MemberInfo& operator = (const MemberInfo &rhs)
+		{
+			const MemberInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				level = r->level;
+				occupation = r->occupation;
+				title = r->title;
+				lineid = r->lineid;
+				familyid = r->familyid;
+				contribution = r->contribution;
+				devotion = r->devotion;
+				name = r->name;
+				nickname = r->nickname;
+				reborn_cnt = r->reborn_cnt;
+				cultivation = r->cultivation;
+				fac_coupon_add = r->fac_coupon_add;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << level;
+			os << occupation;
+			os << title;
+			os << lineid;
+			os << familyid;
+			os << contribution;
+			os << devotion;
+			os << name;
+			os << nickname;
+			os << reborn_cnt;
+			os << cultivation;
+			os << fac_coupon_add;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> level;
+			os >> occupation;
+			os >> title;
+			os >> lineid;
+			os >> familyid;
+			os >> contribution;
+			os >> devotion;
+			os >> name;
+			os >> nickname;
+			os >> reborn_cnt;
+			os >> cultivation;
+			os >> fac_coupon_add;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<MemberInfo>	MemberInfoVector;
+};
+#endif

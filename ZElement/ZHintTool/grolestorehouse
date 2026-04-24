@@ -1,0 +1,104 @@
+#ifndef __GNET_GROLESTOREHOUSE_RPCDATA
+#define __GNET_GROLESTOREHOUSE_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "groleinventory"
+
+namespace GNET
+{
+	class GRoleStorehouse : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int capacity;
+		unsigned int money;
+		GRoleInventoryVector items;
+		unsigned char capacity2;
+		GRoleInventoryVector items2;
+		GRoleInventoryVector fuwen;
+		char reserved3;
+		short reserved1;
+		int reserved2;
+
+	public:
+		GRoleStorehouse (unsigned int l_capacity = 0,unsigned int l_money = 0,unsigned char l_capacity2 = 0
+			,char l_reserved3 = 0,short l_reserved1 = 0,int l_reserved2 = 0)
+			: capacity(l_capacity),money(l_money),capacity2(l_capacity2)
+			,reserved3(l_reserved3),reserved1(l_reserved1),reserved2(l_reserved2)
+		{
+		}
+
+		GRoleStorehouse(const GRoleStorehouse &rhs)
+			: capacity(rhs.capacity),money(rhs.money),items(rhs.items),
+			capacity2(rhs.capacity2),items2(rhs.items2),fuwen(rhs.fuwen),
+			reserved3(rhs.reserved3),reserved1(rhs.reserved1),reserved2(rhs.reserved2) { }
+
+		Rpc::Data *Clone() const { return new GRoleStorehouse(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GRoleStorehouse *r = dynamic_cast<const GRoleStorehouse *>(&rhs);
+			if (r && r != this)
+			{
+				capacity = r->capacity;
+				money = r->money;
+				items = r->items;
+				capacity2 = r->capacity2;
+				items2 = r->items2;
+				fuwen = r->fuwen;
+				reserved3 = r->reserved3;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+			}
+			return *this;
+		}
+
+		GRoleStorehouse& operator = (const GRoleStorehouse &rhs)
+		{
+			const GRoleStorehouse *r = &rhs;
+			if (r && r != this)
+			{
+				capacity = r->capacity;
+				money = r->money;
+				items = r->items;
+				capacity2 = r->capacity2;
+				items2 = r->items2;
+				fuwen = r->fuwen;
+				reserved3 = r->reserved3;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << capacity;
+			os << money;
+			os << items;
+			os << capacity2;
+			os << items2;
+			os << fuwen;
+			os << reserved3;
+			os << reserved1;
+			os << reserved2;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> capacity;
+			os >> money;
+			os >> items;
+			os >> capacity2;
+			os >> items2;
+			os >> fuwen;
+			os >> reserved3;
+			os >> reserved1;
+			os >> reserved2;
+			return os;
+		}
+
+	};
+};
+#endif

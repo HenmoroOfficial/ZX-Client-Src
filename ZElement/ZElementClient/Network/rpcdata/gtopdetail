@@ -1,0 +1,82 @@
+#ifndef __GNET_GTOPDETAIL_RPCDATA
+#define __GNET_GTOPDETAIL_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GTopDetail : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int id;
+		Octets content;
+		unsigned int value1;
+		unsigned int value2;
+		unsigned int value3;
+
+	public:
+		GTopDetail (unsigned int l_id = 0,const Octets& l_content = Octets(),unsigned int l_value1 = 0
+			,unsigned int l_value2 = 0,unsigned int l_value3 = 0)
+			: id(l_id),content(l_content),value1(l_value1)
+			,value2(l_value2),value3(l_value3)
+		{
+		}
+
+		GTopDetail(const GTopDetail &rhs)
+			: id(rhs.id),content(rhs.content),value1(rhs.value1),
+			value2(rhs.value2),value3(rhs.value3) { }
+
+		Rpc::Data *Clone() const { return new GTopDetail(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GTopDetail *r = dynamic_cast<const GTopDetail *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				content = r->content;
+				value1 = r->value1;
+				value2 = r->value2;
+				value3 = r->value3;
+			}
+			return *this;
+		}
+
+		GTopDetail& operator = (const GTopDetail &rhs)
+		{
+			const GTopDetail *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				content = r->content;
+				value1 = r->value1;
+				value2 = r->value2;
+				value3 = r->value3;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << content;
+			os << value1;
+			os << value2;
+			os << value3;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> content;
+			os >> value1;
+			os >> value2;
+			os >> value3;
+			return os;
+		}
+
+	};
+};
+#endif

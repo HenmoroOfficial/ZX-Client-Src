@@ -1,0 +1,69 @@
+#ifndef __GNET_SECTINVITEARG_RPCDATA
+#define __GNET_SECTINVITEARG_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class SectInviteArg : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int invitee;
+		Octets role_name;
+
+	public:
+		SectInviteArg (int l_roleid = -1,int l_invitee = -1,const Octets& l_role_name = Octets())
+			: roleid(l_roleid),invitee(l_invitee),role_name(l_role_name)
+		{
+		}
+
+		SectInviteArg(const SectInviteArg &rhs)
+			: roleid(rhs.roleid),invitee(rhs.invitee),role_name(rhs.role_name) { }
+
+		Rpc::Data *Clone() const { return new SectInviteArg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SectInviteArg *r = dynamic_cast<const SectInviteArg *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				invitee = r->invitee;
+				role_name = r->role_name;
+			}
+			return *this;
+		}
+
+		SectInviteArg& operator = (const SectInviteArg &rhs)
+		{
+			const SectInviteArg *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				invitee = r->invitee;
+				role_name = r->role_name;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << invitee;
+			os << role_name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> invitee;
+			os >> role_name;
+			return os;
+		}
+
+	};
+};
+#endif

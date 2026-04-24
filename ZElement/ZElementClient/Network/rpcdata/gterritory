@@ -1,0 +1,100 @@
+#ifndef __GNET_GTERRITORY_RPCDATA
+#define __GNET_GTERRITORY_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GTerritory : public GNET::Rpc::Data
+	{
+	public:
+		char id;
+		char level;
+		char color;
+		unsigned int owner;
+		unsigned int challenger1;
+		unsigned int challenger2;
+		unsigned int battle_time1;
+		unsigned int battle_time2;
+
+	public:
+		GTerritory (char l_id = 0,char l_level = 0,char l_color = 0
+			,unsigned int l_owner = 0,unsigned int l_challenger1 = 0,unsigned int l_challenger2 = 0
+			,unsigned int l_battle_time1 = 0,unsigned int l_battle_time2 = 0)
+			: id(l_id),level(l_level),color(l_color)
+			,owner(l_owner),challenger1(l_challenger1),challenger2(l_challenger2)
+			,battle_time1(l_battle_time1),battle_time2(l_battle_time2)
+		{
+		}
+
+		GTerritory(const GTerritory &rhs)
+			: id(rhs.id),level(rhs.level),color(rhs.color),
+			owner(rhs.owner),challenger1(rhs.challenger1),challenger2(rhs.challenger2),
+			battle_time1(rhs.battle_time1),battle_time2(rhs.battle_time2) { }
+
+		Rpc::Data *Clone() const { return new GTerritory(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GTerritory *r = dynamic_cast<const GTerritory *>(&rhs);
+			if (r && r != this)
+			{
+				id = r->id;
+				level = r->level;
+				color = r->color;
+				owner = r->owner;
+				challenger1 = r->challenger1;
+				challenger2 = r->challenger2;
+				battle_time1 = r->battle_time1;
+				battle_time2 = r->battle_time2;
+			}
+			return *this;
+		}
+
+		GTerritory& operator = (const GTerritory &rhs)
+		{
+			const GTerritory *r = &rhs;
+			if (r && r != this)
+			{
+				id = r->id;
+				level = r->level;
+				color = r->color;
+				owner = r->owner;
+				challenger1 = r->challenger1;
+				challenger2 = r->challenger2;
+				battle_time1 = r->battle_time1;
+				battle_time2 = r->battle_time2;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << id;
+			os << level;
+			os << color;
+			os << owner;
+			os << challenger1;
+			os << challenger2;
+			os << battle_time1;
+			os << battle_time2;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> id;
+			os >> level;
+			os >> color;
+			os >> owner;
+			os >> challenger1;
+			os >> challenger2;
+			os >> battle_time1;
+			os >> battle_time2;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,74 @@
+DIALOG "Dlg_Plant" 0 0 275 480 0 1 10 "Window\对话框_标准边框.dds" "" "" 0 0 250 27 "" 26 5 96 96 96 255 1
+STILLIMAGEBUTTON "Btn_PDlgMountain" "ChooseMountain" "" 0 59 58 60 0 0 0 0 2 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 3 1
+STILLIMAGEBUTTON "Btn_PDlgWater" "ChooseWater" "" 0 118 58 60 0 0 0 0 4 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 5 1
+STILLIMAGEBUTTON "Btn_PDlgRoad" "ChooseRoad" "" 1 178 58 60 0 0 0 0 6 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 7 1
+STILLIMAGEBUTTON "Btn_PDlgLocalTexture" "ChooseLocalTexture" "" 0 238 58 60 0 0 0 0 8 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 9 1
+STILLIMAGEBUTTON "Btn_PDlgPlant" "ChoosePlant" "" 0 298 58 60 0 0 0 0 10 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 11 1
+STILLIMAGEBUTTON "Btn_PDlgBuilding" "ChooseBuilding" "" 0 358 58 60 0 0 0 0 12 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 13 1
+STILLIMAGEBUTTON "Btn_PDlgLight" "ChooseLight" "" 1 418 58 60 0 0 0 0 14 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 15 1
+STILLIMAGEBUTTON "Btn_PDlgTerrain" "ChooseTerrain" "" 0 0 58 60 0 0 0 0 16 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 17 1
+IMAGEPICTURE "Control_11845287" "" "" 90 27 174 3 1 0 "Window\分隔线.tga"
+LABEL "Control_45691258" "" "" 134 7 47 20 18 16 19 255 203 74 255
+LIST "ListBox_Trees" "" "" 65 36 119 46 20 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"
+STILLIMAGEBUTTON "Control_33109029" "OpenChooseTreeDlg" "" 192 30 45 22 0 0 0 0 21 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 22 1
+STILLIMAGEBUTTON "Control_303161643" "DelTreeInfo" "" 192 53 45 22 0 0 0 0 23 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 24 1
+STILLIMAGEBUTTON "Control_396152185" "ClearAllTreeInfo" "" 191 76 45 22 0 0 0 0 25 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 26 1
+LABEL "Control_465399414" "" "" 60 97 31 16 27 15 28 255 255 255 255
+SLIDER "Slider_TreeSeed" "moveSlider" "" 142 102 125 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+STILLIMAGEBUTTON "Control_124737912" "CreateTreePoly" "" 105 116 54 20 0 0 0 0 29 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 30 1
+STILLIMAGEBUTTON "Control_784390560" "CreateTreeLine" "" 219 116 47 20 0 0 0 0 31 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 32 1
+LABEL "Control_35565600" "" "" 58 141 30 16 33 15 34 255 255 255 255
+LABEL "Control_0231562" "" "" 61 20 20 15 35 15 36 255 255 255 255
+LABEL "Control_231625319" "" "" 58 160 53 16 37 15 38 255 255 255 255
+LABEL "Control_96860712" "" "" 58 180 47 15 39 15 40 255 255 255 255
+LABEL "Control_159853824" "" "" 58 198 44 16 41 15 42 255 255 255 255
+LABEL "Control_833067510" "" "" 59 216 44 17 43 15 44 255 255 255 255
+LABEL "Control_897887964" "" "" 60 233 45 18 45 15 46 255 255 255 255
+SLIDER "Slider_TreeDensity" "moveSlider" "" 145 142 122 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TreeSpaceX" "moveSlider" "" 145 183 122 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TreeSlope" "moveSlider" "" 145 164 122 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TreeSpaceZ" "moveSlider" "" 145 201 122 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TreeSpaceLine" "moveSlider" "" 145 220 122 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TreeSpaceNoise" "moveSlider" "" 145 238 122 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+STILLIMAGEBUTTON "Control_201218904" "ClearAllTrees" "" 167 254 87 20 0 0 0 0 47 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 48 1
+CHECK "Check_TreeRegular" "" "" 96 251 19 19 "Extra\复选框_标准.tga"
+LABEL "Control_315250420" "" "" 62 252 35 18 49 15 50 255 255 255 255
+LABEL "Control_168914729" "" "" 64 271 18 17 51 15 52 255 255 255 255
+IMAGEPICTURE "Control_973511840" "" "" 85 278 184 3 1 0 "Window\分隔线.tga"
+LIST "ListBox_LandGrass" "" "" 65 285 99 42 53 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"
+STILLIMAGEBUTTON "Control_170965580" "OpenChooseLandGrassDlg" "" 172 282 45 22 0 0 0 0 54 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 55 1
+STILLIMAGEBUTTON "Control_87150830" "DelLandGrassInfo" "" 172 304 45 22 0 0 0 0 56 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 57 1
+STILLIMAGEBUTTON "Control_83066794" "ClearAllLandGrassInfo" "" 172 326 45 22 0 0 0 0 58 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 59 1
+STILLIMAGEBUTTON "Control_532754820" "CreateLandGrass" "" 221 321 43 23 0 0 0 0 60 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 61 1
+LABEL "Control_85496112" "" "" 65 347 30 17 62 15 63 255 255 255 255
+IMAGEPICTURE "Control_14601248" "" "" 94 353 173 4 1 0 "Window\分隔线.tga"
+LIST "ListBox_WaterGrass" "" "" 67 363 99 43 64 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"
+STILLIMAGEBUTTON "Control_130498199" "OpenChooseWaterGrassDlg" "" 172 358 45 22 0 0 0 0 65 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 66 1
+STILLIMAGEBUTTON "Control_1274147" "DelWaterGrassInfo" "" 172 381 45 22 0 0 0 0 67 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 68 1
+STILLIMAGEBUTTON "Control_438049506" "CreateWaterGrass" "" 218 360 45 22 0 0 0 0 69 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 70 1
+STILLIMAGEBUTTON "Control_97169632" "ClearAllWaterGrassInfo" "" 172 404 45 22 0 0 0 0 71 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 72 1
+IMAGEPICTURE "Control_60226488" "" "" 63 426 202 4 1 0 "Window\分隔线.tga"
+LABEL "Control_26923788" "" "" 63 429 29 17 73 15 74 255 255 255 255
+LABEL "Control_7001386" "" "" 63 447 27 17 75 15 76 255 255 255 255
+SLIDER "Slider_GrassDensity" "moveSlider" "" 136 435 131 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_GrassSeed" "moveSlider" "" 136 448 131 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+STILLIMAGEBUTTON "Control_301036312" "ClearAllGrass" "" 185 461 57 18 0 0 0 0 77 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 78 1
+LABEL "Label_TreeSeed" "" "" 90 96 47 19 79 15 80 255 255 255 255
+LABEL "Label_TreeDensity" "" "" 93 140 47 17 81 15 82 255 255 255 255
+LABEL "Label_TreeSlope" "" "" 110 158 33 18 83 15 84 255 255 255 255
+LABEL "Label_TreeSpaceX" "" "" 102 178 39 18 85 15 86 255 255 255 255
+LABEL "Label_TreeSpaceZ" "" "" 100 196 40 18 87 15 88 255 255 255 255
+LABEL "Label_TreeSpaceLine" "" "" 101 213 39 17 89 15 90 255 255 255 255
+LABEL "Label_TreeSpaceNoise" "" "" 101 233 41 19 91 15 92 255 255 255 255
+LABEL "Label_GrassDensity" "" "" 90 428 44 17 93 15 94 255 255 255 255
+LABEL "Label_GrassSeed" "" "" 91 446 44 16 95 15 96 255 255 255 255
+STILLIMAGEBUTTON "Control_558616809" "EditTreePoly" "" 63 116 37 22 0 0 0 0 97 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 98 1
+STILLIMAGEBUTTON "Control_8979228" "EditTreeLine" "" 168 116 47 20 0 0 0 0 99 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 100 1
+STILLIMAGEBUTTON "Control_424027330" "EditGrass" "" 222 283 40 25 0 0 0 0 101 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 102 1
+STILLIMAGEBUTTON "Control_239347560" "PerspectiveView" "" 98 460 57 18 0 0 0 0 103 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 104 1
+LABEL "Control_242740172" "" "" 65 81 32 16 105 15 106 255 255 255 255
+LABEL "Label_TreeWeight" "" "" 101 81 32 18 107 15 108 255 255 255 255
+LABEL "Control_405007003" "" "" 65 327 32 17 109 15 110 255 255 255 255
+LABEL "Label_LandGrassWeight" "" "" 107 328 46 18 111 15 112 255 255 255 255
+LABEL "Control_82522590" "" "" 67 406 40 20 113 15 114 255 255 255 255
+LABEL "Label_WaterGrassWeight" "" "" 103 405 49 19 115 15 116 255 255 255 255

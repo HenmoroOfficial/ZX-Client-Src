@@ -1,0 +1,82 @@
+#ifndef __GNET_GOPENBANQUETINFO_RPCDATA
+#define __GNET_GOPENBANQUETINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GOpenBanquetInfo : public GNET::Rpc::Data
+	{
+	public:
+		int gs_id;
+		int map_id;
+		int attack_number;
+		int defend_number;
+		int starttime;
+
+	public:
+		GOpenBanquetInfo (int l_gs_id = 0,int l_map_id = 0,int l_attack_number = 0
+			,int l_defend_number = 0,int l_starttime = 0)
+			: gs_id(l_gs_id),map_id(l_map_id),attack_number(l_attack_number)
+			,defend_number(l_defend_number),starttime(l_starttime)
+		{
+		}
+
+		GOpenBanquetInfo(const GOpenBanquetInfo &rhs)
+			: gs_id(rhs.gs_id),map_id(rhs.map_id),attack_number(rhs.attack_number),
+			defend_number(rhs.defend_number),starttime(rhs.starttime) { }
+
+		Rpc::Data *Clone() const { return new GOpenBanquetInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GOpenBanquetInfo *r = dynamic_cast<const GOpenBanquetInfo *>(&rhs);
+			if (r && r != this)
+			{
+				gs_id = r->gs_id;
+				map_id = r->map_id;
+				attack_number = r->attack_number;
+				defend_number = r->defend_number;
+				starttime = r->starttime;
+			}
+			return *this;
+		}
+
+		GOpenBanquetInfo& operator = (const GOpenBanquetInfo &rhs)
+		{
+			const GOpenBanquetInfo *r = &rhs;
+			if (r && r != this)
+			{
+				gs_id = r->gs_id;
+				map_id = r->map_id;
+				attack_number = r->attack_number;
+				defend_number = r->defend_number;
+				starttime = r->starttime;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << gs_id;
+			os << map_id;
+			os << attack_number;
+			os << defend_number;
+			os << starttime;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> gs_id;
+			os >> map_id;
+			os >> attack_number;
+			os >> defend_number;
+			os >> starttime;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,38 @@
+	public:
+		int map_id;
+		int reason;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGCLOSENOTIFY };
+	public:
+		InstancingCloseNotify() { type = PROTOCOL_INSTANCINGCLOSENOTIFY; }
+		InstancingCloseNotify(void*) : Protocol(PROTOCOL_INSTANCINGCLOSENOTIFY) { }
+		InstancingCloseNotify (int l_map_id,int l_reason = 0,unsigned int l_localsid = 0)
+			 : map_id(l_map_id),reason(l_reason),localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGCLOSENOTIFY;
+		}
+
+		InstancingCloseNotify(const InstancingCloseNotify &rhs)
+			: Protocol(rhs),map_id(rhs.map_id),reason(rhs.reason),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingCloseNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << map_id;
+			os << reason;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> map_id;
+			os >> reason;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

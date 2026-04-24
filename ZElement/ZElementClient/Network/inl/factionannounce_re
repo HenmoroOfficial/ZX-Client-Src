@@ -1,0 +1,47 @@
+	public:
+		int retcode;
+		int roleid;
+		Octets announce;
+		unsigned int localsid;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONANNOUNCE_RE };
+	public:
+		FactionAnnounce_Re() { type = PROTOCOL_FACTIONANNOUNCE_RE; }
+		FactionAnnounce_Re(void*) : Protocol(PROTOCOL_FACTIONANNOUNCE_RE) { }
+		FactionAnnounce_Re (int l_retcode,int l_roleid,const Octets& l_announce,
+			unsigned int l_localsid,char l_scale = 0)
+			 : retcode(l_retcode),roleid(l_roleid),announce(l_announce)
+			,localsid(l_localsid),scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONANNOUNCE_RE;
+		}
+
+		FactionAnnounce_Re(const FactionAnnounce_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),announce(rhs.announce)
+			,localsid(rhs.localsid),scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionAnnounce_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << announce;
+			os << localsid;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> announce;
+			os >> localsid;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 256; }

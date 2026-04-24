@@ -1,0 +1,50 @@
+	public:
+		int roleid;
+		unsigned short achieve_id;
+		int param;
+		Octets rolename;
+		int localsid;
+		int timestamp;
+		enum { PROTOCOL_TYPE = PROTOCOL_ACHIEVEMENTMESSAGE };
+	public:
+		AchievementMessage() { type = PROTOCOL_ACHIEVEMENTMESSAGE; }
+		AchievementMessage(void*) : Protocol(PROTOCOL_ACHIEVEMENTMESSAGE) { }
+		AchievementMessage (int l_roleid,unsigned short l_achieve_id = 0,int l_param = 0,
+			const Octets& l_rolename = Octets(),int l_localsid = -1,int l_timestamp = 0)
+			 : roleid(l_roleid),achieve_id(l_achieve_id),param(l_param)
+			,rolename(l_rolename),localsid(l_localsid),timestamp(l_timestamp)
+		{
+			type = PROTOCOL_ACHIEVEMENTMESSAGE;
+		}
+
+		AchievementMessage(const AchievementMessage &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),achieve_id(rhs.achieve_id),param(rhs.param)
+			,rolename(rhs.rolename),localsid(rhs.localsid),timestamp(rhs.timestamp) { }
+
+		GNET::Protocol *Clone() const { return new AchievementMessage(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << achieve_id;
+			os << param;
+			os << rolename;
+			os << localsid;
+			os << timestamp;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> achieve_id;
+			os >> param;
+			os >> rolename;
+			os >> localsid;
+			os >> timestamp;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int teamid;
+		std::vector<GCrssvrTeamsRole> members;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSROLELIST_RE };
+	public:
+		CrssvrTeamsRoleList_Re() { type = PROTOCOL_CRSSVRTEAMSROLELIST_RE; }
+		CrssvrTeamsRoleList_Re(void*) : Protocol(PROTOCOL_CRSSVRTEAMSROLELIST_RE) { }
+		CrssvrTeamsRoleList_Re (int l_retcode,int l_teamid,const std::vector<GCrssvrTeamsRole>& l_members = std::vector<GCrssvrTeamsRole>(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),teamid(l_teamid),members(l_members)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSROLELIST_RE;
+		}
+
+		CrssvrTeamsRoleList_Re(const CrssvrTeamsRoleList_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),teamid(rhs.teamid),members(rhs.members)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsRoleList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << teamid;
+			os << members;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> teamid;
+			os >> members;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

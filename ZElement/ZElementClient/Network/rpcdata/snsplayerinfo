@@ -1,0 +1,167 @@
+#ifndef __GNET_SNSPLAYERINFO_RPCDATA
+#define __GNET_SNSPLAYERINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class SNSPlayerInfo : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int is_private;
+		Octets rolename;
+		Octets nickname;
+		short age;
+		int birthday;
+		int province;
+		int city;
+		Octets career;
+		Octets address;
+		Octets introduce;
+		int charm_personal;
+		int charm_friend;
+		int charm_sect;
+		int charm_faction;
+		int press_time;
+		int apply_time;
+		int leavemsg_time;
+		int vote_time;
+
+	public:
+		SNSPlayerInfo (int l_roleid = 0,int l_is_private = 0,const Octets& l_rolename = Octets()
+			,const Octets& l_nickname = Octets(),short l_age = 0,int l_birthday = 0
+			,int l_province = 0,int l_city = 0,const Octets& l_career = Octets()
+			,const Octets& l_address = Octets(),const Octets& l_introduce = Octets(),int l_charm_personal = 0
+			,int l_charm_friend = 0,int l_charm_sect = 0,int l_charm_faction = 0
+			,int l_press_time = 0,int l_apply_time = 0,int l_leavemsg_time = 0
+			,int l_vote_time = 0)
+			: roleid(l_roleid),is_private(l_is_private),rolename(l_rolename)
+			,nickname(l_nickname),age(l_age),birthday(l_birthday)
+			,province(l_province),city(l_city),career(l_career)
+			,address(l_address),introduce(l_introduce),charm_personal(l_charm_personal)
+			,charm_friend(l_charm_friend),charm_sect(l_charm_sect),charm_faction(l_charm_faction)
+			,press_time(l_press_time),apply_time(l_apply_time),leavemsg_time(l_leavemsg_time)
+			,vote_time(l_vote_time)
+		{
+		}
+
+		SNSPlayerInfo(const SNSPlayerInfo &rhs)
+			: roleid(rhs.roleid),is_private(rhs.is_private),rolename(rhs.rolename),
+			nickname(rhs.nickname),age(rhs.age),birthday(rhs.birthday),
+			province(rhs.province),city(rhs.city),career(rhs.career),
+			address(rhs.address),introduce(rhs.introduce),charm_personal(rhs.charm_personal),
+			charm_friend(rhs.charm_friend),charm_sect(rhs.charm_sect),charm_faction(rhs.charm_faction),
+			press_time(rhs.press_time),apply_time(rhs.apply_time),leavemsg_time(rhs.leavemsg_time),
+			vote_time(rhs.vote_time) { }
+
+		Rpc::Data *Clone() const { return new SNSPlayerInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SNSPlayerInfo *r = dynamic_cast<const SNSPlayerInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				is_private = r->is_private;
+				rolename = r->rolename;
+				nickname = r->nickname;
+				age = r->age;
+				birthday = r->birthday;
+				province = r->province;
+				city = r->city;
+				career = r->career;
+				address = r->address;
+				introduce = r->introduce;
+				charm_personal = r->charm_personal;
+				charm_friend = r->charm_friend;
+				charm_sect = r->charm_sect;
+				charm_faction = r->charm_faction;
+				press_time = r->press_time;
+				apply_time = r->apply_time;
+				leavemsg_time = r->leavemsg_time;
+				vote_time = r->vote_time;
+			}
+			return *this;
+		}
+
+		SNSPlayerInfo& operator = (const SNSPlayerInfo &rhs)
+		{
+			const SNSPlayerInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				is_private = r->is_private;
+				rolename = r->rolename;
+				nickname = r->nickname;
+				age = r->age;
+				birthday = r->birthday;
+				province = r->province;
+				city = r->city;
+				career = r->career;
+				address = r->address;
+				introduce = r->introduce;
+				charm_personal = r->charm_personal;
+				charm_friend = r->charm_friend;
+				charm_sect = r->charm_sect;
+				charm_faction = r->charm_faction;
+				press_time = r->press_time;
+				apply_time = r->apply_time;
+				leavemsg_time = r->leavemsg_time;
+				vote_time = r->vote_time;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << is_private;
+			os << rolename;
+			os << nickname;
+			os << age;
+			os << birthday;
+			os << province;
+			os << city;
+			os << career;
+			os << address;
+			os << introduce;
+			os << charm_personal;
+			os << charm_friend;
+			os << charm_sect;
+			os << charm_faction;
+			os << press_time;
+			os << apply_time;
+			os << leavemsg_time;
+			os << vote_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> is_private;
+			os >> rolename;
+			os >> nickname;
+			os >> age;
+			os >> birthday;
+			os >> province;
+			os >> city;
+			os >> career;
+			os >> address;
+			os >> introduce;
+			os >> charm_personal;
+			os >> charm_friend;
+			os >> charm_sect;
+			os >> charm_faction;
+			os >> press_time;
+			os >> apply_time;
+			os >> leavemsg_time;
+			os >> vote_time;
+			return os;
+		}
+
+	};
+};
+#endif

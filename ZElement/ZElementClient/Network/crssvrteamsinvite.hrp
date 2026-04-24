@@ -1,0 +1,42 @@
+
+#ifndef __GNET_CRSSVRTEAMSINVITE_HPP
+#define __GNET_CRSSVRTEAMSINVITE_HPP
+
+#include "rpcdefs.h"
+#include "callid.hxx"
+#include "state.hxx"
+
+#include "crssvrteamsinvitearg"
+#include "crssvrteamsinviteres"
+
+namespace GNET
+{
+
+class CrssvrTeamsInvite : public Rpc
+{
+#define	RPC_BASECLASS	Rpc
+	#include "crssvrteamsinvite"
+#undef	RPC_BASECLASS
+
+	void Server(Rpc::Data *argument, Rpc::Data *result, Manager *manager, Manager::Session::ID sid)
+	{
+		// CrssvrTeamsInviteArg *arg = (CrssvrTeamsInviteArg *)argument;
+		// CrssvrTeamsInviteRes *res = (CrssvrTeamsInviteRes *)result;
+	}
+
+	void Client(Rpc::Data *argument, Rpc::Data *result, Manager *manager, Manager::Session::ID sid)
+	{
+		// TODO
+		// CrssvrTeamsInviteArg *arg = (CrssvrTeamsInviteArg *)argument;
+		// CrssvrTeamsInviteRes *res = (CrssvrTeamsInviteRes *)result;
+	}
+
+	void OnTimeout()
+	{
+		// TODO Client Only
+	}
+
+};
+
+};
+#endif

@@ -1,0 +1,62 @@
+	public:
+		int retcode;
+		int roleid;
+		char message_type;
+		int message_id;
+		GLeaveMessageVector leave_msgs;
+		GApplyInfoVector apply_list;
+		GApplyInfoVector agree_list;
+		GApplyInfoVector deny_list;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSGETMESSAGE_RE };
+	public:
+		SNSGetMessage_Re() { type = PROTOCOL_SNSGETMESSAGE_RE; }
+		SNSGetMessage_Re(void*) : Protocol(PROTOCOL_SNSGETMESSAGE_RE) { }
+		SNSGetMessage_Re (int l_retcode,int l_roleid = 0,char l_message_type = 0,
+			int l_message_id = 0,const GLeaveMessageVector& l_leave_msgs = GLeaveMessageVector(),const GApplyInfoVector& l_apply_list = GApplyInfoVector(),
+			const GApplyInfoVector& l_agree_list = GApplyInfoVector(),const GApplyInfoVector& l_deny_list = GApplyInfoVector(),int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),message_type(l_message_type)
+			,message_id(l_message_id),leave_msgs(l_leave_msgs),apply_list(l_apply_list)
+			,agree_list(l_agree_list),deny_list(l_deny_list),localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSGETMESSAGE_RE;
+		}
+
+		SNSGetMessage_Re(const SNSGetMessage_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),message_type(rhs.message_type)
+			,message_id(rhs.message_id),leave_msgs(rhs.leave_msgs),apply_list(rhs.apply_list)
+			,agree_list(rhs.agree_list),deny_list(rhs.deny_list),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSGetMessage_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << message_type;
+			os << message_id;
+			os << leave_msgs;
+			os << apply_list;
+			os << agree_list;
+			os << deny_list;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> message_type;
+			os >> message_id;
+			os >> leave_msgs;
+			os >> apply_list;
+			os >> agree_list;
+			os >> deny_list;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 10240; }

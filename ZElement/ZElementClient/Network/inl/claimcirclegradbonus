@@ -1,0 +1,35 @@
+	public:
+		unsigned int circleid;
+		unsigned int roleid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CLAIMCIRCLEGRADBONUS };
+	public:
+		ClaimCircleGradBonus() { type = PROTOCOL_CLAIMCIRCLEGRADBONUS; }
+		ClaimCircleGradBonus(void*) : Protocol(PROTOCOL_CLAIMCIRCLEGRADBONUS) { }
+		ClaimCircleGradBonus (unsigned int l_circleid,unsigned int l_roleid)
+			 : circleid(l_circleid),roleid(l_roleid)
+		{
+			type = PROTOCOL_CLAIMCIRCLEGRADBONUS;
+		}
+
+		ClaimCircleGradBonus(const ClaimCircleGradBonus &rhs)
+			: Protocol(rhs),circleid(rhs.circleid),roleid(rhs.roleid) { }
+
+		GNET::Protocol *Clone() const { return new ClaimCircleGradBonus(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << circleid;
+			os << roleid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> circleid;
+			os >> roleid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

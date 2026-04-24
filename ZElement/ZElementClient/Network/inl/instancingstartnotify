@@ -1,0 +1,44 @@
+	public:
+		int gs_id;
+		int map_id;
+		int starttime;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_INSTANCINGSTARTNOTIFY };
+	public:
+		InstancingStartNotify() { type = PROTOCOL_INSTANCINGSTARTNOTIFY; }
+		InstancingStartNotify(void*) : Protocol(PROTOCOL_INSTANCINGSTARTNOTIFY) { }
+		InstancingStartNotify (int l_gs_id,int l_map_id = 0,int l_starttime = 0,
+			unsigned int l_localsid = 0)
+			 : gs_id(l_gs_id),map_id(l_map_id),starttime(l_starttime)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_INSTANCINGSTARTNOTIFY;
+		}
+
+		InstancingStartNotify(const InstancingStartNotify &rhs)
+			: Protocol(rhs),gs_id(rhs.gs_id),map_id(rhs.map_id),starttime(rhs.starttime)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new InstancingStartNotify(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << gs_id;
+			os << map_id;
+			os << starttime;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> gs_id;
+			os >> map_id;
+			os >> starttime;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

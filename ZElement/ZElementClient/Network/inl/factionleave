@@ -1,0 +1,38 @@
+	public:
+		unsigned int factionid;
+		int roleid;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONLEAVE };
+	public:
+		FactionLeave() { type = PROTOCOL_FACTIONLEAVE; }
+		FactionLeave(void*) : Protocol(PROTOCOL_FACTIONLEAVE) { }
+		FactionLeave (unsigned int l_factionid,int l_roleid,char l_scale = 0)
+			 : factionid(l_factionid),roleid(l_roleid),scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONLEAVE;
+		}
+
+		FactionLeave(const FactionLeave &rhs)
+			: Protocol(rhs),factionid(rhs.factionid),roleid(rhs.roleid),scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionLeave(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << factionid;
+			os << roleid;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> factionid;
+			os >> roleid;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

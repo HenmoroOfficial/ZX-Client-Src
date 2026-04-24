@@ -1,0 +1,47 @@
+	public:
+		Octets identity;
+		Octets response;
+		Octets state;
+		char use_token;
+		Octets mid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RESPONSE };
+	public:
+		Response() { type = PROTOCOL_RESPONSE; }
+		Response(void*) : Protocol(PROTOCOL_RESPONSE) { }
+		Response (const Octets& l_identity,const Octets& l_response,const Octets& l_state,
+			char l_use_token = 0,const Octets& l_mid = Octets())
+			 : identity(l_identity),response(l_response),state(l_state)
+			,use_token(l_use_token),mid(l_mid)
+		{
+			type = PROTOCOL_RESPONSE;
+		}
+
+		Response(const Response &rhs)
+			: Protocol(rhs),identity(rhs.identity),response(rhs.response),state(rhs.state)
+			,use_token(rhs.use_token),mid(rhs.mid) { }
+
+		GNET::Protocol *Clone() const { return new Response(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << identity;
+			os << response;
+			os << state;
+			os << use_token;
+			os << mid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> identity;
+			os >> response;
+			os >> state;
+			os >> use_token;
+			os >> mid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 101; }
+
+		bool SizePolicy(size_t size) const { return size <= 132; }

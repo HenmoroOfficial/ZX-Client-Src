@@ -1,0 +1,44 @@
+	public:
+		int64_t sn;
+		GRoleInventory obj;
+		unsigned int localsid;
+		int retcode;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNGETITEM_RE };
+	public:
+		ConsignGetItem_Re() { type = PROTOCOL_CONSIGNGETITEM_RE; }
+		ConsignGetItem_Re(void*) : Protocol(PROTOCOL_CONSIGNGETITEM_RE) { }
+		ConsignGetItem_Re (int64_t l_sn,GRoleInventory l_obj,unsigned int l_localsid,
+			int l_retcode = 0)
+			 : sn(l_sn),obj(l_obj),localsid(l_localsid)
+			,retcode(l_retcode)
+		{
+			type = PROTOCOL_CONSIGNGETITEM_RE;
+		}
+
+		ConsignGetItem_Re(const ConsignGetItem_Re &rhs)
+			: Protocol(rhs),sn(rhs.sn),obj(rhs.obj),localsid(rhs.localsid)
+			,retcode(rhs.retcode) { }
+
+		GNET::Protocol *Clone() const { return new ConsignGetItem_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << sn;
+			os << obj;
+			os << localsid;
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> sn;
+			os >> obj;
+			os >> localsid;
+			os >> retcode;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

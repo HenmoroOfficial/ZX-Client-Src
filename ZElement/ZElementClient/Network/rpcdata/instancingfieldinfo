@@ -1,0 +1,90 @@
+#ifndef __GNET_INSTANCINGFIELDINFO_RPCDATA
+#define __GNET_INSTANCINGFIELDINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "instancingsideinfo"
+#include "instancingsideinfo"
+#include "instancingsideinfo"
+
+namespace GNET
+{
+	class InstancingFieldInfo : public GNET::Rpc::Data
+	{
+	public:
+		int battle_id;
+		int world_tag;
+		int tid;
+		InstancingSideInfo attacker;
+		InstancingSideInfo defender;
+		InstancingSideInfo looker;
+
+	public:
+		InstancingFieldInfo (int l_battle_id = 0,int l_world_tag = 0,const InstancingSideInfo& l_attacker = InstancingSideInfo()
+			,const InstancingSideInfo& l_defender = InstancingSideInfo(),const InstancingSideInfo& l_looker = InstancingSideInfo())
+			: battle_id(l_battle_id),world_tag(l_world_tag),attacker(l_attacker)
+			,defender(l_defender),looker(l_looker)
+		{
+		}
+
+		InstancingFieldInfo(const InstancingFieldInfo &rhs)
+			: battle_id(rhs.battle_id),world_tag(rhs.world_tag),tid(rhs.tid),
+			attacker(rhs.attacker),defender(rhs.defender),looker(rhs.looker) { }
+
+		Rpc::Data *Clone() const { return new InstancingFieldInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const InstancingFieldInfo *r = dynamic_cast<const InstancingFieldInfo *>(&rhs);
+			if (r && r != this)
+			{
+				battle_id = r->battle_id;
+				world_tag = r->world_tag;
+				tid = r->tid;
+				attacker = r->attacker;
+				defender = r->defender;
+				looker = r->looker;
+			}
+			return *this;
+		}
+
+		InstancingFieldInfo& operator = (const InstancingFieldInfo &rhs)
+		{
+			const InstancingFieldInfo *r = &rhs;
+			if (r && r != this)
+			{
+				battle_id = r->battle_id;
+				world_tag = r->world_tag;
+				tid = r->tid;
+				attacker = r->attacker;
+				defender = r->defender;
+				looker = r->looker;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << battle_id;
+			os << world_tag;
+			os << tid;
+			os << attacker;
+			os << defender;
+			os << looker;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> battle_id;
+			os >> world_tag;
+			os >> tid;
+			os >> attacker;
+			os >> defender;
+			os >> looker;
+			return os;
+		}
+
+	};
+};
+#endif

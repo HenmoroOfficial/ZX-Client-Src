@@ -1,0 +1,56 @@
+	public:
+		int userid;
+		unsigned int localsid;
+		int remain_time;
+		int zoneid;
+		int free_time_left;
+		int free_time_end;
+		int district_id;
+		enum { PROTOCOL_TYPE = PROTOCOL_ONLINEANNOUNCE };
+	public:
+		OnlineAnnounce() { type = PROTOCOL_ONLINEANNOUNCE; }
+		OnlineAnnounce(void*) : Protocol(PROTOCOL_ONLINEANNOUNCE) { }
+		OnlineAnnounce (int l_userid,unsigned int l_localsid,int l_remain_time = 0,
+			int l_zoneid = 0,int l_free_time_left = 0,int l_free_time_end = 0,
+			int l_district_id = 0)
+			 : userid(l_userid),localsid(l_localsid),remain_time(l_remain_time)
+			,zoneid(l_zoneid),free_time_left(l_free_time_left),free_time_end(l_free_time_end)
+			,district_id(l_district_id)
+		{
+			type = PROTOCOL_ONLINEANNOUNCE;
+		}
+
+		OnlineAnnounce(const OnlineAnnounce &rhs)
+			: Protocol(rhs),userid(rhs.userid),localsid(rhs.localsid),remain_time(rhs.remain_time)
+			,zoneid(rhs.zoneid),free_time_left(rhs.free_time_left),free_time_end(rhs.free_time_end)
+			,district_id(rhs.district_id) { }
+
+		GNET::Protocol *Clone() const { return new OnlineAnnounce(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << userid;
+			os << localsid;
+			os << remain_time;
+			os << zoneid;
+			os << free_time_left;
+			os << free_time_end;
+			os << district_id;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> userid;
+			os >> localsid;
+			os >> remain_time;
+			os >> zoneid;
+			os >> free_time_left;
+			os >> free_time_end;
+			os >> district_id;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 101; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

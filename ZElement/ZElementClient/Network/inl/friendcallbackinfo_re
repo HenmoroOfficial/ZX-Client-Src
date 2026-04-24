@@ -1,0 +1,44 @@
+	public:
+		unsigned char retcode;
+		int roleid;
+		unsigned int localsid;
+		GCallbackInfo callback_limit;
+		enum { PROTOCOL_TYPE = PROTOCOL_FRIENDCALLBACKINFO_RE };
+	public:
+		FriendCallbackInfo_Re() { type = PROTOCOL_FRIENDCALLBACKINFO_RE; }
+		FriendCallbackInfo_Re(void*) : Protocol(PROTOCOL_FRIENDCALLBACKINFO_RE) { }
+		FriendCallbackInfo_Re (unsigned char l_retcode,int l_roleid,unsigned int l_localsid,
+			const GCallbackInfo& l_callback_limit)
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid)
+			,callback_limit(l_callback_limit)
+		{
+			type = PROTOCOL_FRIENDCALLBACKINFO_RE;
+		}
+
+		FriendCallbackInfo_Re(const FriendCallbackInfo_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid)
+			,callback_limit(rhs.callback_limit) { }
+
+		GNET::Protocol *Clone() const { return new FriendCallbackInfo_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << callback_limit;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> callback_limit;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

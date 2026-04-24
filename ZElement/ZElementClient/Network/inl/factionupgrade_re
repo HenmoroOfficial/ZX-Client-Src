@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int level;
+		unsigned int localsid;
+		char scale;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONUPGRADE_RE };
+	public:
+		FactionUpgrade_Re() { type = PROTOCOL_FACTIONUPGRADE_RE; }
+		FactionUpgrade_Re(void*) : Protocol(PROTOCOL_FACTIONUPGRADE_RE) { }
+		FactionUpgrade_Re (int l_retcode,int l_level,unsigned int l_localsid,
+			char l_scale = 0)
+			 : retcode(l_retcode),level(l_level),localsid(l_localsid)
+			,scale(l_scale)
+		{
+			type = PROTOCOL_FACTIONUPGRADE_RE;
+		}
+
+		FactionUpgrade_Re(const FactionUpgrade_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),level(rhs.level),localsid(rhs.localsid)
+			,scale(rhs.scale) { }
+
+		GNET::Protocol *Clone() const { return new FactionUpgrade_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << level;
+			os << localsid;
+			os << scale;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> level;
+			os >> localsid;
+			os >> scale;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

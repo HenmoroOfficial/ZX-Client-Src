@@ -1,0 +1,50 @@
+	public:
+		int page;
+		unsigned int roleid;
+		unsigned int factionid;
+		unsigned int familyid;
+		unsigned char istree;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONLIST };
+	public:
+		FactionList() { type = PROTOCOL_FACTIONLIST; }
+		FactionList(void*) : Protocol(PROTOCOL_FACTIONLIST) { }
+		FactionList (int l_page,unsigned int l_roleid,unsigned int l_factionid,
+			unsigned int l_familyid,unsigned char l_istree = 0,unsigned int l_localsid = 0)
+			 : page(l_page),roleid(l_roleid),factionid(l_factionid)
+			,familyid(l_familyid),istree(l_istree),localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONLIST;
+		}
+
+		FactionList(const FactionList &rhs)
+			: Protocol(rhs),page(rhs.page),roleid(rhs.roleid),factionid(rhs.factionid)
+			,familyid(rhs.familyid),istree(rhs.istree),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionList(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << page;
+			os << roleid;
+			os << factionid;
+			os << familyid;
+			os << istree;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> page;
+			os >> roleid;
+			os >> factionid;
+			os >> familyid;
+			os >> istree;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

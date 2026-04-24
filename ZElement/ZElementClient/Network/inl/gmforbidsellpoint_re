@@ -1,0 +1,35 @@
+	public:
+		int retcode;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GMFORBIDSELLPOINT_RE };
+	public:
+		GMForbidSellPoint_Re() { type = PROTOCOL_GMFORBIDSELLPOINT_RE; }
+		GMForbidSellPoint_Re(void*) : Protocol(PROTOCOL_GMFORBIDSELLPOINT_RE) { }
+		GMForbidSellPoint_Re (int l_retcode,unsigned int l_localsid)
+			 : retcode(l_retcode),localsid(l_localsid)
+		{
+			type = PROTOCOL_GMFORBIDSELLPOINT_RE;
+		}
+
+		GMForbidSellPoint_Re(const GMForbidSellPoint_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GMForbidSellPoint_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

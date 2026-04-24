@@ -1,0 +1,83 @@
+#ifndef __GNET_GDISCIPLEINFO_RPCDATA
+#define __GNET_GDISCIPLEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GDiscipleInfo : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets name;
+		unsigned char level;
+		unsigned char occupation;
+		int lineid;
+
+	public:
+		GDiscipleInfo (int l_roleid = 0,const Octets& l_name = Octets(0),unsigned char l_level = 0
+			,unsigned char l_occupation = 0,int l_lineid = 0)
+			: roleid(l_roleid),name(l_name),level(l_level)
+			,occupation(l_occupation),lineid(l_lineid)
+		{
+		}
+
+		GDiscipleInfo(const GDiscipleInfo &rhs)
+			: roleid(rhs.roleid),name(rhs.name),level(rhs.level),
+			occupation(rhs.occupation),lineid(rhs.lineid) { }
+
+		Rpc::Data *Clone() const { return new GDiscipleInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GDiscipleInfo *r = dynamic_cast<const GDiscipleInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				occupation = r->occupation;
+				lineid = r->lineid;
+			}
+			return *this;
+		}
+
+		GDiscipleInfo& operator = (const GDiscipleInfo &rhs)
+		{
+			const GDiscipleInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				occupation = r->occupation;
+				lineid = r->lineid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << name;
+			os << level;
+			os << occupation;
+			os << lineid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> name;
+			os >> level;
+			os >> occupation;
+			os >> lineid;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GDiscipleInfo>	GDiscipleInfoVector;
+};
+#endif

@@ -1,0 +1,50 @@
+	public:
+		int roleid;
+		unsigned short retcode;
+		int gs_id;
+		int map_id;
+		int queue_number;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_OPENBANQUETJOIN_RE };
+	public:
+		OpenBanquetJoin_Re() { type = PROTOCOL_OPENBANQUETJOIN_RE; }
+		OpenBanquetJoin_Re(void*) : Protocol(PROTOCOL_OPENBANQUETJOIN_RE) { }
+		OpenBanquetJoin_Re (int l_roleid,unsigned short l_retcode,int l_gs_id,
+			int l_map_id = 0,int l_queue_number = 0,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),retcode(l_retcode),gs_id(l_gs_id)
+			,map_id(l_map_id),queue_number(l_queue_number),localsid(l_localsid)
+		{
+			type = PROTOCOL_OPENBANQUETJOIN_RE;
+		}
+
+		OpenBanquetJoin_Re(const OpenBanquetJoin_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),retcode(rhs.retcode),gs_id(rhs.gs_id)
+			,map_id(rhs.map_id),queue_number(rhs.queue_number),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new OpenBanquetJoin_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << retcode;
+			os << gs_id;
+			os << map_id;
+			os << queue_number;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> retcode;
+			os >> gs_id;
+			os >> map_id;
+			os >> queue_number;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 100; }

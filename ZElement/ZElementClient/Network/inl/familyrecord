@@ -1,0 +1,47 @@
+	public:
+		int familyid;
+		int roleid;
+		int star;
+		std::vector<int> records;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FAMILYRECORD };
+	public:
+		FamilyRecord() { type = PROTOCOL_FAMILYRECORD; }
+		FamilyRecord(void*) : Protocol(PROTOCOL_FAMILYRECORD) { }
+		FamilyRecord (int l_familyid,int l_roleid,int l_star,
+			const std::vector<int>& l_records,unsigned int l_localsid)
+			 : familyid(l_familyid),roleid(l_roleid),star(l_star)
+			,records(l_records),localsid(l_localsid)
+		{
+			type = PROTOCOL_FAMILYRECORD;
+		}
+
+		FamilyRecord(const FamilyRecord &rhs)
+			: Protocol(rhs),familyid(rhs.familyid),roleid(rhs.roleid),star(rhs.star)
+			,records(rhs.records),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FamilyRecord(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << familyid;
+			os << roleid;
+			os << star;
+			os << records;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> familyid;
+			os >> roleid;
+			os >> star;
+			os >> records;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

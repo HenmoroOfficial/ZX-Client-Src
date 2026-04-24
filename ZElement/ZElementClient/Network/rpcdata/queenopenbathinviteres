@@ -1,0 +1,59 @@
+#ifndef __GNET_QUEENOPENBATHINVITERES_RPCDATA
+#define __GNET_QUEENOPENBATHINVITERES_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class QueenOpenBathInviteRes : public GNET::Rpc::Data
+	{
+	public:
+		char retcode;
+
+	public:
+		QueenOpenBathInviteRes (char l_retcode = 0)
+			: retcode(l_retcode)
+		{
+		}
+
+		QueenOpenBathInviteRes(const QueenOpenBathInviteRes &rhs)
+			: retcode(rhs.retcode) { }
+
+		Rpc::Data *Clone() const { return new QueenOpenBathInviteRes(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const QueenOpenBathInviteRes *r = dynamic_cast<const QueenOpenBathInviteRes *>(&rhs);
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+			}
+			return *this;
+		}
+
+		QueenOpenBathInviteRes& operator = (const QueenOpenBathInviteRes &rhs)
+		{
+			const QueenOpenBathInviteRes *r = &rhs;
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			return os;
+		}
+
+	};
+};
+#endif

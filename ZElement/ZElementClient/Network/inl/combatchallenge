@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		unsigned int factionid;
+		enum { PROTOCOL_TYPE = PROTOCOL_COMBATCHALLENGE };
+	public:
+		CombatChallenge() { type = PROTOCOL_COMBATCHALLENGE; }
+		CombatChallenge(void*) : Protocol(PROTOCOL_COMBATCHALLENGE) { }
+		CombatChallenge (int l_roleid,unsigned int l_factionid = 0)
+			 : roleid(l_roleid),factionid(l_factionid)
+		{
+			type = PROTOCOL_COMBATCHALLENGE;
+		}
+
+		CombatChallenge(const CombatChallenge &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),factionid(rhs.factionid) { }
+
+		GNET::Protocol *Clone() const { return new CombatChallenge(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << factionid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> factionid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

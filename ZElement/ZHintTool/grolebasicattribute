@@ -1,0 +1,249 @@
+#ifndef __GNET_GROLEBASICATTRIBUTE_RPCDATA
+#define __GNET_GROLEBASICATTRIBUTE_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GRoleBasicAttribute : public GNET::Rpc::Data
+	{
+	public:
+		int resistance1;
+		int resistance2;
+		int resistance3;
+		int resistance4;
+		int resistance5;
+		int level;
+		int cls;
+		int level_before_reborn;
+		int cls_before_reborn;
+		int talisman_value;
+		int reputation;
+		int pk_value;
+		char cultivation;
+		int64_t exp;
+		int max_hp;
+		int max_mp;
+		int damage_low;
+		int damage_high;
+		int defense;
+		int attack;
+		int armor;
+		float crit_damage;
+		float crit_rate;
+		float skill_armor_rate;
+		float skill_attack_rate;
+		float anti_crit;
+		float anti_crit_damage;
+		float cult_defense_xian;
+		float cult_defense_mo;
+		float cult_defense_fo;
+		int battlescore;
+		char reborn_count;
+		char gender;
+
+	public:
+		GRoleBasicAttribute (int l_resistance1 = 0,int l_resistance2 = 0,int l_resistance3 = 0
+			,int l_resistance4 = 0,int l_resistance5 = 0,int l_level = 0
+			,int l_cls = 0,int l_level_before_reborn = 0,int l_cls_before_reborn = 0
+			,int l_talisman_value = 0,int l_reputation = 0,int l_pk_value = 0
+			,char l_cultivation = 0,int64_t l_exp = 0,int l_max_hp = 0
+			,int l_max_mp = 0,int l_damage_low = 0,int l_damage_high = 0
+			,int l_defense = 0,int l_attack = 0,int l_armor = 0
+			,float l_crit_damage = 0.0f,float l_crit_rate = 0.0f,float l_skill_armor_rate = 0.0f
+			,float l_skill_attack_rate = 0.0f,float l_anti_crit = 0.0f,float l_anti_crit_damage = 0.0f
+			,float l_cult_defense_xian = 0.0f,float l_cult_defense_mo = 0.0f,float l_cult_defense_fo = 0.0f
+			,int l_battlescore = 0,char l_reborn_count = 0,char l_gender = 0)
+			: resistance1(l_resistance1),resistance2(l_resistance2),resistance3(l_resistance3)
+			,resistance4(l_resistance4),resistance5(l_resistance5),level(l_level)
+			,cls(l_cls),level_before_reborn(l_level_before_reborn),cls_before_reborn(l_cls_before_reborn)
+			,talisman_value(l_talisman_value),reputation(l_reputation),pk_value(l_pk_value)
+			,cultivation(l_cultivation),exp(l_exp),max_hp(l_max_hp)
+			,max_mp(l_max_mp),damage_low(l_damage_low),damage_high(l_damage_high)
+			,defense(l_defense),attack(l_attack),armor(l_armor)
+			,crit_damage(l_crit_damage),crit_rate(l_crit_rate),skill_armor_rate(l_skill_armor_rate)
+			,skill_attack_rate(l_skill_attack_rate),anti_crit(l_anti_crit),anti_crit_damage(l_anti_crit_damage)
+			,cult_defense_xian(l_cult_defense_xian),cult_defense_mo(l_cult_defense_mo),cult_defense_fo(l_cult_defense_fo)
+			,battlescore(l_battlescore),reborn_count(l_reborn_count),gender(l_gender)
+		{
+		}
+
+		GRoleBasicAttribute(const GRoleBasicAttribute &rhs)
+			: resistance1(rhs.resistance1),resistance2(rhs.resistance2),resistance3(rhs.resistance3),
+			resistance4(rhs.resistance4),resistance5(rhs.resistance5),level(rhs.level),
+			cls(rhs.cls),level_before_reborn(rhs.level_before_reborn),cls_before_reborn(rhs.cls_before_reborn),
+			talisman_value(rhs.talisman_value),reputation(rhs.reputation),pk_value(rhs.pk_value),
+			cultivation(rhs.cultivation),exp(rhs.exp),max_hp(rhs.max_hp),
+			max_mp(rhs.max_mp),damage_low(rhs.damage_low),damage_high(rhs.damage_high),
+			defense(rhs.defense),attack(rhs.attack),armor(rhs.armor),
+			crit_damage(rhs.crit_damage),crit_rate(rhs.crit_rate),skill_armor_rate(rhs.skill_armor_rate),
+			skill_attack_rate(rhs.skill_attack_rate),anti_crit(rhs.anti_crit),anti_crit_damage(rhs.anti_crit_damage),
+			cult_defense_xian(rhs.cult_defense_xian),cult_defense_mo(rhs.cult_defense_mo),cult_defense_fo(rhs.cult_defense_fo),
+			battlescore(rhs.battlescore),reborn_count(rhs.reborn_count),gender(rhs.gender) { }
+
+		Rpc::Data *Clone() const { return new GRoleBasicAttribute(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GRoleBasicAttribute *r = dynamic_cast<const GRoleBasicAttribute *>(&rhs);
+			if (r && r != this)
+			{
+				resistance1 = r->resistance1;
+				resistance2 = r->resistance2;
+				resistance3 = r->resistance3;
+				resistance4 = r->resistance4;
+				resistance5 = r->resistance5;
+				level = r->level;
+				cls = r->cls;
+				level_before_reborn = r->level_before_reborn;
+				cls_before_reborn = r->cls_before_reborn;
+				talisman_value = r->talisman_value;
+				reputation = r->reputation;
+				pk_value = r->pk_value;
+				cultivation = r->cultivation;
+				exp = r->exp;
+				max_hp = r->max_hp;
+				max_mp = r->max_mp;
+				damage_low = r->damage_low;
+				damage_high = r->damage_high;
+				defense = r->defense;
+				attack = r->attack;
+				armor = r->armor;
+				crit_damage = r->crit_damage;
+				crit_rate = r->crit_rate;
+				skill_armor_rate = r->skill_armor_rate;
+				skill_attack_rate = r->skill_attack_rate;
+				anti_crit = r->anti_crit;
+				anti_crit_damage = r->anti_crit_damage;
+				cult_defense_xian = r->cult_defense_xian;
+				cult_defense_mo = r->cult_defense_mo;
+				cult_defense_fo = r->cult_defense_fo;
+				battlescore = r->battlescore;
+				reborn_count = r->reborn_count;
+				gender = r->gender;
+			}
+			return *this;
+		}
+
+		GRoleBasicAttribute& operator = (const GRoleBasicAttribute &rhs)
+		{
+			const GRoleBasicAttribute *r = &rhs;
+			if (r && r != this)
+			{
+				resistance1 = r->resistance1;
+				resistance2 = r->resistance2;
+				resistance3 = r->resistance3;
+				resistance4 = r->resistance4;
+				resistance5 = r->resistance5;
+				level = r->level;
+				cls = r->cls;
+				level_before_reborn = r->level_before_reborn;
+				cls_before_reborn = r->cls_before_reborn;
+				talisman_value = r->talisman_value;
+				reputation = r->reputation;
+				pk_value = r->pk_value;
+				cultivation = r->cultivation;
+				exp = r->exp;
+				max_hp = r->max_hp;
+				max_mp = r->max_mp;
+				damage_low = r->damage_low;
+				damage_high = r->damage_high;
+				defense = r->defense;
+				attack = r->attack;
+				armor = r->armor;
+				crit_damage = r->crit_damage;
+				crit_rate = r->crit_rate;
+				skill_armor_rate = r->skill_armor_rate;
+				skill_attack_rate = r->skill_attack_rate;
+				anti_crit = r->anti_crit;
+				anti_crit_damage = r->anti_crit_damage;
+				cult_defense_xian = r->cult_defense_xian;
+				cult_defense_mo = r->cult_defense_mo;
+				cult_defense_fo = r->cult_defense_fo;
+				battlescore = r->battlescore;
+				reborn_count = r->reborn_count;
+				gender = r->gender;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << resistance1;
+			os << resistance2;
+			os << resistance3;
+			os << resistance4;
+			os << resistance5;
+			os << level;
+			os << cls;
+			os << level_before_reborn;
+			os << cls_before_reborn;
+			os << talisman_value;
+			os << reputation;
+			os << pk_value;
+			os << cultivation;
+			os << exp;
+			os << max_hp;
+			os << max_mp;
+			os << damage_low;
+			os << damage_high;
+			os << defense;
+			os << attack;
+			os << armor;
+			os << crit_damage;
+			os << crit_rate;
+			os << skill_armor_rate;
+			os << skill_attack_rate;
+			os << anti_crit;
+			os << anti_crit_damage;
+			os << cult_defense_xian;
+			os << cult_defense_mo;
+			os << cult_defense_fo;
+			os << battlescore;
+			os << reborn_count;
+			os << gender;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> resistance1;
+			os >> resistance2;
+			os >> resistance3;
+			os >> resistance4;
+			os >> resistance5;
+			os >> level;
+			os >> cls;
+			os >> level_before_reborn;
+			os >> cls_before_reborn;
+			os >> talisman_value;
+			os >> reputation;
+			os >> pk_value;
+			os >> cultivation;
+			os >> exp;
+			os >> max_hp;
+			os >> max_mp;
+			os >> damage_low;
+			os >> damage_high;
+			os >> defense;
+			os >> attack;
+			os >> armor;
+			os >> crit_damage;
+			os >> crit_rate;
+			os >> skill_armor_rate;
+			os >> skill_attack_rate;
+			os >> anti_crit;
+			os >> anti_crit_damage;
+			os >> cult_defense_xian;
+			os >> cult_defense_mo;
+			os >> cult_defense_fo;
+			os >> battlescore;
+			os >> reborn_count;
+			os >> gender;
+			return os;
+		}
+
+	};
+};
+#endif

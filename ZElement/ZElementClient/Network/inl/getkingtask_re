@@ -1,0 +1,56 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int localsid;
+		int task_type;
+		int complete_times;
+		int task_status;
+		int task_issue_time;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETKINGTASK_RE };
+	public:
+		GetKingTask_Re() { type = PROTOCOL_GETKINGTASK_RE; }
+		GetKingTask_Re(void*) : Protocol(PROTOCOL_GETKINGTASK_RE) { }
+		GetKingTask_Re (int l_retcode,int l_roleid,unsigned int l_localsid = 0,
+			int l_task_type = 0,int l_complete_times = 0,int l_task_status = 0,
+			int l_task_issue_time = 0)
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid)
+			,task_type(l_task_type),complete_times(l_complete_times),task_status(l_task_status)
+			,task_issue_time(l_task_issue_time)
+		{
+			type = PROTOCOL_GETKINGTASK_RE;
+		}
+
+		GetKingTask_Re(const GetKingTask_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid)
+			,task_type(rhs.task_type),complete_times(rhs.complete_times),task_status(rhs.task_status)
+			,task_issue_time(rhs.task_issue_time) { }
+
+		GNET::Protocol *Clone() const { return new GetKingTask_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << task_type;
+			os << complete_times;
+			os << task_status;
+			os << task_issue_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> task_type;
+			os >> complete_times;
+			os >> task_status;
+			os >> task_issue_time;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

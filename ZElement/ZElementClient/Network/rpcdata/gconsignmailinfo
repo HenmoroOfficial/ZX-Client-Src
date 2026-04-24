@@ -1,0 +1,87 @@
+#ifndef __GNET_GCONSIGNMAILINFO_RPCDATA
+#define __GNET_GCONSIGNMAILINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GConsignMailInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int item_id;
+		int item_cnt;
+		int money;
+		int margin;
+		Octets sell_to_rolename;
+		unsigned char consign_type;
+
+	public:
+		GConsignMailInfo (unsigned int l_item_id = 0,int l_item_cnt = 0,int l_money = 0
+			,int l_margin = 0,const Octets& l_sell_to_rolename = Octets(),unsigned char l_consign_type = 0)
+			: item_id(l_item_id),item_cnt(l_item_cnt),money(l_money)
+			,margin(l_margin),sell_to_rolename(l_sell_to_rolename),consign_type(l_consign_type)
+		{
+		}
+
+		GConsignMailInfo(const GConsignMailInfo &rhs)
+			: item_id(rhs.item_id),item_cnt(rhs.item_cnt),money(rhs.money),
+			margin(rhs.margin),sell_to_rolename(rhs.sell_to_rolename),consign_type(rhs.consign_type) { }
+
+		Rpc::Data *Clone() const { return new GConsignMailInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GConsignMailInfo *r = dynamic_cast<const GConsignMailInfo *>(&rhs);
+			if (r && r != this)
+			{
+				item_id = r->item_id;
+				item_cnt = r->item_cnt;
+				money = r->money;
+				margin = r->margin;
+				sell_to_rolename = r->sell_to_rolename;
+				consign_type = r->consign_type;
+			}
+			return *this;
+		}
+
+		GConsignMailInfo& operator = (const GConsignMailInfo &rhs)
+		{
+			const GConsignMailInfo *r = &rhs;
+			if (r && r != this)
+			{
+				item_id = r->item_id;
+				item_cnt = r->item_cnt;
+				money = r->money;
+				margin = r->margin;
+				sell_to_rolename = r->sell_to_rolename;
+				consign_type = r->consign_type;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << item_id;
+			os << item_cnt;
+			os << money;
+			os << margin;
+			os << sell_to_rolename;
+			os << consign_type;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> item_id;
+			os >> item_cnt;
+			os >> money;
+			os >> margin;
+			os >> sell_to_rolename;
+			os >> consign_type;
+			return os;
+		}
+
+	};
+};
+#endif

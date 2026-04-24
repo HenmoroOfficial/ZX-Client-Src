@@ -1,0 +1,64 @@
+#ifndef __GNET_GGATEROLEGTSTATUS_RPCDATA
+#define __GNET_GGATEROLEGTSTATUS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GGateRoleGTStatus : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		unsigned char status;
+
+	public:
+		GGateRoleGTStatus (int l_roleid = 0,unsigned char l_status = 0)
+			: roleid(l_roleid),status(l_status)
+		{
+		}
+
+		GGateRoleGTStatus(const GGateRoleGTStatus &rhs)
+			: roleid(rhs.roleid),status(rhs.status) { }
+
+		Rpc::Data *Clone() const { return new GGateRoleGTStatus(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GGateRoleGTStatus *r = dynamic_cast<const GGateRoleGTStatus *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				status = r->status;
+			}
+			return *this;
+		}
+
+		GGateRoleGTStatus& operator = (const GGateRoleGTStatus &rhs)
+		{
+			const GGateRoleGTStatus *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				status = r->status;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << status;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> status;
+			return os;
+		}
+
+	};
+};
+#endif

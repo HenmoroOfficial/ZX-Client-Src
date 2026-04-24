@@ -1,0 +1,75 @@
+DIALOG "Dlg_Light" 0 0 275 480 0 1 10 "Window\对话框_标准边框.dds" "" "" 0 0 250 27 "" 26 5 96 96 96 255 1
+STILLIMAGEBUTTON "Btn_LiDlgMountain" "ChooseMountain" "" 0 59 58 60 0 0 0 0 2 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 3 1
+STILLIMAGEBUTTON "Btn_LiDlgWater" "ChooseWater" "" 0 118 58 60 0 0 0 0 4 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 5 1
+STILLIMAGEBUTTON "Btn_LiDlgRoad" "ChooseRoad" "" 1 178 58 60 0 0 0 0 6 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 7 1
+STILLIMAGEBUTTON "Btn_LiDlgLocalTexture" "ChooseLocalTexture" "" 0 238 58 60 0 0 0 0 8 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 9 1
+STILLIMAGEBUTTON "Btn_LiDlgPlant" "ChoosePlant" "" 0 298 58 60 0 0 0 0 10 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 11 1
+STILLIMAGEBUTTON "Btn_LiDlgBuilding" "ChooseBuilding" "" 0 358 58 60 0 0 0 0 12 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 13 1
+STILLIMAGEBUTTON "Btn_LiDlgLight" "ChooseLight" "" 1 418 58 60 0 0 0 0 14 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 15 1
+STILLIMAGEBUTTON "Btn_LiDlgTerrain" "ChooseTerrain" "" 0 0 58 60 0 0 0 0 16 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 17 1
+IMAGEPICTURE "Control_11469281" "" "" 64 36 200 3 1 0 "Window\分隔线.tga"
+LABEL "Control_23712456" "" "" 114 8 47 20 18 16 19 255 203 74 255
+LABEL "Control_116962956" "" "" 64 62 45 17 20 15 21 255 255 255 255
+LIST "ListBox_LightInfos" "" "" 63 81 118 45 22 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"
+STILLIMAGEBUTTON "Control_82678402" "OpenChooseLight" "" 192 43 60 20 0 0 0 0 23 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 24 1
+STILLIMAGEBUTTON "Control_3808085" "EditCurLight" "" 192 65 60 20 0 0 0 0 25 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 26 1
+STILLIMAGEBUTTON "Control_380746437" "DelLight" "" 192 86 60 20 0 0 0 0 27 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 28 1
+STILLIMAGEBUTTON "Control_23879537" "ClearAllLight" "" 192 106 60 20 0 0 0 0 29 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 30 1
+IMAGEPICTURE "Control_37375945" "" "" 64 127 201 3 1 0 "Window\分隔线.tga"
+LABEL "Control_106240224" "" "" 66 131 28 15 31 15 32 255 255 255 255
+IMAGEPICTURE "Control_167872000" "" "" 96 137 167 3 1 0 "Window\分隔线.tga"
+LABEL "Control_43653600" "" "" 71 151 58 16 33 15 34 255 255 255 255
+LABEL "Control_69958830" "" "" 69 173 55 17 35 15 36 255 255 255 255
+STILLIMAGEBUTTON "Control_2274250" "OpenChooseDaySunColor" "" 200 143 60 20 0 0 0 0 37 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 38 1
+STILLIMAGEBUTTON "Control_207003753" "OpenChooseDayEnvironmentColor" "" 200 166 60 20 0 0 0 0 39 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 40 1
+LABEL "Control_671551020" "" "" 67 186 27 17 41 15 42 255 255 255 255
+IMAGEPICTURE "Control_26202253" "" "" 96 192 163 3 1 0 "Window\分隔线.tga"
+LABEL "Control_746446542" "" "" 68 202 54 17 43 15 44 255 255 255 255
+LABEL "Control_15050541" "" "" 69 225 52 18 45 15 46 255 255 255 255
+STILLIMAGEBUTTON "Control_542855050" "OpenChooseNightSunColor" "" 200 196 60 20 0 0 0 0 47 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 48 1
+STILLIMAGEBUTTON "Control_54730531" "OpenChooseNightEnvironmentColor" "" 201 219 60 20 0 0 0 0 49 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 50 1
+STILLIMAGEBUTTON "Control_810860544" "CreateLightMap" "" 64 289 67 20 0 0 0 0 51 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 52 1
+IMAGEPICTURE "Control_25740330" "" "" 62 248 200 3 1 0 "Window\分隔线.tga"
+LABEL "Control_252211690" "" "" 64 308 30 16 53 15 54 255 255 255 255
+IMAGEPICTURE "Control_290996121" "" "" 96 317 165 3 1 0 "Window\分隔线.tga"
+STILLIMAGEBUTTON "Control_66944980" "LoadDaySkyBox" "" 84 323 77 20 0 0 0 0 55 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 56 1
+STILLIMAGEBUTTON "Control_243334170" "LoadNightSkyBox" "" 173 322 80 20 0 0 0 0 57 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 58 1
+LABEL "Control_18115846" "" "" 65 338 18 17 59 15 60 255 255 255 255
+IMAGEPICTURE "Control_47029168" "" "" 87 346 172 3 1 0 "Window\分隔线.tga"
+LABEL "Control_166832800" "" "" 65 355 29 15 61 15 62 255 255 255 255
+LABEL "Control_92454696" "" "" 68 404 30 15 63 15 64 255 255 255 255
+IMAGEPICTURE "ImagePic_DayFog" "" "" 98 350 26 23 0 0 ""
+IMAGEPICTURE "ImagePic_NightFog" "" "" 99 402 26 23 0 0 ""
+LABEL "Control_1423842" "" "" 125 361 52 19 65 15 66 255 255 255 255
+LABEL "Control_95767956" "" "" 126 386 54 16 67 15 68 255 255 255 255
+LABEL "Control_300035295" "" "" 126 415 55 17 69 15 70 255 255 255 255
+LABEL "Control_152953290" "" "" 125 439 54 17 71 15 72 255 255 255 255
+IMAGEPICTURE "ImagePic_DaySun" "" "" 141 141 23 24 1 0 "faces\color.bmp"
+IMAGEPICTURE "ImagePic_DayEnv" "" "" 141 167 23 24 1 0 "faces\color.bmp"
+IMAGEPICTURE "ImagePic_NightSun" "" "" 141 196 23 24 1 0 "faces\color.bmp"
+IMAGEPICTURE "ImagePic_NightEnv" "" "" 141 223 23 24 1 0 "faces\color.bmp"
+STILLIMAGEBUTTON "Control_949128810" "OpenChooseDayFogColor" "" 66 374 54 23 0 0 0 0 73 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 74 1
+STILLIMAGEBUTTON "Control_108330368" "OpenChooseNightFogColor" "" 66 426 50 23 0 0 0 0 75 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 76 1
+SLIDER "Slider_DayFogStart" "moveSlider" "" 183 366 82 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_DayFogEnd" "moveSlider" "" 183 392 80 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_NightFogStart" "moveSlider" "" 183 420 82 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_NightFogEnd" "moveSlider" "" 183 445 84 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+LABEL "Label_DayFogStart" "" "" 184 346 51 18 77 15 78 255 255 255 255
+LABEL "Label_DayFogEnd" "" "" 183 373 54 17 79 15 80 255 255 255 255
+LABEL "Label_NightFogStart" "" "" 184 400 47 17 81 15 82 255 255 255 255
+LABEL "Label_NightFogEnd" "" "" 183 429 51 16 83 15 84 255 255 255 255
+CHECK "Check_Fog" "UpdateFog" "" 66 455 15 18 "Extra\复选框_标准.tga"
+LABEL "Control_718874212" "" "" 83 454 40 17 85 15 86 255 255 255 255
+STILLIMAGEBUTTON "Control_83558112" "EditLight" "" 65 39 56 20 0 0 0 0 87 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 88 1
+STILLIMAGEBUTTON "Control_994935064" "PerspectiveView" "" 129 39 56 20 0 0 0 0 89 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 90 1
+RADIO "Control_4091373" "ChangeLightMapType" "" 61 251 17 18 "Extra\单选框_标准.tga" 0 1
+RADIO "Control_92363570" "ChangeLightMapType" "" 61 269 17 18 "Extra\单选框_标准.tga" 1 1
+RADIO "Control_20876833" "ChangeLightMapType" "" 138 252 17 18 "Extra\单选框_标准.tga" 2 1
+RADIO "Control_364158795" "ChangeLightMapType" "" 186 252 17 18 "Extra\单选框_标准.tga" 3 1
+LABEL "Control_142751277" "" "" 206 253 42 15 91 15 92 255 255 255 255
+LABEL "Control_140783787" "" "" 157 252 28 16 93 15 94 255 255 255 255
+LABEL "Control_275033547" "" "" 80 269 53 17 95 15 96 255 255 255 255
+LABEL "Control_196408299" "" "" 80 251 54 17 97 15 98 255 255 255 255
+SLIDER "Slider_DayWeight" "MoveSliderDayWeight" "" 137 295 120 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+LABEL "Control_701832267" "" "" 139 277 28 16 99 15 100 255 255 255 255
+LABEL "Control_424032872" "" "" 229 277 30 14 101 15 102 255 255 255 255

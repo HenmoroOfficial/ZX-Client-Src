@@ -1,0 +1,47 @@
+	public:
+		char cmd;
+		int attacker;
+		int defender;
+		int endtime;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_COMBATCONTROL };
+	public:
+		CombatControl() { type = PROTOCOL_COMBATCONTROL; }
+		CombatControl(void*) : Protocol(PROTOCOL_COMBATCONTROL) { }
+		CombatControl (char l_cmd,int l_attacker = 0,int l_defender = 0,
+			int l_endtime = 0,unsigned int l_localsid = 0)
+			 : cmd(l_cmd),attacker(l_attacker),defender(l_defender)
+			,endtime(l_endtime),localsid(l_localsid)
+		{
+			type = PROTOCOL_COMBATCONTROL;
+		}
+
+		CombatControl(const CombatControl &rhs)
+			: Protocol(rhs),cmd(rhs.cmd),attacker(rhs.attacker),defender(rhs.defender)
+			,endtime(rhs.endtime),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CombatControl(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << cmd;
+			os << attacker;
+			os << defender;
+			os << endtime;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> cmd;
+			os >> attacker;
+			os >> defender;
+			os >> endtime;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

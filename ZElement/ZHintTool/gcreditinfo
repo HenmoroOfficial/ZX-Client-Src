@@ -1,0 +1,59 @@
+#ifndef __GNET_GCREDITINFO_RPCDATA
+#define __GNET_GCREDITINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCreditInfo : public GNET::Rpc::Data
+	{
+	public:
+		Octets  credits;
+
+	public:
+		GCreditInfo (const Octets & l_credits =  Octets (0))
+			: credits(l_credits)
+		{
+		}
+
+		GCreditInfo(const GCreditInfo &rhs)
+			: credits(rhs.credits) { }
+
+		Rpc::Data *Clone() const { return new GCreditInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCreditInfo *r = dynamic_cast<const GCreditInfo *>(&rhs);
+			if (r && r != this)
+			{
+				credits = r->credits;
+			}
+			return *this;
+		}
+
+		GCreditInfo& operator = (const GCreditInfo &rhs)
+		{
+			const GCreditInfo *r = &rhs;
+			if (r && r != this)
+			{
+				credits = r->credits;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << credits;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> credits;
+			return os;
+		}
+
+	};
+};
+#endif

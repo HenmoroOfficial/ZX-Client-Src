@@ -1,0 +1,95 @@
+#ifndef __GNET_GDEITYINFO_RPCDATA
+#define __GNET_GDEITYINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GDeityInfo : public GNET::Rpc::Data
+	{
+	public:
+		float atatck_xian;
+		float atatck_fo;
+		float atatck_mo;
+		int deity_level;
+		int deity_power;
+		int max_dp;
+		int64_t deity_exp;
+
+	public:
+		GDeityInfo (float l_atatck_xian = 0.0f,float l_atatck_fo = 0.0f,float l_atatck_mo = 0.0f
+			,int l_deity_level = 0,int l_deity_power = 0,int l_max_dp = 0
+			,int64_t l_deity_exp = 0)
+			: atatck_xian(l_atatck_xian),atatck_fo(l_atatck_fo),atatck_mo(l_atatck_mo)
+			,deity_level(l_deity_level),deity_power(l_deity_power),max_dp(l_max_dp)
+			,deity_exp(l_deity_exp)
+		{
+		}
+
+		GDeityInfo(const GDeityInfo &rhs)
+			: atatck_xian(rhs.atatck_xian),atatck_fo(rhs.atatck_fo),atatck_mo(rhs.atatck_mo),
+			deity_level(rhs.deity_level),deity_power(rhs.deity_power),max_dp(rhs.max_dp),
+			deity_exp(rhs.deity_exp) { }
+
+		Rpc::Data *Clone() const { return new GDeityInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GDeityInfo *r = dynamic_cast<const GDeityInfo *>(&rhs);
+			if (r && r != this)
+			{
+				atatck_xian = r->atatck_xian;
+				atatck_fo = r->atatck_fo;
+				atatck_mo = r->atatck_mo;
+				deity_level = r->deity_level;
+				deity_power = r->deity_power;
+				max_dp = r->max_dp;
+				deity_exp = r->deity_exp;
+			}
+			return *this;
+		}
+
+		GDeityInfo& operator = (const GDeityInfo &rhs)
+		{
+			const GDeityInfo *r = &rhs;
+			if (r && r != this)
+			{
+				atatck_xian = r->atatck_xian;
+				atatck_fo = r->atatck_fo;
+				atatck_mo = r->atatck_mo;
+				deity_level = r->deity_level;
+				deity_power = r->deity_power;
+				max_dp = r->max_dp;
+				deity_exp = r->deity_exp;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << atatck_xian;
+			os << atatck_fo;
+			os << atatck_mo;
+			os << deity_level;
+			os << deity_power;
+			os << max_dp;
+			os << deity_exp;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> atatck_xian;
+			os >> atatck_fo;
+			os >> atatck_mo;
+			os >> deity_level;
+			os >> deity_power;
+			os >> max_dp;
+			os >> deity_exp;
+			return os;
+		}
+
+	};
+};
+#endif

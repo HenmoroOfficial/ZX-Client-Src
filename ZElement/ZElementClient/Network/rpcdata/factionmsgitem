@@ -1,0 +1,77 @@
+#ifndef __GNET_FACTIONMSGITEM_RPCDATA
+#define __GNET_FACTIONMSGITEM_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class FactionMsgItem : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets rolename;
+		int timestamp;
+		Octets msg;
+
+	public:
+		FactionMsgItem (int l_roleid = 0,const Octets& l_rolename = Octets(),int l_timestamp = 0
+			,const Octets& l_msg = Octets())
+			: roleid(l_roleid),rolename(l_rolename),timestamp(l_timestamp)
+			,msg(l_msg)
+		{
+		}
+
+		FactionMsgItem(const FactionMsgItem &rhs)
+			: roleid(rhs.roleid),rolename(rhs.rolename),timestamp(rhs.timestamp),
+			msg(rhs.msg) { }
+
+		Rpc::Data *Clone() const { return new FactionMsgItem(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const FactionMsgItem *r = dynamic_cast<const FactionMsgItem *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				timestamp = r->timestamp;
+				msg = r->msg;
+			}
+			return *this;
+		}
+
+		FactionMsgItem& operator = (const FactionMsgItem &rhs)
+		{
+			const FactionMsgItem *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				timestamp = r->timestamp;
+				msg = r->msg;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << rolename;
+			os << timestamp;
+			os << msg;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> rolename;
+			os >> timestamp;
+			os >> msg;
+			return os;
+		}
+
+	};
+};
+#endif

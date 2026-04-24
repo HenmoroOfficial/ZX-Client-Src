@@ -1,0 +1,47 @@
+	public:
+		std::vector<GConsignListRoleNode> nodes;
+		int page;
+		int timestamp;
+		unsigned int localsid;
+		int retcode;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNLISTROLE_RE };
+	public:
+		ConsignListRole_Re() { type = PROTOCOL_CONSIGNLISTROLE_RE; }
+		ConsignListRole_Re(void*) : Protocol(PROTOCOL_CONSIGNLISTROLE_RE) { }
+		ConsignListRole_Re (const std::vector<GConsignListRoleNode>& l_nodes,int l_page,int l_timestamp,
+			unsigned int l_localsid,int l_retcode = 0)
+			 : nodes(l_nodes),page(l_page),timestamp(l_timestamp)
+			,localsid(l_localsid),retcode(l_retcode)
+		{
+			type = PROTOCOL_CONSIGNLISTROLE_RE;
+		}
+
+		ConsignListRole_Re(const ConsignListRole_Re &rhs)
+			: Protocol(rhs),nodes(rhs.nodes),page(rhs.page),timestamp(rhs.timestamp)
+			,localsid(rhs.localsid),retcode(rhs.retcode) { }
+
+		GNET::Protocol *Clone() const { return new ConsignListRole_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << nodes;
+			os << page;
+			os << timestamp;
+			os << localsid;
+			os << retcode;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> nodes;
+			os >> page;
+			os >> timestamp;
+			os >> localsid;
+			os >> retcode;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 65536; }

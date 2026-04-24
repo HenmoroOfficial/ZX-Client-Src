@@ -1,0 +1,137 @@
+#ifndef __GNET_GCRSSVRTEAMSROLE_RPCDATA
+#define __GNET_GCRSSVRTEAMSROLE_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gcrssvrteamsscore"
+
+namespace GNET
+{
+	class GCrssvrTeamsRole : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets name;
+		unsigned short level;
+		unsigned char occupation;
+		int score;
+		char camp;
+		char isonline;
+		GCrssvrTeamsScore data_score;
+		char reserved;
+		short reserved1;
+		int reserved2;
+		int reserved3;
+		int reserved4;
+		int reserved5;
+
+	public:
+		GCrssvrTeamsRole (const Octets& l_name = Octets(),unsigned short l_level = 0,unsigned char l_occupation = 0
+			,int l_score = 0,char l_camp = 0,char l_isonline = 0
+			,const GCrssvrTeamsScore& l_data_score = GCrssvrTeamsScore(),char l_reserved = 0,short l_reserved1 = 0
+			,int l_reserved2 = 0,int l_reserved3 = 0,int l_reserved4 = 0
+			,int l_reserved5 = 0)
+			: name(l_name),level(l_level),occupation(l_occupation)
+			,score(l_score),camp(l_camp),isonline(l_isonline)
+			,data_score(l_data_score),reserved(l_reserved),reserved1(l_reserved1)
+			,reserved2(l_reserved2),reserved3(l_reserved3),reserved4(l_reserved4)
+			,reserved5(l_reserved5)
+		{
+		}
+
+		GCrssvrTeamsRole(const GCrssvrTeamsRole &rhs)
+			: roleid(rhs.roleid),name(rhs.name),level(rhs.level),
+			occupation(rhs.occupation),score(rhs.score),camp(rhs.camp),
+			isonline(rhs.isonline),data_score(rhs.data_score),reserved(rhs.reserved),
+			reserved1(rhs.reserved1),reserved2(rhs.reserved2),reserved3(rhs.reserved3),
+			reserved4(rhs.reserved4),reserved5(rhs.reserved5) { }
+
+		Rpc::Data *Clone() const { return new GCrssvrTeamsRole(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCrssvrTeamsRole *r = dynamic_cast<const GCrssvrTeamsRole *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				occupation = r->occupation;
+				score = r->score;
+				camp = r->camp;
+				isonline = r->isonline;
+				data_score = r->data_score;
+				reserved = r->reserved;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+				reserved3 = r->reserved3;
+				reserved4 = r->reserved4;
+				reserved5 = r->reserved5;
+			}
+			return *this;
+		}
+
+		GCrssvrTeamsRole& operator = (const GCrssvrTeamsRole &rhs)
+		{
+			const GCrssvrTeamsRole *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				occupation = r->occupation;
+				score = r->score;
+				camp = r->camp;
+				isonline = r->isonline;
+				data_score = r->data_score;
+				reserved = r->reserved;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+				reserved3 = r->reserved3;
+				reserved4 = r->reserved4;
+				reserved5 = r->reserved5;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << name;
+			os << level;
+			os << occupation;
+			os << score;
+			os << camp;
+			os << isonline;
+			os << data_score;
+			os << reserved;
+			os << reserved1;
+			os << reserved2;
+			os << reserved3;
+			os << reserved4;
+			os << reserved5;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> name;
+			os >> level;
+			os >> occupation;
+			os >> score;
+			os >> camp;
+			os >> isonline;
+			os >> data_score;
+			os >> reserved;
+			os >> reserved1;
+			os >> reserved2;
+			os >> reserved3;
+			os >> reserved4;
+			os >> reserved5;
+			return os;
+		}
+
+	};
+};
+#endif

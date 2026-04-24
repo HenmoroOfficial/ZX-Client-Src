@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		unsigned short award_type;
+		Octets returnplayer_name;
+		enum { PROTOCOL_TYPE = PROTOCOL_FRIENDCALLBACKAWARD_RE };
+	public:
+		FriendCallbackAward_Re() { type = PROTOCOL_FRIENDCALLBACKAWARD_RE; }
+		FriendCallbackAward_Re(void*) : Protocol(PROTOCOL_FRIENDCALLBACKAWARD_RE) { }
+		FriendCallbackAward_Re (int l_roleid,unsigned int l_localsid,unsigned short l_award_type,
+			const Octets& l_returnplayer_name)
+			 : roleid(l_roleid),localsid(l_localsid),award_type(l_award_type)
+			,returnplayer_name(l_returnplayer_name)
+		{
+			type = PROTOCOL_FRIENDCALLBACKAWARD_RE;
+		}
+
+		FriendCallbackAward_Re(const FriendCallbackAward_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),award_type(rhs.award_type)
+			,returnplayer_name(rhs.returnplayer_name) { }
+
+		GNET::Protocol *Clone() const { return new FriendCallbackAward_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << award_type;
+			os << returnplayer_name;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> award_type;
+			os >> returnplayer_name;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

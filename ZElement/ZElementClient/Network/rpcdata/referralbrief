@@ -1,0 +1,118 @@
+#ifndef __GNET_REFERRALBRIEF_RPCDATA
+#define __GNET_REFERRALBRIEF_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class ReferralBrief : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets rolename;
+		int level;
+		int sub_level;
+		int bonus_total1;
+		int bonus_total2;
+		int bonus_left;
+		int bonus_avail;
+		int64_t exp_total1;
+		int64_t exp_total2;
+		int64_t exp_left;
+
+	public:
+		ReferralBrief (int l_roleid = 0,const Octets& l_rolename = Octets(),int l_level = 0
+			,int l_sub_level = 0,int l_bonus_total1 = 0,int l_bonus_total2 = 0
+			,int l_bonus_left = 0,int l_bonus_avail = 0,int64_t l_exp_total1 = 0
+			,int64_t l_exp_total2 = 0,int64_t l_exp_left = 0)
+			: roleid(l_roleid),rolename(l_rolename),level(l_level)
+			,sub_level(l_sub_level),bonus_total1(l_bonus_total1),bonus_total2(l_bonus_total2)
+			,bonus_left(l_bonus_left),bonus_avail(l_bonus_avail),exp_total1(l_exp_total1)
+			,exp_total2(l_exp_total2),exp_left(l_exp_left)
+		{
+		}
+
+		ReferralBrief(const ReferralBrief &rhs)
+			: roleid(rhs.roleid),rolename(rhs.rolename),level(rhs.level),
+			sub_level(rhs.sub_level),bonus_total1(rhs.bonus_total1),bonus_total2(rhs.bonus_total2),
+			bonus_left(rhs.bonus_left),bonus_avail(rhs.bonus_avail),exp_total1(rhs.exp_total1),
+			exp_total2(rhs.exp_total2),exp_left(rhs.exp_left) { }
+
+		Rpc::Data *Clone() const { return new ReferralBrief(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const ReferralBrief *r = dynamic_cast<const ReferralBrief *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				level = r->level;
+				sub_level = r->sub_level;
+				bonus_total1 = r->bonus_total1;
+				bonus_total2 = r->bonus_total2;
+				bonus_left = r->bonus_left;
+				bonus_avail = r->bonus_avail;
+				exp_total1 = r->exp_total1;
+				exp_total2 = r->exp_total2;
+				exp_left = r->exp_left;
+			}
+			return *this;
+		}
+
+		ReferralBrief& operator = (const ReferralBrief &rhs)
+		{
+			const ReferralBrief *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				rolename = r->rolename;
+				level = r->level;
+				sub_level = r->sub_level;
+				bonus_total1 = r->bonus_total1;
+				bonus_total2 = r->bonus_total2;
+				bonus_left = r->bonus_left;
+				bonus_avail = r->bonus_avail;
+				exp_total1 = r->exp_total1;
+				exp_total2 = r->exp_total2;
+				exp_left = r->exp_left;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << rolename;
+			os << level;
+			os << sub_level;
+			os << bonus_total1;
+			os << bonus_total2;
+			os << bonus_left;
+			os << bonus_avail;
+			os << exp_total1;
+			os << exp_total2;
+			os << exp_left;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> rolename;
+			os >> level;
+			os >> sub_level;
+			os >> bonus_total1;
+			os >> bonus_total2;
+			os >> bonus_left;
+			os >> bonus_avail;
+			os >> exp_total1;
+			os >> exp_total2;
+			os >> exp_left;
+			return os;
+		}
+
+	};
+};
+#endif

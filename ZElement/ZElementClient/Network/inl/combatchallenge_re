@@ -1,0 +1,38 @@
+	public:
+		int retcode;
+		unsigned int factionid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_COMBATCHALLENGE_RE };
+	public:
+		CombatChallenge_Re() { type = PROTOCOL_COMBATCHALLENGE_RE; }
+		CombatChallenge_Re(void*) : Protocol(PROTOCOL_COMBATCHALLENGE_RE) { }
+		CombatChallenge_Re (int l_retcode,unsigned int l_factionid = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),factionid(l_factionid),localsid(l_localsid)
+		{
+			type = PROTOCOL_COMBATCHALLENGE_RE;
+		}
+
+		CombatChallenge_Re(const CombatChallenge_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),factionid(rhs.factionid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CombatChallenge_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << factionid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> factionid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

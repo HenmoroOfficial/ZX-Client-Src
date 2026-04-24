@@ -1,0 +1,59 @@
+#ifndef __GNET_QUEENOPENBATHINVITEARG_RPCDATA
+#define __GNET_QUEENOPENBATHINVITEARG_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class QueenOpenBathInviteArg : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int localsid;
+
+	public:
+		QueenOpenBathInviteArg (unsigned int l_localsid = 0)
+			: localsid(l_localsid)
+		{
+		}
+
+		QueenOpenBathInviteArg(const QueenOpenBathInviteArg &rhs)
+			: localsid(rhs.localsid) { }
+
+		Rpc::Data *Clone() const { return new QueenOpenBathInviteArg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const QueenOpenBathInviteArg *r = dynamic_cast<const QueenOpenBathInviteArg *>(&rhs);
+			if (r && r != this)
+			{
+				localsid = r->localsid;
+			}
+			return *this;
+		}
+
+		QueenOpenBathInviteArg& operator = (const QueenOpenBathInviteArg &rhs)
+		{
+			const QueenOpenBathInviteArg *r = &rhs;
+			if (r && r != this)
+			{
+				localsid = r->localsid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> localsid;
+			return os;
+		}
+
+	};
+};
+#endif

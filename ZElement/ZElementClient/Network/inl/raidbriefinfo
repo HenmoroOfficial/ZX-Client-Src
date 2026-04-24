@@ -1,0 +1,38 @@
+	public:
+		int masterid;
+		int raidroom_id;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_RAIDBRIEFINFO };
+	public:
+		RaidBriefInfo() { type = PROTOCOL_RAIDBRIEFINFO; }
+		RaidBriefInfo(void*) : Protocol(PROTOCOL_RAIDBRIEFINFO) { }
+		RaidBriefInfo (int l_masterid,int l_raidroom_id = 0,unsigned int l_localsid = 0)
+			 : masterid(l_masterid),raidroom_id(l_raidroom_id),localsid(l_localsid)
+		{
+			type = PROTOCOL_RAIDBRIEFINFO;
+		}
+
+		RaidBriefInfo(const RaidBriefInfo &rhs)
+			: Protocol(rhs),masterid(rhs.masterid),raidroom_id(rhs.raidroom_id),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new RaidBriefInfo(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << masterid;
+			os << raidroom_id;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> masterid;
+			os >> raidroom_id;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

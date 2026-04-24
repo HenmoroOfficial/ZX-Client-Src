@@ -1,0 +1,20 @@
+DIALOG "Win_QuickBar10V_1" 0 0 44 328 0 1 10 "Frame\10v1.tga" "" "" 0 0 -1 -1 "" 0 0 255 255 255 255 1 0
+IMAGEPICTURE "Item_1" "" "" 4 20 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_2" "" "" 4 57 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_3" "" "" 4 94 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_4" "" "" 4 131 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_5" "" "" 4 168 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_6" "" "" 4 205 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_7" "" "" 4 242 36 36 1 0 "Icon\Shortcut.tga" ""
+IMAGEPICTURE "Item_8" "" "" 4 279 36 36 1 0 "Icon\Shortcut.tga" ""
+STILLIMAGEBUTTON "Btn_QBVAdd" "add" "" 28 314 13 13 0 0 0 0 2 10 255 255 255 255 "Button\QBVExc.tga" "Button\QBVExcDown.tga" "" 3 1 1
+STILLIMAGEBUTTON "Btn_QBVExtra" "extra" "" 2 314 13 13 0 0 0 0 4 10 255 255 255 255 "Button\QBVExp.tga" "Button\QBVExpDown.tga" "" 5 1 1
+LABEL "Lab_1" "" "" 23 21 0 0 6 8 7 43 255 250 255
+LABEL "Lab_2" "" "" 23 58 0 0 8 8 9 43 255 250 255
+LABEL "Lab_3" "" "" 23 95 0 0 10 8 11 43 255 250 255
+LABEL "Lab_4" "" "" 23 132 0 0 12 8 13 43 255 250 255
+LABEL "Lab_5" "" "" 23 169 0 0 14 8 15 43 255 250 255
+LABEL "Lab_6" "" "" 23 206 0 0 16 8 17 43 255 250 255
+LABEL "Lab_7" "" "" 23 243 0 0 18 8 19 43 255 250 255
+LABEL "Lab_8" "" "" 23 280 0 0 20 8 21 43 255 250 255
+CHECK "Chk_Lock" "lock" "" 16 0 16 16 "Extra\Lock1.tga"

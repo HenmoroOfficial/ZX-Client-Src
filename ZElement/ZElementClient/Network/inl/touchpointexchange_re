@@ -1,0 +1,50 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int flag;
+		unsigned int count;
+		int64_t new_points;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TOUCHPOINTEXCHANGE_RE };
+	public:
+		TouchPointExchange_Re() { type = PROTOCOL_TOUCHPOINTEXCHANGE_RE; }
+		TouchPointExchange_Re(void*) : Protocol(PROTOCOL_TOUCHPOINTEXCHANGE_RE) { }
+		TouchPointExchange_Re (int l_retcode,int l_roleid,unsigned int l_flag = 0,
+			unsigned int l_count = 0,int64_t l_new_points = 0,int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),flag(l_flag)
+			,count(l_count),new_points(l_new_points),localsid(l_localsid)
+		{
+			type = PROTOCOL_TOUCHPOINTEXCHANGE_RE;
+		}
+
+		TouchPointExchange_Re(const TouchPointExchange_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),flag(rhs.flag)
+			,count(rhs.count),new_points(rhs.new_points),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TouchPointExchange_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << flag;
+			os << count;
+			os << new_points;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> flag;
+			os >> count;
+			os >> new_points;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

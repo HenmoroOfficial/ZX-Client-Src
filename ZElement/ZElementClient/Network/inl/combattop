@@ -1,0 +1,47 @@
+	public:
+		int mapid;
+		int roleid;
+		unsigned int factionid;
+		int handle;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_COMBATTOP };
+	public:
+		CombatTop() { type = PROTOCOL_COMBATTOP; }
+		CombatTop(void*) : Protocol(PROTOCOL_COMBATTOP) { }
+		CombatTop (int l_mapid,int l_roleid,unsigned int l_factionid = 0,
+			int l_handle = 0,unsigned int l_localsid = 0)
+			 : mapid(l_mapid),roleid(l_roleid),factionid(l_factionid)
+			,handle(l_handle),localsid(l_localsid)
+		{
+			type = PROTOCOL_COMBATTOP;
+		}
+
+		CombatTop(const CombatTop &rhs)
+			: Protocol(rhs),mapid(rhs.mapid),roleid(rhs.roleid),factionid(rhs.factionid)
+			,handle(rhs.handle),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CombatTop(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << mapid;
+			os << roleid;
+			os << factionid;
+			os << handle;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> mapid;
+			os >> roleid;
+			os >> factionid;
+			os >> handle;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

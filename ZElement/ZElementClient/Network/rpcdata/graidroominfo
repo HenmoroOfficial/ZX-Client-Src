@@ -1,0 +1,118 @@
+#ifndef __GNET_GRAIDROOMINFO_RPCDATA
+#define __GNET_GRAIDROOMINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GRaidRoomInfo : public GNET::Rpc::Data
+	{
+	public:
+		int raidroom_id;
+		int map_id;
+		int apply_endtime;
+		int player_number;
+		int player_limit;
+		Octets leadername;
+		int leaderid;
+		int leader_line;
+		Octets roomname;
+		char can_vote;
+		char difficulty;
+
+	public:
+		GRaidRoomInfo (int l_raidroom_id = 0,int l_map_id = 0,int l_apply_endtime = 0
+			,int l_player_number = 0,int l_player_limit = 0,const Octets& l_leadername = Octets()
+			,int l_leaderid = 0,int l_leader_line = 0,const Octets& l_roomname = Octets()
+			,char l_can_vote = 0,char l_difficulty = 0)
+			: raidroom_id(l_raidroom_id),map_id(l_map_id),apply_endtime(l_apply_endtime)
+			,player_number(l_player_number),player_limit(l_player_limit),leadername(l_leadername)
+			,leaderid(l_leaderid),leader_line(l_leader_line),roomname(l_roomname)
+			,can_vote(l_can_vote),difficulty(l_difficulty)
+		{
+		}
+
+		GRaidRoomInfo(const GRaidRoomInfo &rhs)
+			: raidroom_id(rhs.raidroom_id),map_id(rhs.map_id),apply_endtime(rhs.apply_endtime),
+			player_number(rhs.player_number),player_limit(rhs.player_limit),leadername(rhs.leadername),
+			leaderid(rhs.leaderid),leader_line(rhs.leader_line),roomname(rhs.roomname),
+			can_vote(rhs.can_vote),difficulty(rhs.difficulty) { }
+
+		Rpc::Data *Clone() const { return new GRaidRoomInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GRaidRoomInfo *r = dynamic_cast<const GRaidRoomInfo *>(&rhs);
+			if (r && r != this)
+			{
+				raidroom_id = r->raidroom_id;
+				map_id = r->map_id;
+				apply_endtime = r->apply_endtime;
+				player_number = r->player_number;
+				player_limit = r->player_limit;
+				leadername = r->leadername;
+				leaderid = r->leaderid;
+				leader_line = r->leader_line;
+				roomname = r->roomname;
+				can_vote = r->can_vote;
+				difficulty = r->difficulty;
+			}
+			return *this;
+		}
+
+		GRaidRoomInfo& operator = (const GRaidRoomInfo &rhs)
+		{
+			const GRaidRoomInfo *r = &rhs;
+			if (r && r != this)
+			{
+				raidroom_id = r->raidroom_id;
+				map_id = r->map_id;
+				apply_endtime = r->apply_endtime;
+				player_number = r->player_number;
+				player_limit = r->player_limit;
+				leadername = r->leadername;
+				leaderid = r->leaderid;
+				leader_line = r->leader_line;
+				roomname = r->roomname;
+				can_vote = r->can_vote;
+				difficulty = r->difficulty;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << raidroom_id;
+			os << map_id;
+			os << apply_endtime;
+			os << player_number;
+			os << player_limit;
+			os << leadername;
+			os << leaderid;
+			os << leader_line;
+			os << roomname;
+			os << can_vote;
+			os << difficulty;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> raidroom_id;
+			os >> map_id;
+			os >> apply_endtime;
+			os >> player_number;
+			os >> player_limit;
+			os >> leadername;
+			os >> leaderid;
+			os >> leader_line;
+			os >> roomname;
+			os >> can_vote;
+			os >> difficulty;
+			return os;
+		}
+
+	};
+};
+#endif

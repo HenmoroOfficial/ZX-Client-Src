@@ -1,0 +1,65 @@
+#ifndef __GNET_GCOOLDOWN_RPCDATA
+#define __GNET_GCOOLDOWN_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCooldown : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int send_time;
+
+	public:
+		GCooldown (int l_roleid = 0,int l_send_time = 0)
+			: roleid(l_roleid),send_time(l_send_time)
+		{
+		}
+
+		GCooldown(const GCooldown &rhs)
+			: roleid(rhs.roleid),send_time(rhs.send_time) { }
+
+		Rpc::Data *Clone() const { return new GCooldown(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCooldown *r = dynamic_cast<const GCooldown *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				send_time = r->send_time;
+			}
+			return *this;
+		}
+
+		GCooldown& operator = (const GCooldown &rhs)
+		{
+			const GCooldown *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				send_time = r->send_time;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << send_time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> send_time;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GCooldown>	GCooldownVector;
+};
+#endif

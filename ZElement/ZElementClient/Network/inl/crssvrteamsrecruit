@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		Octets name;
+		int teamid;
+		int invitee;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSRECRUIT };
+	public:
+		CrssvrTeamsRecruit() { type = PROTOCOL_CRSSVRTEAMSRECRUIT; }
+		CrssvrTeamsRecruit(void*) : Protocol(PROTOCOL_CRSSVRTEAMSRECRUIT) { }
+		CrssvrTeamsRecruit (int l_roleid,const Octets& l_name,int l_teamid,
+			int l_invitee,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),name(l_name),teamid(l_teamid)
+			,invitee(l_invitee),localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSRECRUIT;
+		}
+
+		CrssvrTeamsRecruit(const CrssvrTeamsRecruit &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),name(rhs.name),teamid(rhs.teamid)
+			,invitee(rhs.invitee),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsRecruit(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << name;
+			os << teamid;
+			os << invitee;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> name;
+			os >> teamid;
+			os >> invitee;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

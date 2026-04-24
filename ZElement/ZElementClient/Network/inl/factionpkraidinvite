@@ -1,0 +1,50 @@
+	public:
+		int map_id;
+		unsigned int inviter_factionid;
+		Octets inviter_faction_name;
+		unsigned int dst_factionid;
+		Octets dst_faction_name;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONPKRAIDINVITE };
+	public:
+		FactionPkRaidInvite() { type = PROTOCOL_FACTIONPKRAIDINVITE; }
+		FactionPkRaidInvite(void*) : Protocol(PROTOCOL_FACTIONPKRAIDINVITE) { }
+		FactionPkRaidInvite (int l_map_id,unsigned int l_inviter_factionid = 0,const Octets& l_inviter_faction_name = Octets(),
+			unsigned int l_dst_factionid = 0,const Octets& l_dst_faction_name = Octets(),unsigned int l_localsid = 0)
+			 : map_id(l_map_id),inviter_factionid(l_inviter_factionid),inviter_faction_name(l_inviter_faction_name)
+			,dst_factionid(l_dst_factionid),dst_faction_name(l_dst_faction_name),localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONPKRAIDINVITE;
+		}
+
+		FactionPkRaidInvite(const FactionPkRaidInvite &rhs)
+			: Protocol(rhs),map_id(rhs.map_id),inviter_factionid(rhs.inviter_factionid),inviter_faction_name(rhs.inviter_faction_name)
+			,dst_factionid(rhs.dst_factionid),dst_faction_name(rhs.dst_faction_name),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionPkRaidInvite(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << map_id;
+			os << inviter_factionid;
+			os << inviter_faction_name;
+			os << dst_factionid;
+			os << dst_faction_name;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> map_id;
+			os >> inviter_factionid;
+			os >> inviter_faction_name;
+			os >> dst_factionid;
+			os >> dst_faction_name;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

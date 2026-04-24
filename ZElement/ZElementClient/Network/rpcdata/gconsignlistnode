@@ -1,0 +1,83 @@
+#ifndef __GNET_GCONSIGNLISTNODE_RPCDATA
+#define __GNET_GCONSIGNLISTNODE_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gconsignitem"
+
+namespace GNET
+{
+	class GConsignListNode : public GNET::Rpc::Data
+	{
+	public:
+		GConsignItem info;
+		int seller_roleid;
+		Octets seller_name;
+		int buyer_roleid;
+		int commodityid;
+
+	public:
+		GConsignListNode (const GConsignItem& l_info = GConsignItem(),int l_seller_roleid = 0,const Octets& l_seller_name = Octets()
+			,int l_buyer_roleid = 0,int l_commodityid = 0)
+			: info(l_info),seller_roleid(l_seller_roleid),seller_name(l_seller_name)
+			,buyer_roleid(l_buyer_roleid),commodityid(l_commodityid)
+		{
+		}
+
+		GConsignListNode(const GConsignListNode &rhs)
+			: info(rhs.info),seller_roleid(rhs.seller_roleid),seller_name(rhs.seller_name),
+			buyer_roleid(rhs.buyer_roleid),commodityid(rhs.commodityid) { }
+
+		Rpc::Data *Clone() const { return new GConsignListNode(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GConsignListNode *r = dynamic_cast<const GConsignListNode *>(&rhs);
+			if (r && r != this)
+			{
+				info = r->info;
+				seller_roleid = r->seller_roleid;
+				seller_name = r->seller_name;
+				buyer_roleid = r->buyer_roleid;
+				commodityid = r->commodityid;
+			}
+			return *this;
+		}
+
+		GConsignListNode& operator = (const GConsignListNode &rhs)
+		{
+			const GConsignListNode *r = &rhs;
+			if (r && r != this)
+			{
+				info = r->info;
+				seller_roleid = r->seller_roleid;
+				seller_name = r->seller_name;
+				buyer_roleid = r->buyer_roleid;
+				commodityid = r->commodityid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << info;
+			os << seller_roleid;
+			os << seller_name;
+			os << buyer_roleid;
+			os << commodityid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> info;
+			os >> seller_roleid;
+			os >> seller_name;
+			os >> buyer_roleid;
+			os >> commodityid;
+			return os;
+		}
+
+	};
+};
+#endif

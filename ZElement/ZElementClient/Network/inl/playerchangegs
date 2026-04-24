@@ -1,0 +1,59 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		int gslineid;
+		int mapid;
+		int reason;
+		float scalex;
+		float scaley;
+		float scalez;
+		enum { PROTOCOL_TYPE = PROTOCOL_PLAYERCHANGEGS };
+	public:
+		PlayerChangeGS() { type = PROTOCOL_PLAYERCHANGEGS; }
+		PlayerChangeGS(void*) : Protocol(PROTOCOL_PLAYERCHANGEGS) { }
+		PlayerChangeGS (int l_roleid,unsigned int l_localsid,int l_gslineid = 0,
+			int l_mapid = 0,int l_reason = 0,float l_scalex = 0,
+			float l_scaley = 0,float l_scalez = 0)
+			 : roleid(l_roleid),localsid(l_localsid),gslineid(l_gslineid)
+			,mapid(l_mapid),reason(l_reason),scalex(l_scalex)
+			,scaley(l_scaley),scalez(l_scalez)
+		{
+			type = PROTOCOL_PLAYERCHANGEGS;
+		}
+
+		PlayerChangeGS(const PlayerChangeGS &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),gslineid(rhs.gslineid)
+			,mapid(rhs.mapid),reason(rhs.reason),scalex(rhs.scalex)
+			,scaley(rhs.scaley),scalez(rhs.scalez) { }
+
+		GNET::Protocol *Clone() const { return new PlayerChangeGS(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << gslineid;
+			os << mapid;
+			os << reason;
+			os << scalex;
+			os << scaley;
+			os << scalez;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> gslineid;
+			os >> mapid;
+			os >> reason;
+			os >> scalex;
+			os >> scaley;
+			os >> scalez;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

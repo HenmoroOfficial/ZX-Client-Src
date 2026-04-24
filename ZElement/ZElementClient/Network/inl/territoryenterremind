@@ -1,0 +1,35 @@
+	public:
+		int territoryid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TERRITORYENTERREMIND };
+	public:
+		TerritoryEnterRemind() { type = PROTOCOL_TERRITORYENTERREMIND; }
+		TerritoryEnterRemind(void*) : Protocol(PROTOCOL_TERRITORYENTERREMIND) { }
+		TerritoryEnterRemind (int l_territoryid,unsigned int l_localsid = 0)
+			 : territoryid(l_territoryid),localsid(l_localsid)
+		{
+			type = PROTOCOL_TERRITORYENTERREMIND;
+		}
+
+		TerritoryEnterRemind(const TerritoryEnterRemind &rhs)
+			: Protocol(rhs),territoryid(rhs.territoryid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TerritoryEnterRemind(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << territoryid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> territoryid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

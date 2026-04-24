@@ -1,0 +1,83 @@
+#ifndef __GNET_RAIDFIELDINFO_RPCDATA
+#define __GNET_RAIDFIELDINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "raidgrouplimit"
+
+namespace GNET
+{
+	class RaidFieldInfo : public GNET::Rpc::Data
+	{
+	public:
+		int map_id;
+		int raid_type;
+		int queuing_time;
+		int raid_max_instance;
+		RaidGroupLimit group1_limit;
+
+	public:
+		RaidFieldInfo (int l_map_id = 0,int l_raid_type = 0,int l_queuing_time = 0
+			,int l_raid_max_instance = 0,const RaidGroupLimit& l_group1_limit = RaidGroupLimit())
+			: map_id(l_map_id),raid_type(l_raid_type),queuing_time(l_queuing_time)
+			,raid_max_instance(l_raid_max_instance),group1_limit(l_group1_limit)
+		{
+		}
+
+		RaidFieldInfo(const RaidFieldInfo &rhs)
+			: map_id(rhs.map_id),raid_type(rhs.raid_type),queuing_time(rhs.queuing_time),
+			raid_max_instance(rhs.raid_max_instance),group1_limit(rhs.group1_limit) { }
+
+		Rpc::Data *Clone() const { return new RaidFieldInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const RaidFieldInfo *r = dynamic_cast<const RaidFieldInfo *>(&rhs);
+			if (r && r != this)
+			{
+				map_id = r->map_id;
+				raid_type = r->raid_type;
+				queuing_time = r->queuing_time;
+				raid_max_instance = r->raid_max_instance;
+				group1_limit = r->group1_limit;
+			}
+			return *this;
+		}
+
+		RaidFieldInfo& operator = (const RaidFieldInfo &rhs)
+		{
+			const RaidFieldInfo *r = &rhs;
+			if (r && r != this)
+			{
+				map_id = r->map_id;
+				raid_type = r->raid_type;
+				queuing_time = r->queuing_time;
+				raid_max_instance = r->raid_max_instance;
+				group1_limit = r->group1_limit;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << map_id;
+			os << raid_type;
+			os << queuing_time;
+			os << raid_max_instance;
+			os << group1_limit;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> map_id;
+			os >> raid_type;
+			os >> queuing_time;
+			os >> raid_max_instance;
+			os >> group1_limit;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,59 @@
+#ifndef __GNET_RAIDGROUPINFO_RPCDATA
+#define __GNET_RAIDGROUPINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class RaidGroupInfo : public GNET::Rpc::Data
+	{
+	public:
+		std::vector<int> roleid_list;
+
+	public:
+		RaidGroupInfo (const std::vector<int>& l_roleid_list = std::vector<int>())
+			: roleid_list(l_roleid_list)
+		{
+		}
+
+		RaidGroupInfo(const RaidGroupInfo &rhs)
+			: roleid_list(rhs.roleid_list) { }
+
+		Rpc::Data *Clone() const { return new RaidGroupInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const RaidGroupInfo *r = dynamic_cast<const RaidGroupInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid_list = r->roleid_list;
+			}
+			return *this;
+		}
+
+		RaidGroupInfo& operator = (const RaidGroupInfo &rhs)
+		{
+			const RaidGroupInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid_list = r->roleid_list;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid_list;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid_list;
+			return os;
+		}
+
+	};
+};
+#endif

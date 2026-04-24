@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		char check_private;
+		int asker;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SNSGETPLAYERINFO };
+	public:
+		SNSGetPlayerInfo() { type = PROTOCOL_SNSGETPLAYERINFO; }
+		SNSGetPlayerInfo(void*) : Protocol(PROTOCOL_SNSGETPLAYERINFO) { }
+		SNSGetPlayerInfo (int l_roleid,char l_check_private = 0,int l_asker = 0,
+			int l_localsid = 0)
+			 : roleid(l_roleid),check_private(l_check_private),asker(l_asker)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_SNSGETPLAYERINFO;
+		}
+
+		SNSGetPlayerInfo(const SNSGetPlayerInfo &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),check_private(rhs.check_private),asker(rhs.asker)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SNSGetPlayerInfo(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << check_private;
+			os << asker;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> check_private;
+			os >> asker;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

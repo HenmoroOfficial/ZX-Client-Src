@@ -1,0 +1,87 @@
+#ifndef __GNET_GCIRCLEHISTORY_RPCDATA
+#define __GNET_GCIRCLEHISTORY_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCircleHistory : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int circleid;
+		unsigned int circlename;
+		unsigned char titlemask;
+		int jointime;
+		int graduate_time;
+		unsigned char circlegrade;
+
+	public:
+		GCircleHistory (unsigned int l_circleid = 0,unsigned int l_circlename = 0,unsigned char l_titlemask = 0
+			,int l_jointime = 0,int l_graduate_time = 0,unsigned char l_circlegrade = 0)
+			: circleid(l_circleid),circlename(l_circlename),titlemask(l_titlemask)
+			,jointime(l_jointime),graduate_time(l_graduate_time),circlegrade(l_circlegrade)
+		{
+		}
+
+		GCircleHistory(const GCircleHistory &rhs)
+			: circleid(rhs.circleid),circlename(rhs.circlename),titlemask(rhs.titlemask),
+			jointime(rhs.jointime),graduate_time(rhs.graduate_time),circlegrade(rhs.circlegrade) { }
+
+		Rpc::Data *Clone() const { return new GCircleHistory(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCircleHistory *r = dynamic_cast<const GCircleHistory *>(&rhs);
+			if (r && r != this)
+			{
+				circleid = r->circleid;
+				circlename = r->circlename;
+				titlemask = r->titlemask;
+				jointime = r->jointime;
+				graduate_time = r->graduate_time;
+				circlegrade = r->circlegrade;
+			}
+			return *this;
+		}
+
+		GCircleHistory& operator = (const GCircleHistory &rhs)
+		{
+			const GCircleHistory *r = &rhs;
+			if (r && r != this)
+			{
+				circleid = r->circleid;
+				circlename = r->circlename;
+				titlemask = r->titlemask;
+				jointime = r->jointime;
+				graduate_time = r->graduate_time;
+				circlegrade = r->circlegrade;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << circleid;
+			os << circlename;
+			os << titlemask;
+			os << jointime;
+			os << graduate_time;
+			os << circlegrade;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> circleid;
+			os >> circlename;
+			os >> titlemask;
+			os >> jointime;
+			os >> graduate_time;
+			os >> circlegrade;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,82 @@
+#ifndef __GNET_GFIELDINFO_RPCDATA
+#define __GNET_GFIELDINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GFieldInfo : public GNET::Rpc::Data
+	{
+	public:
+		int gs_id;
+		int map_id;
+		int red_number;
+		int blue_number;
+		int starttime;
+
+	public:
+		GFieldInfo (int l_gs_id = 0,int l_map_id = 0,int l_red_number = 0
+			,int l_blue_number = 0,int l_starttime = 0)
+			: gs_id(l_gs_id),map_id(l_map_id),red_number(l_red_number)
+			,blue_number(l_blue_number),starttime(l_starttime)
+		{
+		}
+
+		GFieldInfo(const GFieldInfo &rhs)
+			: gs_id(rhs.gs_id),map_id(rhs.map_id),red_number(rhs.red_number),
+			blue_number(rhs.blue_number),starttime(rhs.starttime) { }
+
+		Rpc::Data *Clone() const { return new GFieldInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GFieldInfo *r = dynamic_cast<const GFieldInfo *>(&rhs);
+			if (r && r != this)
+			{
+				gs_id = r->gs_id;
+				map_id = r->map_id;
+				red_number = r->red_number;
+				blue_number = r->blue_number;
+				starttime = r->starttime;
+			}
+			return *this;
+		}
+
+		GFieldInfo& operator = (const GFieldInfo &rhs)
+		{
+			const GFieldInfo *r = &rhs;
+			if (r && r != this)
+			{
+				gs_id = r->gs_id;
+				map_id = r->map_id;
+				red_number = r->red_number;
+				blue_number = r->blue_number;
+				starttime = r->starttime;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << gs_id;
+			os << map_id;
+			os << red_number;
+			os << blue_number;
+			os << starttime;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> gs_id;
+			os >> map_id;
+			os >> red_number;
+			os >> blue_number;
+			os >> starttime;
+			return os;
+		}
+
+	};
+};
+#endif

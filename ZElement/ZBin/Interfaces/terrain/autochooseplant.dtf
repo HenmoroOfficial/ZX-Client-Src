@@ -1,0 +1,7 @@
+DIALOG "Dlg_ChoosePlant" 0 0 297 312 0 1 10 "Window\对话框_标准边框.dds" "" "" 0 0 -1 -1 "" 0 0 96 96 96 255 1
+LABEL "Control_302158647" "" "" 171 41 39 17 2 15 3 255 255 255 255
+SLIDER "Slider_Weight" "moveSlider" "" 170 77 118 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+STILLIMAGEBUTTON "Control_120159100" "OK" "" 86 251 40 40 0 0 0 0 4 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 5 1
+STILLIMAGEBUTTON "Control_428722905" "Cancel" "" 167 249 40 40 0 0 0 0 6 15 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 7 1
+LABEL "Label_Weight" "" "" 218 42 40 19 8 15 9 255 255 255 255
+LIST "ListBox_Plants" "" "" 21 46 140 178 10 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"

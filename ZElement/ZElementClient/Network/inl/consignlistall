@@ -1,0 +1,50 @@
+	public:
+		int roleid;
+		int category;
+		int page;
+		int64_t index;
+		char direction;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONSIGNLISTALL };
+	public:
+		ConsignListAll() { type = PROTOCOL_CONSIGNLISTALL; }
+		ConsignListAll(void*) : Protocol(PROTOCOL_CONSIGNLISTALL) { }
+		ConsignListAll (int l_roleid,int l_category,int l_page,
+			int64_t l_index,char l_direction,unsigned int l_localsid)
+			 : roleid(l_roleid),category(l_category),page(l_page)
+			,index(l_index),direction(l_direction),localsid(l_localsid)
+		{
+			type = PROTOCOL_CONSIGNLISTALL;
+		}
+
+		ConsignListAll(const ConsignListAll &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),category(rhs.category),page(rhs.page)
+			,index(rhs.index),direction(rhs.direction),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new ConsignListAll(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << category;
+			os << page;
+			os << index;
+			os << direction;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> category;
+			os >> page;
+			os >> index;
+			os >> direction;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

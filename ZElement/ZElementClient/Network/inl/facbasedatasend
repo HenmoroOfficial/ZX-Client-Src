@@ -1,0 +1,47 @@
+	public:
+		int roleid;
+		unsigned int localsid;
+		int base_tag;
+		Octets data;
+		int linkid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACBASEDATASEND };
+	public:
+		FacBaseDataSend() { type = PROTOCOL_FACBASEDATASEND; }
+		FacBaseDataSend(void*) : Protocol(PROTOCOL_FACBASEDATASEND) { }
+		FacBaseDataSend (int l_roleid,unsigned int l_localsid = 0,int l_base_tag = 0,
+			const Octets& l_data = Octets(),int l_linkid = 0)
+			 : roleid(l_roleid),localsid(l_localsid),base_tag(l_base_tag)
+			,data(l_data),linkid(l_linkid)
+		{
+			type = PROTOCOL_FACBASEDATASEND;
+		}
+
+		FacBaseDataSend(const FacBaseDataSend &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),localsid(rhs.localsid),base_tag(rhs.base_tag)
+			,data(rhs.data),linkid(rhs.linkid) { }
+
+		GNET::Protocol *Clone() const { return new FacBaseDataSend(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << localsid;
+			os << base_tag;
+			os << data;
+			os << linkid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> localsid;
+			os >> base_tag;
+			os >> data;
+			os >> linkid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 65536; }

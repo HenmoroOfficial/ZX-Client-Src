@@ -1,0 +1,59 @@
+	public:
+		Octets name;
+		unsigned int master;
+		int lineid;
+		unsigned int reputation;
+		unsigned int capacity;
+		std::vector<GDiscipleInfo> disciples;
+		std::vector<GSectSkill> skills;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SECTLIST_RE };
+	public:
+		SectList_Re() { type = PROTOCOL_SECTLIST_RE; }
+		SectList_Re(void*) : Protocol(PROTOCOL_SECTLIST_RE) { }
+		SectList_Re (const Octets& l_name,unsigned int l_master,int l_lineid,
+			unsigned int l_reputation,unsigned int l_capacity,const std::vector<GDiscipleInfo>& l_disciples = std::vector<GDiscipleInfo>(),
+			const std::vector<GSectSkill>& l_skills = std::vector<GSectSkill>(),unsigned int l_localsid = 0)
+			 : name(l_name),master(l_master),lineid(l_lineid)
+			,reputation(l_reputation),capacity(l_capacity),disciples(l_disciples)
+			,skills(l_skills),localsid(l_localsid)
+		{
+			type = PROTOCOL_SECTLIST_RE;
+		}
+
+		SectList_Re(const SectList_Re &rhs)
+			: Protocol(rhs),name(rhs.name),master(rhs.master),lineid(rhs.lineid)
+			,reputation(rhs.reputation),capacity(rhs.capacity),disciples(rhs.disciples)
+			,skills(rhs.skills),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SectList_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << name;
+			os << master;
+			os << lineid;
+			os << reputation;
+			os << capacity;
+			os << disciples;
+			os << skills;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> name;
+			os >> master;
+			os >> lineid;
+			os >> reputation;
+			os >> capacity;
+			os >> disciples;
+			os >> skills;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16384; }

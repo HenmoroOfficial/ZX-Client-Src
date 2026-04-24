@@ -1,0 +1,82 @@
+#ifndef __GNET_GFACTIONBASEINFO_RPCDATA
+#define __GNET_GFACTIONBASEINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GFactionBaseInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int fid;
+		Octets name;
+		char level;
+		int nimbus;
+		int territoryscore;
+
+	public:
+		GFactionBaseInfo (unsigned int l_fid = 0,const Octets& l_name = Octets(0),char l_level = 0
+			,int l_nimbus = 0,int l_territoryscore = 0)
+			: fid(l_fid),name(l_name),level(l_level)
+			,nimbus(l_nimbus),territoryscore(l_territoryscore)
+		{
+		}
+
+		GFactionBaseInfo(const GFactionBaseInfo &rhs)
+			: fid(rhs.fid),name(rhs.name),level(rhs.level),
+			nimbus(rhs.nimbus),territoryscore(rhs.territoryscore) { }
+
+		Rpc::Data *Clone() const { return new GFactionBaseInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GFactionBaseInfo *r = dynamic_cast<const GFactionBaseInfo *>(&rhs);
+			if (r && r != this)
+			{
+				fid = r->fid;
+				name = r->name;
+				level = r->level;
+				nimbus = r->nimbus;
+				territoryscore = r->territoryscore;
+			}
+			return *this;
+		}
+
+		GFactionBaseInfo& operator = (const GFactionBaseInfo &rhs)
+		{
+			const GFactionBaseInfo *r = &rhs;
+			if (r && r != this)
+			{
+				fid = r->fid;
+				name = r->name;
+				level = r->level;
+				nimbus = r->nimbus;
+				territoryscore = r->territoryscore;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << fid;
+			os << name;
+			os << level;
+			os << nimbus;
+			os << territoryscore;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> fid;
+			os >> name;
+			os >> level;
+			os >> nimbus;
+			os >> territoryscore;
+			return os;
+		}
+
+	};
+};
+#endif

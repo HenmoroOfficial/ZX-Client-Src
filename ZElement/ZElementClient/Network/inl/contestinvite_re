@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		char accept_invite;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTINVITE_RE };
+	public:
+		ContestInvite_Re() { type = PROTOCOL_CONTESTINVITE_RE; }
+		ContestInvite_Re(void*) : Protocol(PROTOCOL_CONTESTINVITE_RE) { }
+		ContestInvite_Re (int l_roleid,char l_accept_invite)
+			 : roleid(l_roleid),accept_invite(l_accept_invite)
+		{
+			type = PROTOCOL_CONTESTINVITE_RE;
+		}
+
+		ContestInvite_Re(const ContestInvite_Re &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),accept_invite(rhs.accept_invite) { }
+
+		GNET::Protocol *Clone() const { return new ContestInvite_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << accept_invite;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> accept_invite;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

@@ -1,0 +1,35 @@
+	public:
+		int roleid;
+		int friendid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFRIENDGTSTATUS };
+	public:
+		GetFriendGTStatus() { type = PROTOCOL_GETFRIENDGTSTATUS; }
+		GetFriendGTStatus(void*) : Protocol(PROTOCOL_GETFRIENDGTSTATUS) { }
+		GetFriendGTStatus (int l_roleid,int l_friendid)
+			 : roleid(l_roleid),friendid(l_friendid)
+		{
+			type = PROTOCOL_GETFRIENDGTSTATUS;
+		}
+
+		GetFriendGTStatus(const GetFriendGTStatus &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),friendid(rhs.friendid) { }
+
+		GNET::Protocol *Clone() const { return new GetFriendGTStatus(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << friendid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> friendid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

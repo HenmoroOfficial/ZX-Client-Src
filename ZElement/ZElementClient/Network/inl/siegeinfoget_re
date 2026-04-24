@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		GCityInfo city;
+		std::vector<GChallenger> challengers;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_SIEGEINFOGET_RE };
+	public:
+		SiegeInfoGet_Re() { type = PROTOCOL_SIEGEINFOGET_RE; }
+		SiegeInfoGet_Re(void*) : Protocol(PROTOCOL_SIEGEINFOGET_RE) { }
+		SiegeInfoGet_Re (int l_retcode,const GCityInfo& l_city = GCityInfo(),const std::vector<GChallenger>& l_challengers = std::vector<GChallenger>(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),city(l_city),challengers(l_challengers)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_SIEGEINFOGET_RE;
+		}
+
+		SiegeInfoGet_Re(const SiegeInfoGet_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),city(rhs.city),challengers(rhs.challengers)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new SiegeInfoGet_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << city;
+			os << challengers;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> city;
+			os >> challengers;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }

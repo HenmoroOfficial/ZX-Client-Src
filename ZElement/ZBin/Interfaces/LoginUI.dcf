@@ -1,0 +1,55 @@
+//文件名.xml x y 是否显示；-1居中 负数表示距右（下）距离，正的是左（上），0左（上）对齐，-2右（下）对齐，1左（上）1个像素
+Agreement.xml	-1	-1	0
+Login.xml		-100	-150	0
+Login_Replay.xml	-444	-110	0
+Login_LogOut.xml	-1	-50	0
+Login_ReplaySelect.xml	-1	-1	0
+Softkb.xml		-1	-1	0
+Softkb2.xml		-1	-1	0
+PwdProtect.xml		-1	-1	0
+PwdProtect1.xml		-1	-1	0
+Login_Link.xml	5	-50	0
+Login_Anime.xml	-100	-70	0
+
+Char_Rotate.xml		-1	-75	0
+LoginServerListSearch.xml	-1	-1	0
+CharList.xml		-2	45	0
+Char_EnterWorld.xml		-1	-30	0
+Char_Create.xml		-2	-110	0
+Char_Delete.xml		-2	-70	0
+Char_Restore.xml		-2	-30	0
+Char_Return.xml		0	-30	0
+Char_SelectLine.xml	10	10	0
+Char_SelectLineList.xml	-1	-1	0
+Char_ChangeLine.xml	0	30	0
+Char_TaskTip.xml	-1	-1	0
+Char_UpdateLog.xml	-1	-1	0
+
+Create.xml		-1	160	0
+Create_Wild.xml		-2	25	0
+Create_Human.xml	-2	25	0
+Create_Race03.xml	 -2	25	0
+Create_Prof01.xml		0	-1	0
+Create_Prof02.xml		0	-1	0
+Create_Prof03.xml		0	-1	0
+Create_Name.xml		-1	-75	0
+Create_Confirm.xml		-1	-30	0
+Create_Return.xml		0	-30	0
+
+//Customize.xml		-1	-10	0
+//Instruction.xml		-1	-1	0
+LoginWait.xml		-1	-1	0
+LoginServerList.xml	-1	-85	0
+//LoginPage.xml		1	-1	0
+LoginAccountTime.xml 10 10 0
+CharList_Cover.xml	0	0	0
+CharList_Cover2.xml	0	0	0
+
+PopID.xml		100	-1	0
+PwdProtectHint.xml	-2	-5	0
+Login_explorer.xml	-1	-1	0
+PwdProtect_Phone1.xml	-1	-1	0
+PwdProtect_Phone2.xml	-1	-1	0
+
+Create_WildEnter.xml	-1	-1	0
+Create_HumanEnter.xml	-1	-1	0

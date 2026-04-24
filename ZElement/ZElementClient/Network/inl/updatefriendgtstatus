@@ -1,0 +1,35 @@
+	public:
+		GGateRoleGTStatus friendstatus;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_UPDATEFRIENDGTSTATUS };
+	public:
+		UpdateFriendGTStatus() { type = PROTOCOL_UPDATEFRIENDGTSTATUS; }
+		UpdateFriendGTStatus(void*) : Protocol(PROTOCOL_UPDATEFRIENDGTSTATUS) { }
+		UpdateFriendGTStatus (GGateRoleGTStatus l_friendstatus,unsigned int l_localsid)
+			 : friendstatus(l_friendstatus),localsid(l_localsid)
+		{
+			type = PROTOCOL_UPDATEFRIENDGTSTATUS;
+		}
+
+		UpdateFriendGTStatus(const UpdateFriendGTStatus &rhs)
+			: Protocol(rhs),friendstatus(rhs.friendstatus),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new UpdateFriendGTStatus(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << friendstatus;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> friendstatus;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

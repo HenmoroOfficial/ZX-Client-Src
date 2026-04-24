@@ -1,0 +1,47 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int localsid;
+		int cloneid;
+		GRoleBase player;
+		enum { PROTOCOL_TYPE = PROTOCOL_PLAYERBASEINFO2_RE };
+	public:
+		PlayerBaseInfo2_Re() { type = PROTOCOL_PLAYERBASEINFO2_RE; }
+		PlayerBaseInfo2_Re(void*) : Protocol(PROTOCOL_PLAYERBASEINFO2_RE) { }
+		PlayerBaseInfo2_Re (int l_retcode,int l_roleid,unsigned int l_localsid,
+			int l_cloneid,GRoleBase l_player)
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid)
+			,cloneid(l_cloneid),player(l_player)
+		{
+			type = PROTOCOL_PLAYERBASEINFO2_RE;
+		}
+
+		PlayerBaseInfo2_Re(const PlayerBaseInfo2_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid)
+			,cloneid(rhs.cloneid),player(rhs.player) { }
+
+		GNET::Protocol *Clone() const { return new PlayerBaseInfo2_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << cloneid;
+			os << player;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> cloneid;
+			os >> player;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1536; }

@@ -1,0 +1,62 @@
+	public:
+		unsigned short retcode;
+		int roleid;
+		short id;
+		unsigned int credit1;
+		unsigned int credit2;
+		unsigned int challenger1;
+		unsigned int challenger2;
+		unsigned int cutoff_time;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_BATTLECHALLENGE_RE };
+	public:
+		BattleChallenge_Re() { type = PROTOCOL_BATTLECHALLENGE_RE; }
+		BattleChallenge_Re(void*) : Protocol(PROTOCOL_BATTLECHALLENGE_RE) { }
+		BattleChallenge_Re (unsigned short l_retcode,int l_roleid,short l_id,
+			unsigned int l_credit1 = 0,unsigned int l_credit2 = 0,unsigned int l_challenger1 = 0,
+			unsigned int l_challenger2 = 0,unsigned int l_cutoff_time = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),id(l_id),
+			credit1(l_credit1),credit2(l_credit2),challenger1(l_challenger1),
+			challenger2(l_challenger2),cutoff_time(l_cutoff_time),localsid(l_localsid)
+		{
+			type = PROTOCOL_BATTLECHALLENGE_RE;
+		}
+
+		BattleChallenge_Re(const BattleChallenge_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),id(rhs.id),
+			credit1(rhs.credit1),credit2(rhs.credit2),challenger1(rhs.challenger1),
+			challenger2(rhs.challenger2),cutoff_time(rhs.cutoff_time),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new BattleChallenge_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << id;
+			os << credit1;
+			os << credit2;
+			os << challenger1;
+			os << challenger2;
+			os << cutoff_time;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> id;
+			os >> credit1;
+			os >> credit2;
+			os >> challenger1;
+			os >> challenger2;
+			os >> cutoff_time;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

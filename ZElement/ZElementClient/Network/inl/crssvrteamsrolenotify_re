@@ -1,0 +1,50 @@
+	public:
+		int retcode;
+		int roleid;
+		int teamid;
+		int ct_last_max_score;
+		int ct_last_battle_times;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_CRSSVRTEAMSROLENOTIFY_RE };
+	public:
+		CrssvrTeamsRoleNotify_Re() { type = PROTOCOL_CRSSVRTEAMSROLENOTIFY_RE; }
+		CrssvrTeamsRoleNotify_Re(void*) : Protocol(PROTOCOL_CRSSVRTEAMSROLENOTIFY_RE) { }
+		CrssvrTeamsRoleNotify_Re (int l_retcode,int l_roleid,int l_teamid,
+			int l_ct_last_max_score = 0,int l_ct_last_battle_times = 0,unsigned int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),teamid(l_teamid)
+			,ct_last_max_score(l_ct_last_max_score),ct_last_battle_times(l_ct_last_battle_times),localsid(l_localsid)
+		{
+			type = PROTOCOL_CRSSVRTEAMSROLENOTIFY_RE;
+		}
+
+		CrssvrTeamsRoleNotify_Re(const CrssvrTeamsRoleNotify_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),teamid(rhs.teamid)
+			,ct_last_max_score(rhs.ct_last_max_score),ct_last_battle_times(rhs.ct_last_battle_times),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new CrssvrTeamsRoleNotify_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << teamid;
+			os << ct_last_max_score;
+			os << ct_last_battle_times;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> teamid;
+			os >> ct_last_max_score;
+			os >> ct_last_battle_times;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

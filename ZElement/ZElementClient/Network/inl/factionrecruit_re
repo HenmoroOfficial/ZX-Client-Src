@@ -1,0 +1,62 @@
+	public:
+		int retcode;
+		unsigned int factionid;
+		int invitee;
+		int inviter;
+		int level;
+		char occupation;
+		Octets name;
+		char scale;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONRECRUIT_RE };
+	public:
+		FactionRecruit_Re() { type = PROTOCOL_FACTIONRECRUIT_RE; }
+		FactionRecruit_Re(void*) : Protocol(PROTOCOL_FACTIONRECRUIT_RE) { }
+		FactionRecruit_Re (int l_retcode,unsigned int l_factionid,int l_invitee,
+			int l_inviter,int l_level,char l_occupation,
+			const Octets& l_name,char l_scale,unsigned int l_localsid)
+			 : retcode(l_retcode),factionid(l_factionid),invitee(l_invitee)
+			,inviter(l_inviter),level(l_level),occupation(l_occupation)
+			,name(l_name),scale(l_scale),localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONRECRUIT_RE;
+		}
+
+		FactionRecruit_Re(const FactionRecruit_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),factionid(rhs.factionid),invitee(rhs.invitee)
+			,inviter(rhs.inviter),level(rhs.level),occupation(rhs.occupation)
+			,name(rhs.name),scale(rhs.scale),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionRecruit_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << factionid;
+			os << invitee;
+			os << inviter;
+			os << level;
+			os << occupation;
+			os << name;
+			os << scale;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> factionid;
+			os >> invitee;
+			os >> inviter;
+			os >> level;
+			os >> occupation;
+			os >> name;
+			os >> scale;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

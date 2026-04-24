@@ -1,0 +1,38 @@
+	public:
+		int roleid;
+		int isapplying;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_TEAMRAIDAPPLYNOTICE };
+	public:
+		TeamRaidApplyNotice() { type = PROTOCOL_TEAMRAIDAPPLYNOTICE; }
+		TeamRaidApplyNotice(void*) : Protocol(PROTOCOL_TEAMRAIDAPPLYNOTICE) { }
+		TeamRaidApplyNotice (int l_roleid,int l_isapplying,unsigned int l_localsid = 0)
+			 : roleid(l_roleid),isapplying(l_isapplying),localsid(l_localsid)
+		{
+			type = PROTOCOL_TEAMRAIDAPPLYNOTICE;
+		}
+
+		TeamRaidApplyNotice(const TeamRaidApplyNotice &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),isapplying(rhs.isapplying),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new TeamRaidApplyNotice(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << isapplying;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> isapplying;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

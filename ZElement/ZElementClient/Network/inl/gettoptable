@@ -1,0 +1,44 @@
+	public:
+		int tableid;
+		int pageid;
+		int roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETTOPTABLE };
+	public:
+		GetTopTable() { type = PROTOCOL_GETTOPTABLE; }
+		GetTopTable(void*) : Protocol(PROTOCOL_GETTOPTABLE) { }
+		GetTopTable (int l_tableid,int l_pageid,int l_roleid,
+			unsigned int l_localsid)
+			 : tableid(l_tableid),pageid(l_pageid),roleid(l_roleid)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_GETTOPTABLE;
+		}
+
+		GetTopTable(const GetTopTable &rhs)
+			: Protocol(rhs),tableid(rhs.tableid),pageid(rhs.pageid),roleid(rhs.roleid)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GetTopTable(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << tableid;
+			os << pageid;
+			os << roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> tableid;
+			os >> pageid;
+			os >> roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

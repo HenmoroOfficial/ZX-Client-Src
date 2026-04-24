@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		int task_type;
+		int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGISSUETASK_RE };
+	public:
+		KingIssueTask_Re() { type = PROTOCOL_KINGISSUETASK_RE; }
+		KingIssueTask_Re(void*) : Protocol(PROTOCOL_KINGISSUETASK_RE) { }
+		KingIssueTask_Re (int l_retcode,int l_roleid,int l_task_type = 0,
+			int l_localsid = 0)
+			 : retcode(l_retcode),roleid(l_roleid),task_type(l_task_type)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_KINGISSUETASK_RE;
+		}
+
+		KingIssueTask_Re(const KingIssueTask_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),task_type(rhs.task_type)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new KingIssueTask_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << task_type;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> task_type;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 64; }

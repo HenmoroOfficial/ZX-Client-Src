@@ -1,0 +1,44 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int localsid;
+		KingdomClientInfo info;
+		enum { PROTOCOL_TYPE = PROTOCOL_KINGDOMGETINFO_RE };
+	public:
+		KingdomGetInfo_Re() { type = PROTOCOL_KINGDOMGETINFO_RE; }
+		KingdomGetInfo_Re(void*) : Protocol(PROTOCOL_KINGDOMGETINFO_RE) { }
+		KingdomGetInfo_Re (int l_retcode,int l_roleid,unsigned int l_localsid,
+			KingdomClientInfo l_info = KingdomClientInfo())
+			 : retcode(l_retcode),roleid(l_roleid),localsid(l_localsid)
+			,info(l_info)
+		{
+			type = PROTOCOL_KINGDOMGETINFO_RE;
+		}
+
+		KingdomGetInfo_Re(const KingdomGetInfo_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),localsid(rhs.localsid)
+			,info(rhs.info) { }
+
+		GNET::Protocol *Clone() const { return new KingdomGetInfo_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << localsid;
+			os << info;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> localsid;
+			os >> info;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 1024; }

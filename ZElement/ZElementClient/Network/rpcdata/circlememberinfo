@@ -1,0 +1,105 @@
+#ifndef __GNET_CIRCLEMEMBERINFO_RPCDATA
+#define __GNET_CIRCLEMEMBERINFO_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CircleMemberInfo : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int roleid;
+		Octets name;
+		unsigned char level;
+		unsigned char reborn_cnt;
+		unsigned char occupation;
+		unsigned char gender;
+		int jointime;
+		int grad_time;
+		int lineid;
+
+	public:
+		CircleMemberInfo (unsigned int l_roleid = 0,const Octets& l_name = Octets(0),unsigned char l_level = 0
+			,unsigned char l_reborn_cnt = 0,unsigned char l_occupation = 0,unsigned char l_gender = 0
+			,int l_jointime = 0,int l_grad_time = 0,int l_lineid = -1)
+			: roleid(l_roleid),name(l_name),level(l_level)
+			,reborn_cnt(l_reborn_cnt),occupation(l_occupation),gender(l_gender)
+			,jointime(l_jointime),grad_time(l_grad_time),lineid(l_lineid)
+		{
+		}
+
+		CircleMemberInfo(const CircleMemberInfo &rhs)
+			: roleid(rhs.roleid),name(rhs.name),level(rhs.level),
+			reborn_cnt(rhs.reborn_cnt),occupation(rhs.occupation),gender(rhs.gender),
+			jointime(rhs.jointime),grad_time(rhs.grad_time),lineid(rhs.lineid) { }
+
+		Rpc::Data *Clone() const { return new CircleMemberInfo(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CircleMemberInfo *r = dynamic_cast<const CircleMemberInfo *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				reborn_cnt = r->reborn_cnt;
+				occupation = r->occupation;
+				gender = r->gender;
+				jointime = r->jointime;
+				grad_time = r->grad_time;
+				lineid = r->lineid;
+			}
+			return *this;
+		}
+
+		CircleMemberInfo& operator = (const CircleMemberInfo &rhs)
+		{
+			const CircleMemberInfo *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				name = r->name;
+				level = r->level;
+				reborn_cnt = r->reborn_cnt;
+				occupation = r->occupation;
+				gender = r->gender;
+				jointime = r->jointime;
+				grad_time = r->grad_time;
+				lineid = r->lineid;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << name;
+			os << level;
+			os << reborn_cnt;
+			os << occupation;
+			os << gender;
+			os << jointime;
+			os << grad_time;
+			os << lineid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> name;
+			os >> level;
+			os >> reborn_cnt;
+			os >> occupation;
+			os >> gender;
+			os >> jointime;
+			os >> grad_time;
+			os >> lineid;
+			return os;
+		}
+
+	};
+};
+#endif

@@ -1,0 +1,56 @@
+	public:
+		int retcode;
+		int roleid;
+		unsigned int familyid;
+		int expellee;
+		Octets name;
+		char scale;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_FACTIONEXPEL_RE };
+	public:
+		FactionExpel_Re() { type = PROTOCOL_FACTIONEXPEL_RE; }
+		FactionExpel_Re(void*) : Protocol(PROTOCOL_FACTIONEXPEL_RE) { }
+		FactionExpel_Re (int l_retcode,int l_roleid,unsigned int l_familyid,
+			int l_expellee,const Octets& l_name,char l_scale,
+			unsigned int l_localsid)
+			 : retcode(l_retcode),roleid(l_roleid),familyid(l_familyid)
+			,expellee(l_expellee),name(l_name),scale(l_scale)
+			,localsid(l_localsid)
+		{
+			type = PROTOCOL_FACTIONEXPEL_RE;
+		}
+
+		FactionExpel_Re(const FactionExpel_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),roleid(rhs.roleid),familyid(rhs.familyid)
+			,expellee(rhs.expellee),name(rhs.name),scale(rhs.scale)
+			,localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new FactionExpel_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << roleid;
+			os << familyid;
+			os << expellee;
+			os << name;
+			os << scale;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> roleid;
+			os >> familyid;
+			os >> expellee;
+			os >> name;
+			os >> scale;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

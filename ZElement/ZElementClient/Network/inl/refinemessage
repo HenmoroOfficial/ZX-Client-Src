@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		int itemid;
+		int refine_level;
+		Octets rolename;
+		enum { PROTOCOL_TYPE = PROTOCOL_REFINEMESSAGE };
+	public:
+		RefineMessage() { type = PROTOCOL_REFINEMESSAGE; }
+		RefineMessage(void*) : Protocol(PROTOCOL_REFINEMESSAGE) { }
+		RefineMessage (int l_roleid,int l_itemid,int l_refine_level,
+			const Octets& l_rolename = Octets())
+			 : roleid(l_roleid),itemid(l_itemid),refine_level(l_refine_level)
+			,rolename(l_rolename)
+		{
+			type = PROTOCOL_REFINEMESSAGE;
+		}
+
+		RefineMessage(const RefineMessage &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),itemid(rhs.itemid),refine_level(rhs.refine_level)
+			,rolename(rhs.rolename) { }
+
+		GNET::Protocol *Clone() const { return new RefineMessage(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << itemid;
+			os << refine_level;
+			os << rolename;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> itemid;
+			os >> refine_level;
+			os >> rolename;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 128; }

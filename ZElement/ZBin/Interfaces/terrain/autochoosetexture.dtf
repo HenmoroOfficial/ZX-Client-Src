@@ -1,0 +1,35 @@
+DIALOG "Dlg_ChooseTexture" 0 0 406 323 0 1 10 "Window\对话框_标准边框.dds" "" "" 0 0 250 27 "Window\对话框_标准关闭.tga" 26 5 96 96 96 255 1
+LABEL "Control_237500184" "" "" 155 6 84 20 2 16 3 255 203 74 255
+SLIDER "Slider_MainTexture" "moveSlider" "" 133 222 202 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_PatchTexture" "moveSlider" "" 133 239 202 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_PatchDivision" "moveSlider" "" 133 257 202 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TextureSeed" "moveSlider" "" 133 277 202 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_TextureRatio" "moveSlider" "" 133 204 202 8 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+STILLIMAGEBUTTON "Control_157290432" "OK" "" 91 293 102 20 0 0 0 0 4 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 5 1
+LABEL "Control_349146350" "" "" 20 199 81 15 6 15 7 255 255 255 255
+LABEL "Control_120095148" "" "" 18 218 75 15 8 15 9 255 255 255 255
+LABEL "Control_308604990" "" "" 20 235 68 15 10 15 11 255 255 255 255
+LABEL "Control_826920608" "" "" 18 253 68 17 12 15 13 255 255 255 255
+LABEL "Control_192303902" "" "" 19 271 60 18 14 15 15 255 255 255 255
+LIST "ListBox_MainTexture" "ChooseBuilding" "" 23 29 154 88 16 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"
+LIST "ListBox_PatchTexture" "ChooseBuilding" "" 215 30 154 88 17 10 255 255 255 255 "Editbox\文本框_4.tga" "Listbox\列表框_反显.dds" "Listbox\列表框_上移.bmp" "Listbox\列表框_下移.bmp" "Listbox\列表框_滚动槽1.tga" "Listbox\列表框_拖动按钮1.bmp" 0 "0"
+IMAGEPICTURE "ImagePic_MainTexture" "" "" 23 120 70 70 0 0 ""
+IMAGEPICTURE "ImagePic_PatchTexture" "" "" 216 121 70 70 0 0 ""
+STILLIMAGEBUTTON "Control_653262381" "Cancel" "" 222 293 102 20 0 0 0 0 18 10 255 255 255 255 "Button\按钮_文本1.dds" "Button\按钮_文本2.dds" 19 1
+LABEL "Label_TextureRatio" "" "" 102 199 30 17 20 15 21 255 255 255 255
+LABEL "Label_MainTexture" "" "" 87 217 44 18 22 15 23 255 255 255 255
+LABEL "Label_PatchTexture" "" "" 88 235 40 17 24 15 25 255 255 255 255
+LABEL "Label_PatchDivision" "" "" 84 252 43 19 26 15 27 255 255 255 255
+LABEL "Label_TextureSeed" "" "" 75 270 51 17 28 15 29 255 255 255 255
+LABEL "Control_783352875" "" "" 96 117 20 16 30 15 31 255 255 255 255
+LABEL "Control_192143952" "" "" 95 157 20 15 32 15 33 255 255 255 255
+SLIDER "Slider_MainTextureU" "moveSlider" "" 97 137 96 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_MainTextureV" "moveSlider" "" 97 178 96 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+LABEL "Control_391924628" "" "" 291 121 21 16 34 15 35 255 255 255 255
+LABEL "Control_477102032" "" "" 290 158 21 16 36 15 37 255 255 255 255
+SLIDER "Slider_PatchTextureU" "moveSlider" "" 291 142 100 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+SLIDER "Slider_PatchTextureV" "moveSlider" "" 291 178 101 9 "Listbox\列表框_滚动槽2.tga" "Listbox\列表框_拖动按钮2.bmp" 100
+LABEL "Label_MainTextureU" "" "" 117 119 51 15 38 15 39 255 255 255 255
+LABEL "Label_MainTextureV" "" "" 114 155 47 18 40 15 41 255 255 255 255
+LABEL "Label_PatchTextureU" "" "" 309 120 56 19 42 15 43 255 255 255 255
+LABEL "Label_PatchTextureV" "" "" 310 154 54 19 44 15 45 255 255 255 255

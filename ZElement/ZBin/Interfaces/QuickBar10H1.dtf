@@ -1,0 +1,21 @@
+DIALOG "Win_QuickBar10H_1" 0 0 492 65 0 1 10 "" "Window\QuickBar10H1.tga" "" 0 0 -1 -1 "" 0 0 255 255 255 255 1 0
+IMAGEPICTURE "Item_1" "" "" 61 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_2" "" "" 98 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_3" "" "" 135 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_4" "" "" 172 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_5" "" "" 209 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_6" "" "" 246 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_7" "" "" 283 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_8" "" "" 320 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_9" "" "" 357 25 36 36 1 0 "Icon\Shortcut.tga"
+IMAGEPICTURE "Item_10" "" "" 394 25 36 36 1 0 "Icon\Shortcut.tga"
+LABEL "Lab_1" "" "" 85 45 0 0 2 8 3 255 255 255 255
+LABEL "Lab_2" "" "" 122 45 0 0 4 8 5 255 255 255 255
+LABEL "Lab_3" "" "" 159 45 0 0 6 8 7 255 255 255 255
+LABEL "Lab_4" "" "" 196 45 0 0 8 8 9 255 255 255 255
+LABEL "Lab_5" "" "" 233 45 0 0 10 8 11 255 255 255 255
+LABEL "Lab_6" "" "" 270 45 0 0 12 8 13 255 255 255 255
+LABEL "Lab_7" "" "" 307 45 0 0 14 8 15 255 255 255 255
+LABEL "Lab_8" "" "" 344 45 0 0 16 8 17 255 255 255 255
+LABEL "Lab_9" "" "" 381 45 0 0 18 8 19 255 255 255 255
+LABEL "Lab_10" "" "" 418 45 0 0 20 8 21 255 255 255 255

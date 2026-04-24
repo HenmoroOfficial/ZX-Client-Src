@@ -1,0 +1,59 @@
+	public:
+		int tableid;
+		int pageid;
+		int maxsize;
+		int selfrank;
+		std::vector<GTopItem> items;
+		std::vector<GTopDetail> details;
+		unsigned int localsid;
+		unsigned int roleid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETTOPTABLE_RE };
+	public:
+		GetTopTable_Re() { type = PROTOCOL_GETTOPTABLE_RE; }
+		GetTopTable_Re(void*) : Protocol(PROTOCOL_GETTOPTABLE_RE) { }
+		GetTopTable_Re (int l_tableid,int l_pageid,int l_maxsize,
+			int l_selfrank,const std::vector<GTopItem>& l_items,const std::vector<GTopDetail>& l_details,
+			unsigned int l_localsid,unsigned int l_roleid = 0)
+			 : tableid(l_tableid),pageid(l_pageid),maxsize(l_maxsize)
+			,selfrank(l_selfrank),items(l_items),details(l_details)
+			,localsid(l_localsid),roleid(l_roleid)
+		{
+			type = PROTOCOL_GETTOPTABLE_RE;
+		}
+
+		GetTopTable_Re(const GetTopTable_Re &rhs)
+			: Protocol(rhs),tableid(rhs.tableid),pageid(rhs.pageid),maxsize(rhs.maxsize)
+			,selfrank(rhs.selfrank),items(rhs.items),details(rhs.details)
+			,localsid(rhs.localsid),roleid(rhs.roleid) { }
+
+		GNET::Protocol *Clone() const { return new GetTopTable_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << tableid;
+			os << pageid;
+			os << maxsize;
+			os << selfrank;
+			os << items;
+			os << details;
+			os << localsid;
+			os << roleid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> tableid;
+			os >> pageid;
+			os >> maxsize;
+			os >> selfrank;
+			os >> items;
+			os >> details;
+			os >> localsid;
+			os >> roleid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 131072; }

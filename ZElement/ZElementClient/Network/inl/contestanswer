@@ -1,0 +1,44 @@
+	public:
+		int roleid;
+		char questionid;
+		char answer;
+		char usestar;
+		enum { PROTOCOL_TYPE = PROTOCOL_CONTESTANSWER };
+	public:
+		ContestAnswer() { type = PROTOCOL_CONTESTANSWER; }
+		ContestAnswer(void*) : Protocol(PROTOCOL_CONTESTANSWER) { }
+		ContestAnswer (int l_roleid,char l_questionid,char l_answer,
+			char l_usestar)
+			 : roleid(l_roleid),questionid(l_questionid),answer(l_answer)
+			,usestar(l_usestar)
+		{
+			type = PROTOCOL_CONTESTANSWER;
+		}
+
+		ContestAnswer(const ContestAnswer &rhs)
+			: Protocol(rhs),roleid(rhs.roleid),questionid(rhs.questionid),answer(rhs.answer)
+			,usestar(rhs.usestar) { }
+
+		GNET::Protocol *Clone() const { return new ContestAnswer(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << questionid;
+			os << answer;
+			os << usestar;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> questionid;
+			os >> answer;
+			os >> usestar;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

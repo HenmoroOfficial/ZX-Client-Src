@@ -1,0 +1,32 @@
+	public:
+		int time;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETSERVERRTT };
+	public:
+		GetServerRTT() { type = PROTOCOL_GETSERVERRTT; }
+		GetServerRTT(void*) : Protocol(PROTOCOL_GETSERVERRTT) { }
+		GetServerRTT (int l_time)
+			 : time(l_time)
+		{
+			type = PROTOCOL_GETSERVERRTT;
+		}
+
+		GetServerRTT(const GetServerRTT &rhs)
+			: Protocol(rhs),time(rhs.time) { }
+
+		GNET::Protocol *Clone() const { return new GetServerRTT(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << time;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> time;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 16; }

@@ -1,0 +1,38 @@
+	public:
+		int pageid;
+		int roleid;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_GETFACACTTOPTABLE };
+	public:
+		GetFacActTopTable() { type = PROTOCOL_GETFACACTTOPTABLE; }
+		GetFacActTopTable(void*) : Protocol(PROTOCOL_GETFACACTTOPTABLE) { }
+		GetFacActTopTable (int l_pageid,int l_roleid,unsigned int l_localsid)
+			 : pageid(l_pageid),roleid(l_roleid),localsid(l_localsid)
+		{
+			type = PROTOCOL_GETFACACTTOPTABLE;
+		}
+
+		GetFacActTopTable(const GetFacActTopTable &rhs)
+			: Protocol(rhs),pageid(rhs.pageid),roleid(rhs.roleid),localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new GetFacActTopTable(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << pageid;
+			os << roleid;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> pageid;
+			os >> roleid;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 32; }

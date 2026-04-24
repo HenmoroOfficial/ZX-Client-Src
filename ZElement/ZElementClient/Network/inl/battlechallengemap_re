@@ -1,0 +1,44 @@
+	public:
+		unsigned short retcode;
+		int status;
+		std::vector<GBattleChallenge> cities;
+		unsigned int localsid;
+		enum { PROTOCOL_TYPE = PROTOCOL_BATTLECHALLENGEMAP_RE };
+	public:
+		BattleChallengeMap_Re() { type = PROTOCOL_BATTLECHALLENGEMAP_RE; }
+		BattleChallengeMap_Re(void*) : Protocol(PROTOCOL_BATTLECHALLENGEMAP_RE) { }
+		BattleChallengeMap_Re (unsigned short l_retcode,int l_status = 0,std::vector<GBattleChallenge> l_cities = std::vector<GBattleChallenge>(),
+			unsigned int l_localsid = 0)
+			 : retcode(l_retcode),status(l_status),cities(l_cities),
+			localsid(l_localsid)
+		{
+			type = PROTOCOL_BATTLECHALLENGEMAP_RE;
+		}
+
+		BattleChallengeMap_Re(const BattleChallengeMap_Re &rhs)
+			: Protocol(rhs),retcode(rhs.retcode),status(rhs.status),cities(rhs.cities),
+			localsid(rhs.localsid) { }
+
+		GNET::Protocol *Clone() const { return new BattleChallengeMap_Re(*this); }
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << status;
+			os << cities;
+			os << localsid;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> status;
+			os >> cities;
+			os >> localsid;
+			return os;
+		}
+
+		int PriorPolicy( ) const { return 1; }
+
+		bool SizePolicy(size_t size) const { return size <= 2048; }
